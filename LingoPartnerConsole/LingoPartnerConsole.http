@@ -1,6 +1,0 @@
-@LingoPartnerConsole_HostAddress = http://localhost:5220
-
-GET {{LingoPartnerConsole_HostAddress}}/weatherforecast/
-Accept: application/json
-
-###
