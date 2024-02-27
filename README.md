@@ -8,7 +8,7 @@ Opdracht voor semester 2 Fontys HBO ICT opleiding
 ### 27 feb
 - Added reference to readme.md for later use
 - Added initial setup for project
-- merged wit main
+- merged main with dev branch
 
 ## references
 
