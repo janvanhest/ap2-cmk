@@ -1,0 +1,4 @@
+{
+  "dotnet.defaultSolution": "LingoPartner_Console.sln",
+  "csharp.debug.console": "internalConsole"
+}
