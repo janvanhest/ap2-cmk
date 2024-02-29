@@ -1,0 +1,31 @@
+@startuml
+' Entiteiten (Zelfstandige Naamwoorde entity Pretpark
+entity Ticketverkoop
+entity Pretpark
+entity Klant
+entity Medewerker
+entity Attractie
+entity Kaartje
+entity Systeem
+entity Data
+entity Overzicht
+' entity Medewerkerspas
+entity Bezoeker
+entity Wachtrij
+' entity Ziekte
+' entity Eetvoorkeur
+' Relaties
+Pretpark "1" -- "*" Bezoeker : heeft >
+Pretpark "1" -- "1" Ticketverkoop : heeft >
+Pretpark "1" -- "*" Attractie : bevat >
+Pretpark "1" -- "*" Medewerker : heeft >
+' Medewerker "1" -- "1" Medewerkerspas : >
+Ticketverkoop "1" -- "*" Klant : heeft >
+Klant "1" -- "*" Kaartje : heeft/koopt >
+Bezoeker "1" -- "1" Kaartje : >
+Bezoeker "1" -- "0..*" Ziekte : heeft >
+Wachtrij "1" -- "*" Bezoeker : heeft >
+Attractie "1" -- "1" Wachtrij : heeft >
+Systeem "*" -- "*" Data : beheert >
+Bezoeker "1" -- "*" Eetvoorkeur : geeft voorkeur voor >
+@enduml
