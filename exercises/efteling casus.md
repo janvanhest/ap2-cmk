@@ -91,3 +91,17 @@ Advies is om eerst een versie te ontwikkelen die de regels uit de analyse realis
 - Green Stuff
 - Hart- en vaatziekten
 - AI-technologieën
+
+## Conceptueel model. 
+Het conceptueel model bevat de meest belangrijke entiteiten uit de verb noun analysis.
+Hierbij ben ik tot het volgende conceptuele model gekomen. 
+
+![conceptueel model](conceptueel_model.png)
+
+## Use case diagram
+Naar aanleiding van het conceptueel heb ik het volgende use case diagram gemaakt.
+
+![usecase diagram](usecase_diagram.png)
+
+
+
