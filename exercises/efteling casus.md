@@ -30,7 +30,7 @@ De regels die gelden voor de use case zijn t.o.v. de analyse iets uitgebreider g
   - Greasy Stuff
   - Green Stuff
 - Een klant dient aan te geven of hij / zij aan hart- en/of vaatziekten lijdt
-- Per attractie wordt ook bepaald of de attractie toegankelijk is voor mensen met hart- of vaatziekten
+- Per attractie wordt ook bepaald of de attractie toegankelijk is voor mensen met hart- of vaatziekten 
 - Met geavanceerde AI-technologiën wordt bepaald dat een bezoeker last kan hebben van hart- en vaatziekten indien een bezoeker van greasy stuff houdt en ouder is dan 55 jaar
 
 Advies is om eerst een versie te ontwikkelen die de regels uit de analyse realiseert: think big, start small. Om daarna de code aan te passen en bovenstaande regels te implementeren.

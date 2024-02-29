@@ -1,0 +1,38 @@
+@startuml
+left to right direction
+
+' Actoren
+actor Klant
+actor Medewerker
+actor Directeur
+actor Systeem
+
+' Use cases
+rectangle PretparkSysteem {
+  (Bepaal Toegankelijkheid Attractie) as BepaalToegankelijkheid
+  (Geef Eetvoorkeur op) as GeefEetvoorkeurOp
+  (Bepaal Toegankelijkheid Attractie) as BepaalToegankelijkheid
+  (Bekijk Verkoop Tickets) as BekijkVerkoop
+  (Bekijk Wachtrij Informatie) as BekijkWachtrij
+  (Voer Gegevens In) as VoerGegevensIn
+  (Scan Kaartje bij Attractie) as ScanKaartje
+  (Inchecken bij Pretpark) as IncheckenPretpark
+  (Geef Eetvoorkeur op) as GeefEetvoorkeurOp
+  (Bekijk Beschikbaarheid Kaartjes) as BekijkBeschikbaarheid
+  (Download en Print Kaartje) as DownloadPrint
+  (Koop Kaartje) as KoopKaartje
+}
+
+' Relaties
+Klant --> KoopKaartje
+Klant --> BekijkBeschikbaarheid
+Klant --> DownloadPrint
+Klant --> GeefEetvoorkeurOp
+Klant --> IncheckenPretpark
+Klant --> ScanKaartje
+Klant --> VoerGegevensIn
+IncheckenPretpark --> Medewerker
+BekijkWachtrij --> Medewerker
+Directeur --> BekijkVerkoop
+Systeem --> BepaalToegankelijkheid
+@enduml
