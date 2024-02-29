@@ -22,16 +22,72 @@ Een medewerker kan per attractie zien, hoeveel mensen in de wachtrij staan: supe
 
 ## Casus: Efteling Efficiency II
 Het pretpark is erg tevreden over de uitwerking van jullie analyse, en wil graag met jullie verder. Ze krijgen klachten van bezoekers dat ze lang in de rij moeten staan en dat ze bij het betreden van de attractie, regelmatig geweigerd worden door een medewerker omdat de bezoeker niet voldoet aan de eisen van de attractie.
-
 Het pretpark wil dit zo snel mogelijk oplossen en vraagt jullie het algoritme uit de analyse te implementeren. De directeur wil graag een Java console applicatie, want: super nice! Hij heeft gehoord dat Object Oriented Programming óók super nice is.
 
 De regels die gelden voor de use case zijn t.o.v. de analyse iets uitgebreider geworden:
 
-Een klant dient bij het kopen van een ticket zijn voorkeur m.b.t eten op te geven; zo kan het pretpark rekening houden met de inkoop van eten. De opties zijn:
-Greasy Stuff
-Green Stuff
-Een klant dient aan te geven of hij / zij aan hart- en/of vaatziekten lijdt
-Per attractie wordt ook bepaald of de attractie toegankelijk is voor mensen met hart- of vaatziekten
-Met geavanceerde AI-technologiën wordt bepaald dat een bezoeker last kan hebben van hart- en vaatziekten indien een bezoeker van greasy stuff houdt en ouder is dan 55 jaar
+- Een klant dient bij het kopen van een ticket zijn voorkeur m.b.t eten op te geven; zo kan het pretpark rekening houden met de inkoop van eten. De opties zijn:
+  - Greasy Stuff
+  - Green Stuff
+- Een klant dient aan te geven of hij / zij aan hart- en/of vaatziekten lijdt
+- Per attractie wordt ook bepaald of de attractie toegankelijk is voor mensen met hart- of vaatziekten
+- Met geavanceerde AI-technologiën wordt bepaald dat een bezoeker last kan hebben van hart- en vaatziekten indien een bezoeker van greasy stuff houdt en ouder is dan 55 jaar
+
 Advies is om eerst een versie te ontwikkelen die de regels uit de analyse realiseert: think big, start small. Om daarna de code aan te passen en bovenstaande regels te implementeren.
 
+## Verb noun analysis
+
+### Efteling Efficiency
+#### Werkwoorden (Verbs):
+- Besparen
+- Automatiseren
+- Kopen (van kaartjes)
+- Invullen (van gegevens)
+- Aangeven (van beschikbaarheid)
+- Raadplegen (van overzicht)
+- Afsluiten (van bestelling)
+- Downloaden
+- Printen
+- Inchecken
+- Scannen
+- Controleren (van toegangscriteria)
+- Zien (van wachtrij informatie)
+- Geven (van informatie)
+#### Zelfstandige Naamwoorden (Nouns):
+- Pretpark
+- Klant
+- Kaartje
+- Systeem
+- Data
+- Overzicht
+- Medewerker
+- Medewerkerspas
+- Bezoeker
+- Wachtrij
+- Attractie
+- Leeftijd
+- Lengte
+- Directeur
+- Ticketverkoop
+- Informatie
+### Efteling Efficiency II
+#### Werkwoorden (Verbs):
+- Implementeren
+- Klagen
+- Weigeren
+- Oplossen
+- Geven (van etensvoorkeur)
+- Lijden (aan ziekten)
+- Bepalen (toegankelijkheid attractie)
+- Inkoop (van eten)
+#### Zelfstandige Naamwoorden (Nouns):
+- Rij
+- Attractie
+- Regels
+- Klant
+- Ticket
+- Eten
+- Greasy Stuff
+- Green Stuff
+- Hart- en vaatziekten
+- AI-technologieën
