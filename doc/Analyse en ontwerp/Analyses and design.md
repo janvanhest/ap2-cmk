@@ -13,3 +13,40 @@ De app past zich aan het individuele leertempo aan via de functie voor voortgang
 De taaluitwisselingsmodule verbindt leerlingen met moedertaalsprekers en biedt de mogelijkheid om contact te leggen met anderen. Zo kan men een afspraak maken plannen met een taalmaatje, of een videocall inplannen. 
 
 Samenvattend is "LingoPartner" meer dan een leermiddel; het is een platform om contact te maken met anderen, of het nu familie of vrienden zijn, met als gemeenschappelijk doel taalvaardigheid, waardoor de reis naar het beheersen van het Nederlands interactief en plezierig wordt.
+
+## 2. Noun verb analysis. 
+### Nouns: 
+- App
+- Applicatie
+- Talen
+- Nederlands
+- Gebruikers
+- Vrienden
+- Families
+- Activiteiten
+- Spelletjes
+- Invuloefeningen
+- Multiple Choice Vragen
+- Woorden
+- Zinnen
+- Woordbegrip
+- Grammatica
+- Spelling
+- Scores
+- Voortgang
+- Badges
+- Diploma's
+- Docent
+- Inhoud
+- Collecties
+- Hoofdstukken
+- Voortgangsregistratie
+- Leertempo
+- Dagelijks Leven
+- Praktische Taalvaardigheden
+- Taaluitwisselingsmodule
+- Moedertaalsprekers
+- Taalmaatje
+- Videocall
+- Reis
+- Taalvaardigheid
