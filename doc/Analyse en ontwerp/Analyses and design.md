@@ -44,4 +44,28 @@ Samenvattend is "LingoPartner" meer dan een leermiddel; het is een platform om c
 - **Leertempo**: De snelheid waarmee een gebruiker door het leerproces gaat, aangepast door de app om persoonlijke behoeften te accommoderen.    
 - **Dagelijks Leven**: De alledaagse situaties en contexten waarin gebruikers de geleerde taalvaardigheden kunnen toepassen.    
 - **Praktische Taalvaardigheden**: De taalcompetenties die nodig zijn voor effectieve communicatie in dagelijkse situaties.    
-- **Taaluitwisselingsmodule**: Een onderdeel van de app dat gebruikers verbindt met moedertaal
+- **Taaluitwisselingsmodule**: Een onderdeel van de app dat gebruikers verbindt met moedertaalsprekers voor praktijkgerichte taaluitwisseling.
+- **Moedertaalsprekers**: Mensen voor wie Nederlands de moedertaal is en die als taalpartners kunnen dienen in de app.
+- **Taalmaatje**: Een persoon met wie een gebruiker samenwerkt om Nederlands te leren of te oefenen, vaak via de taaluitwisselingsmodule.
+- **Videocall**: Een video-oproepfunctie in de app die taaluitwisseling en live communicatie mogelijk maakt.
+- **Reis**: De metaforische reis van het leren van een taal, van beginner tot gevorderd.
+- **Taalvaardigheid**: De mate van beheersing en competentie in een taal, in dit geval Nederlands.
+
+### Werkwoorden:
+- **Voorbereiden**: Gebruikers helpen zich voor te bereiden op het Nederlandse inburgeringsexamen.    
+- **Leren**: Het hoofddoel van de app, waarbij gebruikers Nederlands leren.    
+- **Maken**: Het creëren van een aantrekkelijke en interactieve leeromgeving.    
+- **Bevatten**: De app omvat verschillende soorten leermateriaal en oefeningen.    
+- **Helpen**: De activiteiten binnen de app helpen bij het leren van nieuwe taalaspecten.    
+- **Uitnodigen**: Gebruikers kunnen vrienden uitnodigen om samen te leren.    
+- **Deelnemen**: Vrienden en familieleden kunnen deelnemen aan het leerproces.    
+- **Vergelijken**: Mogelijkheid voor gebruikers om hun scores en voortgang te vergelijken.    
+- **Behalen**: Gebruikers kunnen badges of diploma's verdienen als erkenning van hun vooruitgang.    
+- **Aanleveren/Structureren**: Docenten leveren en structureren de inhoud van de app.    
+- **Volgen**: Gebruikers kunnen hun eigen leerpad volgen door hoofdstukken.    
+- **Aanpassen**: De app past zich aan aan het individuele leertempo van de gebruiker.    
+- **Integreren/Encouragen**: De app integreert taalgebruik in het dagelijks leven en moedigt praktische toepassing aan.    
+- **Verbinden**: De taaluitwisselingsmodule verbindt gebruikers met moedertaalsprekers.    
+- **Plannen/Inplannen**: Mogelijkheid voor gebruikers om ontmoetingen of videocalls met taalmaatjes te plannen.    
+- **Samenvatten**: De app wordt samengevat als een platform voor interactief en plezierig taalleren.    
+- **Worden**: De app wordt gepresenteerd als meer dan een leermiddel, maar als een manier om contact te maken en taalvaardigheden te ontwikkelen
