@@ -2,32 +2,35 @@
 
 rectangle Leerling
 rectangle Leerkracht
+rectangle Vriend
 rectangle EducatieveInhoud as "Educatieve Inhoud"
 ' rectangle Collectie
 ' rectangle Hoofdstukken
-rectangle Leeractiviteiten
+rectangle Leeractiviteit
 rectangle Voortgang
-rectangle Beloningen
-rectangle SocialeInteractie as "Vriendenlijst"
-rectangle LeerlingDashboard as "Leerling Dashboard"
+rectangle Beloning
+' rectangle Diploma
+' rectangle Badge
+' rectangle SocialeInteractie as "Vriendenlijst"
+' rectangle LeerlingDashboard as "Leerling Dashboard"
 
-Leerkracht -down-> EducatieveInhoud : levert
+Leerkracht "1" -down-> "1..n" EducatieveInhoud : levert
 ' EducatieveInhoud -down-> Collectie : bestaat uit
 ' Collectie -right-> Hoofdstukken : omvat
-' Hoofdstukken -down-> Leeractiviteiten : bevat
-EducatieveInhoud -down-> Leeractiviteiten : bevat
+' Hoofdstukken -down-> Leeractiviteit : bevat
+EducatieveInhoud "1" -down-> "1..n" Leeractiviteit : bevat
 
-Leerling -left-> Leeractiviteiten : "neemt deel aan\n/ voert uit"
-Leeractiviteiten -down-> Voortgang : levert
-Voortgang -down-> Beloningen : levert
-LeerlingDashboard -left-> Voortgang : toont
-SocialeInteractie -down-> LeerlingDashboard : wordt weergegeven in
-SocialeInteractie -left-> Leerling : gebruikt
-' Leerling -down-> Voortgang : toont
-' Leerling -down-> Beloningen : ontvangt
-' Leerling -down-> SocialeInteractie : gebruikt
-' Voortgang -left-> LeerlingDashboard : wordt weergegeven in
-' Beloningen -right-> LeerlingDashboard : wordt weergegeven in
-' SocialeInteractie -right-> LeerlingDashboard : wordt weergegeven in
+Leerling "1" -left-> "1..n" Leeractiviteit : "neemt deel aan\n/ voert uit"
+Leerling "1" -right-> "0..n" Vriend  : heeft
+' Leerling "1" -down-> "1" LeerlingDashboard : heeft
+Leeractiviteit "1" -down-> "1" Voortgang : levert
+Voortgang "1" -up-> "1" Leerling : heeft
+Leerling "1" -down-> "1..n" Beloning : heeft
+Voortgang "1" -right-> "1..n" Beloning : heeft
+' Diploma "1" -up-> "n" Voortgang : heeft
+' Badge "1" -up-> "1" Voortgang : heeft
+' Beloning "1..n" -up-> "1" Diploma : is
+' Beloning "1..n" -up-> "1" Badge : is
+' Beloning "n" -right-> "1" LeerlingDashboard : toont
 
 @enduml
