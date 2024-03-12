@@ -129,7 +129,7 @@ Samenvattend is "LingoPartner" meer dan een leermiddel; het is een platform om c
 
 ![conceptueel_model.svg](https://www.plantuml.com/plantuml/png/VLA_RzKm4DxzLrXUEhq2AmEgIf50OaDYOhd6ryGyvrmvb_3lSyIwEauUsPBFtzttmtwO63BFOpGcOyT0VKJx7J77GFqEkcRe1jw0FtD0yXlWYvyxu80BVgCXpTx2P5q5RK6TkRDrvdEAKNu2DkZNb5xynFFrYhIp0K9U0cDehAIKkOV6yoF6H1AZMVmKNcCQeS4UmVUj_8_K1OYIWeiUhabANgGOVa-iAThAdc0QdXFa4brH-mOxOsgLrdrmzkBJ7xfyak_xUtB72Z_QA3-PHMv_fhErGs4_uyG0RESW8vkJImxzm4BULYlyD2uWp1RMnMtVw_P_x8EHOv3_ZHhjfCn4VE6J6KU88rkF62q0_Q9tTacOrtHkjqhpkVVhhd9PLfOCA2AIKEaxj-x6vUbGQsW_M5zTlQKAhUJvTQTHLojmx4vVhfBRhHhrX7wdptnhWXg_oYoFlp5xcwSYAlh6LYtXXkcCMAIEDD949zV1AH4Ryu3avp6Qlm00)
 
-<details>
+<!-- <details> -->
 ```plantuml
 @startuml
 
@@ -167,4 +167,4 @@ Voortgang "1" -right-> "1..n" Beloning : heeft
 ' Beloning "n" -right-> "1" LeerlingDashboard : toont
 
 @enduml
-</details>
+' </details>
