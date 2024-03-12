@@ -1,0 +1,33 @@
+@startuml
+
+rectangle Leerling
+rectangle Leerkracht
+rectangle EducatieveInhoud as "Educatieve Inhoud"
+' rectangle Collectie
+' rectangle Hoofdstukken
+rectangle Leeractiviteiten
+rectangle Voortgang
+rectangle Beloningen
+rectangle SocialeInteractie as "Vriendenlijst"
+rectangle LeerlingDashboard as "Leerling Dashboard"
+
+Leerkracht -down-> EducatieveInhoud : levert
+' EducatieveInhoud -down-> Collectie : bestaat uit
+' Collectie -right-> Hoofdstukken : omvat
+' Hoofdstukken -down-> Leeractiviteiten : bevat
+EducatieveInhoud -down-> Leeractiviteiten : bevat
+
+Leerling -left-> Leeractiviteiten : "neemt deel aan\n/ voert uit"
+Leeractiviteiten -down-> Voortgang : levert
+Voortgang -down-> Beloningen : levert
+LeerlingDashboard -left-> Voortgang : toont
+SocialeInteractie -down-> LeerlingDashboard : wordt weergegeven in
+SocialeInteractie -left-> Leerling : gebruikt
+' Leerling -down-> Voortgang : toont
+' Leerling -down-> Beloningen : ontvangt
+' Leerling -down-> SocialeInteractie : gebruikt
+' Voortgang -left-> LeerlingDashboard : wordt weergegeven in
+' Beloningen -right-> LeerlingDashboard : wordt weergegeven in
+' SocialeInteractie -right-> LeerlingDashboard : wordt weergegeven in
+
+@enduml
