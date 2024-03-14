@@ -1,0 +1,36 @@
+@startuml
+left to right direction
+actor Admin
+actor Leerling
+actor Vriend
+actor Leerkracht
+
+rectangle "LingoPartner App" {
+  usecase "Gebruiker Aanmaken" as UC1
+  usecase "Profiel Aanpassen" as UC2
+  usecase "Collectie aanmaken" as UC3
+  usecase "Leeractiviteit Aanmaken" as UC4
+  usecase "Voortgang bekijken" as UC5
+  usecase "Leeractiviteit Uitvoeren" as UC6
+  usecase "Woorden Leren" as UC7
+  usecase "Invuloefening en Meerkeuzevraag Uitvoeren" as UC8
+  usecase "Reeds Gestarte Collectie Hervatten" as UC9
+  usecase "Voortgang Delen met Vrienden" as UC10
+
+  Admin --> UC1
+  Leerling --> UC2
+  Leerling --> UC5
+  Leerling --> UC6
+  Leerling --> UC7
+  Leerling --> UC8
+  Leerling --> UC9
+  Leerling --> UC10
+  Leerkracht --> UC1
+  Leerkracht --> UC2
+  Leerkracht --> UC3
+  Leerkracht --> UC4
+  Leerkracht --> UC5
+  Vriend --> UC5
+  Vriend <-- UC10
+}
+@enduml
