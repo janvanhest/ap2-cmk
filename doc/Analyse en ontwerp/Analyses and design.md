@@ -127,16 +127,15 @@ Samenvattend is "LingoPartner" meer dan een leermiddel; het is een platform om c
 - **Verbinden, Leggen, Maken, Inplannen**: De taaluitwisselingsmodule stelt gebruikers in staat om verbindingen te leggen met moedertaalsprekers, wat leidt tot praktische taaloefening. Gebruikers kunnen afspraken en videocalls plannen voor verdere taalpraktijk.
 - **Samenvatten**: Ten slotte, "LingoPartner" wordt samengevat als een platform dat niet alleen dient als een leermiddel maar ook als een manier om contact te maken met anderen, wat de taalleerervaring verrijkt en verbreedt.
 
-![conceptueel_model.svg](https://www.plantuml.com/plantuml/png/VLA_RzKm4DxzLrXUEhq2AmEgIf50OaDYOhd6ryGyvrmvb_3lSyIwEauUsPBFtzttmtwO63BFOpGcOyT0VKJx7J77GFqEkcRe1jw0FtD0yXlWYvyxu80BVgCXpTx2P5q5RK6TkRDrvdEAKNu2DkZNb5xynFFrYhIp0K9U0cDehAIKkOV6yoF6H1AZMVmKNcCQeS4UmVUj_8_K1OYIWeiUhabANgGOVa-iAThAdc0QdXFa4brH-mOxOsgLrdrmzkBJ7xfyak_xUtB72Z_QA3-PHMv_fhErGs4_uyG0RESW8vkJImxzm4BULYlyD2uWp1RMnMtVw_P_x8EHOv3_ZHhjfCn4VE6J6KU88rkF62q0_Q9tTacOrtHkjqhpkVVhhd9PLfOCA2AIKEaxj-x6vUbGQsW_M5zTlQKAhUJvTQTHLojmx4vVhfBRhHhrX7wdptnhWXg_oYoFlp5xcwSYAlh6LYtXXkcCMAIEDD949zV1AH4Ryu3avp6Qlm00)
+![conceptueel_model.svg](https://www.plantuml.com/plantuml/png/VLAnhjim3Dpz5OAMJ7djMpiKGPe2BT2jGASkZCNOQcGga6dtzvyGWRPf1nvzlkFTKJpr38c7BbG9QmPg0ffVY2buQbRGFK7TyWByapoIgmvcXhwxeGRsEE9FQkFW3FJ6pg0fg5MQRp64_E5HeJzYlBcUX_iTQHK4CddqZ5w5YJ5n0ohr6KEaN4GDllX7Y1qex0okqVQ_O-qXv1PS_F3Pf3H62lvVpxg5BEq2VNkDa4frGSq4swgQbsdi-ziRMNDqyJyTlygdBcc-c80Z9guEs_sASbfYPb-nPm0sWy-InPzZyatBcRpSRUR7ReJCrB0CtcIvuWWlezZtdI9ANCbQYYRWZNSqbX0xDWun603wIv_C634z-zdLA6beFpzdbVSoUKYBsIIdrlGfhTs-toJIWTR2-V3cTvgWGXuUAuzvj03RtSdn2bbFbQexz8DS-Z84gRp2BFUlmxxaYOcOJcpnobpVxnABrOP6qcZdEJX6ukg4v8OkV000)
 
 <details>
 ```plantuml
 @startuml
-
 rectangle Leerling
 rectangle Leerkracht
 rectangle Vriend
-rectangle EducatieveInhoud as "Educatieve Inhoud"
+' rectangle EducatieveInhoud as "Educatieve Inhoud"
 ' rectangle Collectie
 ' rectangle Hoofdstukken
 rectangle Leeractiviteit
@@ -147,11 +146,11 @@ rectangle Beloning
 ' rectangle SocialeInteractie as "Vriendenlijst"
 ' rectangle LeerlingDashboard as "Leerling Dashboard"
 
-Leerkracht "1" -down-> "1..n" EducatieveInhoud : levert
+Leerkracht "1..n" -down-> "1..n" Leeractiviteit : levert
 ' EducatieveInhoud -down-> Collectie : bestaat uit
 ' Collectie -right-> Hoofdstukken : omvat
 ' Hoofdstukken -down-> Leeractiviteit : bevat
-EducatieveInhoud "1" -down-> "1..n" Leeractiviteit : bevat
+' EducatieveInhoud "1" -down-> "1..n" Leeractiviteit : bevat
 
 Leerling "1" -left-> "1..n" Leeractiviteit : "neemt deel aan\n/ voert uit"
 Leerling "1" -right-> "0..n" Vriend  : heeft
@@ -165,6 +164,5 @@ Voortgang "1" -right-> "1..n" Beloning : heeft
 ' Beloning "1..n" -up-> "1" Diploma : is
 ' Beloning "1..n" -up-> "1" Badge : is
 ' Beloning "n" -right-> "1" LeerlingDashboard : toont
-
 @enduml
 </details>
