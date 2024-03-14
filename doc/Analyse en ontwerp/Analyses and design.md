@@ -1,5 +1,3 @@
-
- 
 # LingoPartner
 Ik heb de casus iets aangepast, zodat het beter aansluit bij de opdracht, door wat concretere elementen toe te voegen. 
 
@@ -165,4 +163,48 @@ Voortgang "1" -right-> "1..n" Beloning : heeft
 ' Beloning "1..n" -up-> "1" Badge : is
 ' Beloning "n" -right-> "1" LeerlingDashboard : toont
 @enduml
+</details>
+
+## 3. Use case diagram.
+![Usecase Diagram](https://www.plantuml.com/plantuml/png/VPBVIyCm4CVVyrSSUo_eVWz49XEcC648cy-tzjR5fib8hdrG_DzDNRT5KtnhFldasyjTvexHSbKgeMZFm0Qip0yCcRIKiZHQOCh6maDMolFtYiWggVDskRMIT1Ri5HRJ0mlH9A3E5K5lvNMpHikQVDRns8DF0L0vIj7vxINjR2MBPWzrYGNf7g23pU8sjDRMx2MfnZcYSnUf7qeBerHJEG7-ZXg4LbCcUgkMJ9B__dKOgbjZBEV-7h2ZGhvVhT4_WHl9jI5xSSUX--OJCzAm2eH9A3phkbA6zgHzsy2RBqrNgVgWsYBcKVeqFFnAb3bOqizW2QxzU29R8_FbrApxbe-aI4D9t0xsEeiR8U3q4219xjlfd1z3Y_en6iLe7AD9ZAOnciN8bmN1iplJBjZlWeCkEEo2_Y9jJs9mboIdMhx4tA-hKdq3)
+
+<details>
+```plantuml
+@startuml
+left to right direction
+actor Admin
+actor Leerling
+actor Vriend
+actor Leerkracht
+
+rectangle "LingoPartner App" {
+  usecase "Gebruiker Aanmaken" as UC1
+  usecase "Profiel Aanpassen" as UC2
+  usecase "Collectie aanmaken" as UC3
+  usecase "Leeractiviteit Aanmaken" as UC4
+  usecase "Voortgang bekijken" as UC5
+  usecase "Leeractiviteit Uitvoeren" as UC6
+  usecase "Woorden Leren" as UC7
+  usecase "Invuloefening en Meerkeuzevraag Uitvoeren" as UC8
+  usecase "Reeds Gestarte Collectie Hervatten" as UC9
+  usecase "Voortgang Delen met Vrienden" as UC10
+
+  Admin --> UC1
+  Leerling --> UC2
+  Leerling --> UC5
+  Leerling --> UC6
+  Leerling --> UC7
+  Leerling --> UC8
+  Leerling --> UC9
+  Leerling --> UC10
+  Leerkracht --> UC1
+  Leerkracht --> UC2
+  Leerkracht --> UC3
+  Leerkracht --> UC4
+  Leerkracht --> UC5
+  Vriend --> UC5
+  Vriend <-- UC10
+}
+@enduml
+```
 </details>
