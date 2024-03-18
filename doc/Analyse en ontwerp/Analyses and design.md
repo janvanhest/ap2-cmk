@@ -94,8 +94,9 @@ Samenvattend is "LingoPartner" meer dan een leermiddel; het is een platform om c
 - **Inplannen**: Het vaststellen of organiseren van een bepaalde activiteit op een specifiek moment.
 - **Samenvatten**: Het beknopt overzien of beschrijven van de essentie van de app.
 
+## 3. Conceptueel model. 
+Ik heb een kleine analyse gemaakt van zelfstandige naamwoorden en werkwoorden die in de casus voorkomen. Deze zal ik hieronder benoemen en later zal ik de belangrijkste onderdelen van de "LingoPartner" app en hoe ze samenwerken in een conceptueel model weergeven.
 
-## Conceptueel model. 
 ### Entiteiten (Zelfstandige Naamwoorden):
 
 - **Gebruikers**: Centraal in het model, omvatten individuen, families, vrienden en taalmaatjes.    
@@ -125,7 +126,12 @@ Samenvattend is "LingoPartner" meer dan een leermiddel; het is een platform om c
 - **Verbinden, Leggen, Maken, Inplannen**: De taaluitwisselingsmodule stelt gebruikers in staat om verbindingen te leggen met moedertaalsprekers, wat leidt tot praktische taaloefening. Gebruikers kunnen afspraken en videocalls plannen voor verdere taalpraktijk.
 - **Samenvatten**: Ten slotte, "LingoPartner" wordt samengevat als een platform dat niet alleen dient als een leermiddel maar ook als een manier om contact te maken met anderen, wat de taalleerervaring verrijkt en verbreedt.
 
+### Conceptueel model. 
+Het conceptuele model hieronder laat de belangrijkste onderdelen van de "LingoPartner" app en hoe ze samenwerken zien open visuele manier. Dit omvat gebruikers, soorten leeractiviteiten, lesmateriaal, hoe ver iemand is met leren, beloningen, manieren om met anderen te communiceren, een speciaal deel voor taaluitwisseling, en hoe de app de voortgang van een gebruiker volgt. Het laat zien hoe al deze delen samen een app vormen die op een leuke en nuttige manier helpt bij het leren van Nederlands, met aandacht voor zowel theorie als praktijk.
+
 ![conceptueel_model.svg](https://www.plantuml.com/plantuml/png/VLAnhjim3Dpz5OAMJ7djMpiKGPe2BT2jGASkZCNOQcGga6dtzvyGWRPf1nvzlkFTKJpr38c7BbG9QmPg0ffVY2buQbRGFK7TyWByapoIgmvcXhwxeGRsEE9FQkFW3FJ6pg0fg5MQRp64_E5HeJzYlBcUX_iTQHK4CddqZ5w5YJ5n0ohr6KEaN4GDllX7Y1qex0okqVQ_O-qXv1PS_F3Pf3H62lvVpxg5BEq2VNkDa4frGSq4swgQbsdi-ziRMNDqyJyTlygdBcc-c80Z9guEs_sASbfYPb-nPm0sWy-InPzZyatBcRpSRUR7ReJCrB0CtcIvuWWlezZtdI9ANCbQYYRWZNSqbX0xDWun603wIv_C634z-zdLA6beFpzdbVSoUKYBsIIdrlGfhTs-toJIWTR2-V3cTvgWGXuUAuzvj03RtSdn2bbFbQexz8DS-Z84gRp2BFUlmxxaYOcOJcpnobpVxnABrOP6qcZdEJX6ukg4v8OkV000)
+
+
 
 <details>
 ```plantuml
@@ -165,10 +171,30 @@ Voortgang "1" -right-> "1..n" Beloning : heeft
 @enduml
 </details>
 
-## 3. Use case diagram.
+## 4. Use case diagram.
+#### Actoren:
+- **Leerling**: _De gebruiker van de app, die deelneemt aan leeractiviteiten, voortgang maakt, beloningen verdient, en communiceert met vrienden en taalmaatjes._
+- **Leerkracht**: _De leverancier van educatieve inhoud, die collecties en hoofdstukken aanmaakt en aanlevert._
+- **Vriend**: _Een andere gebruiker van de app, met wie de leerling scores en voortgang kan vergelijken, en met wie de leerling kan communiceren._
+- **Admin**: _Een beheerder van de app, die gebruikersaccounts kan aanmaken en beheren._
+
+#### Usecases: 
+
+- **Gebruiker Aanmaken**: _Een nieuwe gebruiker maakt een account aan om de app te gebruiken._
+- **Profiel Aanpassen**: _Een gebruiker past zijn of haar profiel aan, inclusief persoonlijke informatie en voorkeuren._
+- **Collectie aanmaken**: _Een leerkracht maakt een nieuwe collectie aan, bestaande uit verschillende hoofdstukken._
+- **Leeractiviteit Aanmaken**: _Een leerkracht maakt een nieuwe leeractiviteit aan, die deel uitmaakt van een hoofdstuk._
+- **Voortgang bekijken**: _Een leerling, leerkracht of vriend bekijkt zijn of haar voortgang, inclusief scores, badges, diploma's en voortgangsindicatoren._
+- **Leeractiviteit Uitvoeren**: _Een leerling voert een leeractiviteit uit, zoals een interactief spel, invuloefening of multiple choice vraag._
+- **Woorden Leren**: _Een leerling leert nieuwe woorden en zinnen door middel van educatieve activiteiten._
+- **Invuloefening en Meerkeuzevraag Uitvoeren**: _Een leerling voert een invuloefening of meerkeuzevraag uit als onderdeel van een leeractiviteit._
+- **Reeds Gestarte Collectie Hervatten**: _Een leerling hervat een collectie die eerder is gestart, om de voortgang voort te zetten._
+- **Voortgang Delen met Vrienden**: _Een leerling deelt zijn of haar voortgang met vrienden, om scores en badges te vergelijken._
+
 ![Usecase Diagram](https://www.plantuml.com/plantuml/png/VPBVIyCm4CVVyrSSUo_eVWz49XEcC648cy-tzjR5fib8hdrG_DzDNRT5KtnhFldasyjTvexHSbKgeMZFm0Qip0yCcRIKiZHQOCh6maDMolFtYiWggVDskRMIT1Ri5HRJ0mlH9A3E5K5lvNMpHikQVDRns8DF0L0vIj7vxINjR2MBPWzrYGNf7g23pU8sjDRMx2MfnZcYSnUf7qeBerHJEG7-ZXg4LbCcUgkMJ9B__dKOgbjZBEV-7h2ZGhvVhT4_WHl9jI5xSSUX--OJCzAm2eH9A3phkbA6zgHzsy2RBqrNgVgWsYBcKVeqFFnAb3bOqizW2QxzU29R8_FbrApxbe-aI4D9t0xsEeiR8U3q4219xjlfd1z3Y_en6iLe7AD9ZAOnciN8bmN1iplJBjZlWeCkEEo2_Y9jJs9mboIdMhx4tA-hKdq3)
 
 <details>
+
 ```plantuml
 @startuml
 left to right direction
@@ -207,4 +233,146 @@ rectangle "LingoPartner App" {
 }
 @enduml
 ```
+
+</details>
+
+## 5. Class diagram.
+
+### Classes:
+
+![ClassDiagram](https://www.plantuml.com/plantuml/png/fLLVZwCs47_dKrZtKbQtgxwZQdi4k3rqBAI1L6hVV7YIjGGcPvjDLrM_UnriPsr88hMN5sT-C_xDZESFduJ4N8vz5mJ0nXuLW3cZR1-tahvI-TQy7G3z7I3rUzuMJRukikHBbIVP17tEYo8lco_PgeZBhnEKbtMpsIPDNfMJ_Dis_pFunx1_vXGOsS3t4OIi9PQZCEHnacJh9aid8SqIHMk4TLQcUVaq_K_YCicAmcXMHPLyLVyj-mQEc1CdubI5Mpt7sZXEdxApwPeFUmv2U34arRDApmQHb-jDzRJ9wdeIowgfctYZj0iIzusgT5ja9gCc_prl_ZYP_uHMM01gEom4sWqSjKFV3moD0ZZ2KdBwRPGW0lnDI8vRQIotIcs87oY9q7QaH4ixoeKiSGyHgjLjjjTmJmdfO8bt-98rmHAgtOfo-HAXL0aQXXxJphSyg6YE0oSU-d5xE36eLzZH3i95IFT8X-DZ7PvRBSAuHoO4Qp5tV-VwLsJ_sxb7b9sSXfvhJxysKOJBS5I9TSLYqbD6JqMKT62cTXzZGcev4c0o5FgCa07kpXODuFO5U2Zr6I43U35Sexb7uwGdzKpXtRxcudoxcIcSp0o2u2y9Z3YzgQEtU-Dv86C7OJyT4V9XXyw4Tv6kVXcEThR2kmZP_-zQFUcJig12_gBbntTwt-_b6MBBWG3HSdeubSvJw0JznHXYyoT2SvLvymtqmolyrtiwmPcAmdkkyrjJrYRjkUv74t-GQhL55pyARb-TSsF-OFki6hpAgBl3Pc9hRZFePXT-NN8u4NkhMUDYslJHRFERzMQm52IcdN2VG9V3ACAxomlGj2hnhplThllpLZKMZ-vypIxNw7Q0pafglu-OCebP2yx0waznk9iEVrtOrhrfKYlC-vnVfHA7WP5cy8svFYFamSu4Q5oitdIXGbC_trxhx6GOnyuQy8pjymi50J_7gK4EBT3N1Np3g-vMV-6V-dGd7nxH1_R14YrCEDs_61kxLHSsP3WoO-Alii0NVRR5HDWj-p0Uj8dN3O7nViCTYb3B0KiGF_UOuJq8z6XPlMjs22ugTIi7hcyd9EzjW-2J4iQ--nS0)
+
+<details>
+
+```plantuml
+@startuml
+
+enum LearningActivityType {
+    MULTIPLECHOICE
+    FILLINTHEBLANK
+    INSTRUCTION
+    QUIZ
+}
+
+enum FriendRequestStatus {
+    ACCEPTED
+    DECLINED
+    PENDING
+    CANCELLED
+    BLOCKED
+}
+
+enum RewardType {
+    DIPLOMA
+    BADGE
+}
+
+enum ProgressStatus {
+    COMPLETED
+    INPROGRESS
+    NOTSTARTED
+}
+
+enum ProgressType {
+    MODULE
+    ACTIVITY
+}
+
+' Base class for common user attributes
+abstract class User {
+    -id: Uuid
+    -firstName: String
+    -middleName: String
+    -lastName: String
+    -dateOfBirth: Date
+    -email: String
+    -password: String
+    +UpdateProfile(firstName: String, middleName: String, lastName: String, dateOfBirth: Date, email: String, password: String)
+    +UpdateName(firstName: String, middleName: String, lastName: String)
+    +UpdateEmail(email: String)
+    +UpdatePassword(password: String)
+}
+
+class Administration {
+    +AddStudent(student: Student)
+    +AddTeacher(teacher: Teacher)
+    +UpdateStudent(student: Student, updatedStudent: Student)
+    +UpdateTeacher(teacher: Teacher, updatedTeacher: Teacher)
+}
+
+class Teacher extends User {
+    +AddLearningModule(module: LearningModule)
+}
+
+class Student extends User {
+    +ShowProgress(): Progress
+    +ShowRewards(): List<Reward>
+}
+
+class LearningModule {
+    -id: Uuid
+    -name: String
+    -description: String
+    +AddLearningActivity(activity: LearningActivity)
+    +RemoveLearningActivity(activity: LearningActivity)
+    +ShowLearningActivities(): List<LearningActivity>
+}
+
+
+class LearningActivity {
+    -id: Uuid
+    -name: String
+    -description: String
+    -type: LearningActivityType
+    +UpdateActivity(name: String, description: String, type: LearningActivityType)
+}
+
+
+
+class Progress {
+    -learningActivity?: LearningActivity
+    -type: ProgressType
+    -status: ProgressStatus
+    -progressDetails: String
+    +ShowDetails(): String
+    +UpdateProgress(details: String)
+}
+
+class Reward {
+    -id: Uuid
+    -name: String
+    -type: RewardType
+    -description: String
+    +ShowDetails(): String
+}
+
+class Acquaintance {
+    +AddFriend(friend: Student)
+    +RemoveFriend(friend: Student)
+    +SendFriendRequest(friend: Student)
+    +RespondToFriendRequest(request: FriendRequest)
+    +ShowFriendsByStatus(status: FriendRequestStatus): List<Student>
+}
+
+class FriendRequest {
+    -sender: Student
+    -receiver: Student
+    -status: FriendRequestStatus
+}
+
+
+
+Administration -left-> "n" Student
+Administration -right-> "n" Teacher
+Administration -down-> "n" LearningModule
+LearningModule -right-> "n" LearningActivity
+Student -up-> "n" Acquaintance
+Teacher -down-> "n" LearningModule : creates/manages >
+Student -down-> "n" Progress
+Student -down-> "n" Reward
+Acquaintance -up-> "n" FriendRequest
+
+@enduml
+```
+
 </details>
