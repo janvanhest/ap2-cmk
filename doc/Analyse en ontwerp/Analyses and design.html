@@ -1,0 +1,507 @@
+<!DOCTYPE html>
+        <html>
+        <head>
+            <meta charset="UTF-8">
+            <title>LingoPartner</title>
+            <style>
+/* From extension vscode.github */
+/*---------------------------------------------------------------------------------------------
+ *  Copyright (c) Microsoft Corporation. All rights reserved.
+ *  Licensed under the MIT License. See License.txt in the project root for license information.
+ *--------------------------------------------------------------------------------------------*/
+
+.vscode-dark img[src$=\#gh-light-mode-only],
+.vscode-light img[src$=\#gh-dark-mode-only],
+.vscode-high-contrast:not(.vscode-high-contrast-light) img[src$=\#gh-light-mode-only],
+.vscode-high-contrast-light img[src$=\#gh-dark-mode-only] {
+	display: none;
+}
+
+</style>
+            
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Microsoft/vscode/extensions/markdown-language-features/media/markdown.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Microsoft/vscode/extensions/markdown-language-features/media/highlight.css">
+<style>
+            body {
+                font-family: -apple-system, BlinkMacSystemFont, 'Segoe WPC', 'Segoe UI', system-ui, 'Ubuntu', 'Droid Sans', sans-serif;
+                font-size: 20px;
+                line-height: 1.6;
+            }
+        </style>
+        <style>
+.task-list-item {
+    list-style-type: none;
+}
+
+.task-list-item-checkbox {
+    margin-left: -20px;
+    vertical-align: middle;
+    pointer-events: none;
+}
+</style>
+<style>
+:root {
+  --color-note: #0969da;
+  --color-tip: #1a7f37;
+  --color-warning: #9a6700;
+  --color-severe: #bc4c00;
+  --color-caution: #d1242f;
+  --color-important: #8250df;
+}
+
+</style>
+<style>
+@media (prefers-color-scheme: dark) {
+  :root {
+    --color-note: #2f81f7;
+    --color-tip: #3fb950;
+    --color-warning: #d29922;
+    --color-severe: #db6d28;
+    --color-caution: #f85149;
+    --color-important: #a371f7;
+  }
+}
+
+</style>
+<style>
+.markdown-alert {
+  padding: 0.5rem 1rem;
+  margin-bottom: 16px;
+  color: inherit;
+  border-left: .25em solid #888;
+}
+
+.markdown-alert>:first-child {
+  margin-top: 0
+}
+
+.markdown-alert>:last-child {
+  margin-bottom: 0
+}
+
+.markdown-alert .markdown-alert-title {
+  display: flex;
+  font-weight: 500;
+  align-items: center;
+  line-height: 1
+}
+
+.markdown-alert .markdown-alert-title .octicon {
+  margin-right: 0.5rem;
+  display: inline-block;
+  overflow: visible !important;
+  vertical-align: text-bottom;
+  fill: currentColor;
+}
+
+.markdown-alert.markdown-alert-note {
+  border-left-color: var(--color-note);
+}
+
+.markdown-alert.markdown-alert-note .markdown-alert-title {
+  color: var(--color-note);
+}
+
+.markdown-alert.markdown-alert-important {
+  border-left-color: var(--color-important);
+}
+
+.markdown-alert.markdown-alert-important .markdown-alert-title {
+  color: var(--color-important);
+}
+
+.markdown-alert.markdown-alert-warning {
+  border-left-color: var(--color-warning);
+}
+
+.markdown-alert.markdown-alert-warning .markdown-alert-title {
+  color: var(--color-warning);
+}
+
+.markdown-alert.markdown-alert-tip {
+  border-left-color: var(--color-tip);
+}
+
+.markdown-alert.markdown-alert-tip .markdown-alert-title {
+  color: var(--color-tip);
+}
+
+.markdown-alert.markdown-alert-caution {
+  border-left-color: var(--color-caution);
+}
+
+.markdown-alert.markdown-alert-caution .markdown-alert-title {
+  color: var(--color-caution);
+}
+
+</style>
+        
+        </head>
+        <body class="vscode-body vscode-light">
+            <h1 id="lingopartner">LingoPartner</h1>
+<p>Ik heb de casus iets aangepast, zodat het beter aansluit bij de opdracht, door wat concretere elementen toe te voegen.</p>
+<h2 id="1-casus">1. Casus:</h2>
+<p>LingoPartner&quot; is een app voor het leren van talen, ideaal voor degenen die zich voorbereiden op het Nederlandse examen voor sociale integratie (Inburgering), gericht op niveau A1 of A2. Het is ontworpen om het leren van Nederlands aantrekkelijk te maken, niet alleen voor gezinnen maar ook voor vrienden. De app bevat activiteiten zoals interactieve spelletjes, invuloefeningen, multiple choice vragen, woorden vertalen, tekstbegrip, woordgebruik, toetsen en andere activiteiten  die helpen bij het leren van nieuwe woorden en zinnen, op maat gemaakt voor zowel familie- als vriendengroepen. De activiteiten zijn gericht op woordbegrip, grammatica en spelling.</p>
+<p>Een functie is de mogelijkheid voor gebruikers om vrienden uit te nodigen om deel te nemen aan het leertraject, waardoor een ondersteunende en leuke omgeving ontstaat. Gebruikers kunnen scores en voortgang vergelijken, waardoor een vriendelijk concurrentievoordeel aan de leerervaring wordt toegevoegd. Ook het behalen van een badge of diploma kan leuk zijn voor een competitieve leerervaring.</p>
+<p>De inhoud kan door een docent worden aangeleverd. De inhoud is gestructureerd in collecties. Collecties bestaan uit hoofdstukken. Een hoofdstuk bestaat uit activiteiten binnen de app. Elke activiteit kan een score opleveren in de vorm van een cijfer. Wanneer de gebruiker een een hoofdstuk voldoende afrond, kan de gebruiker een badge verdienen. Het afronden van een collectie van hoofdstukken op voldoende niveau kan een diploma opleveren.</p>
+<p>Van de badges en diploma's kan de gebruiker een overzicht zien. Het overzicht kan men vergelijken met vrienden. Vrienden kunnen uitgenodigd worden om deel te nemen aan de activiteiten.
+Per diploma kan men een voortgangs indicator zien.</p>
+<p>De app past zich aan het individuele leertempo aan via de functie voor voortgangsregistratie. Integratie in het dagelijkse leven moedigt gebruikers aan om Nederlands te gebruiken bij routinematige activiteiten, waardoor de praktische taalvaardigheden worden vergroot. Binnen de activiteiten word een aantal getracked op a1, b1 niveau, onderwerp.</p>
+<p>De taaluitwisselingsmodule verbindt leerlingen met moedertaalsprekers en biedt de mogelijkheid om contact te leggen met anderen. Zo kan men een afspraak maken plannen met een taalmaatje, of een videocall inplannen.</p>
+<p>Samenvattend is &quot;LingoPartner&quot; meer dan een leermiddel; het is een platform om contact te maken met anderen, of het nu familie of vrienden zijn, met als gemeenschappelijk doel taalvaardigheid, waardoor de reis naar het beheersen van het Nederlands interactief en plezierig wordt.</p>
+<h2 id="2-noun-verb-analysis">2. Noun verb analysis.</h2>
+<blockquote>
+<p>Deze zelfstandige naamwoorden en werkwoorden een compleet beeld van een veelzijdige, interactieve taalleerapplicatie, ontworpen om gebruikers op een effectieve en aangename manier Nederlands te leren, met nadruk op zowel theoretische kennis als praktische toepassing.</p>
+</blockquote>
+<h3 id="nouns-analysis">Nouns analysis:</h3>
+<blockquote>
+<p>De zelfstandige naamwoorden omschrijven de sleutelcomponenten en gebruikers van de app. Ze omvatten niet alleen de basis elementen zoals 'App', 'Applicatie', en 'Talen', maar ook specifieke aspecten zoals 'Activiteiten', 'Spelletjes', en 'Invuloefeningen', die wijzen op interactieve en educatieve onderdelen binnen de app. Belangrijke gebruikersgroepen zoals 'Gebruikers', 'Vrienden', en 'Families' worden benoemd, wat aangeeft dat de app zich richt op individueel én groepsleren. 'Scores', 'Voortgang', en 'Badges' duiden op een systeem van voortgangsbewaking en motivatie. Meer geavanceerde functies zoals de 'Taaluitwisselingsmodule' en 'Videocall' benadrukken interactie en praktische toepassing van de taal.</p>
+</blockquote>
+<ul>
+<li><strong>App (Applicatie)</strong>: Een softwaretoepassing voor het leren van talen.</li>
+<li><strong>Families</strong>: Groepen familieleden die gezamenlijk Nederlands leren met behulp van de app.</li>
+<li><strong>Talen</strong>: De talen die geleerd kunnen worden, in dit geval Nederlands.</li>
+<li><strong>Examen</strong>: Een specifieke toets of beoordeling, zoals het Nederlandse examen voor sociale integratie.</li>
+<li><strong>Niveau</strong>: Vaardigheidsniveaus in een taal, hier A1 of A2.</li>
+<li><strong>Activiteiten</strong>: Verschillende interactieve oefeningen binnen de app om taal te leren.</li>
+<li><strong>Spelling</strong>: De manier waarop Nederlandse woorden correct worden geschreven.</li>
+<li><strong>Spelletjes</strong>: Educatieve games in de app om taalvaardigheden op een leuke manier te oefenen.</li>
+<li><strong>Invuloefeningen</strong>: Oefeningen waarbij gebruikers woorden of zinnen moeten aanvullen.</li>
+<li><strong>Multiple Choice Vragen</strong>: Vragen met meerdere antwoordkeuzes ter beoordeling van taalkennis.</li>
+<li><strong>Woorden</strong>: Individuele vocabulaire-items die geleerd worden.</li>
+<li><strong>Tekstbegrip</strong>: Het vermogen om geschreven taal te begrijpen en te interpreteren.</li>
+<li><strong>Woordgebruik</strong>: Het correct en gepast gebruiken van woorden in zinnen.</li>
+<li><strong>Toetsen</strong>: Testen of beoordelingen om de voortgang in taalvaardigheid te meten.</li>
+<li><strong>Gebruikers</strong>: Personen die de app gebruiken om talen te leren.</li>
+<li><strong>Vrienden</strong>: Andere gebruikers van de app met wie men kan samenwerken of concurreren.</li>
+<li><strong>Scores</strong>: Punten of beoordelingen verkregen voor prestaties binnen de app.</li>
+<li><strong>Badge</strong>: Een digitale erkenning of beloning voor het bereiken van bepaalde mijlpalen.</li>
+<li><strong>Diploma</strong>: Certificaat of bewijs van het succesvol afronden van een cursus of niveau.</li>
+<li><strong>Inhoud</strong>: Educatief materiaal of lessen aangeboden in de app.</li>
+<li><strong>Docent</strong>: De persoon die educatieve inhoud voor de app levert of creëert.</li>
+<li><strong>Collecties</strong>: Verzamelingen van gerelateerde educatieve content binnen de app.</li>
+<li><strong>Hoofdstukken</strong>: Onderdelen of secties binnen een collectie in de app.</li>
+<li><strong>Voortgang</strong>: De vooruitgang van een gebruiker in het leren van de Nederlandse taal binnen de app.</li>
+<li><strong>Voortgangsregistratie</strong>: Het systeem binnen de app dat bijhoudt hoe ver een gebruiker gevorderd is in het leerproces.</li>
+<li><strong>Voortgangsindicator</strong>: Tool om de vooruitgang van de gebruiker in de app te volgen.</li>
+<li><strong>Leertempo</strong>: De snelheid waarmee een gebruiker nieuwe informatie leert en verwerkt.</li>
+<li><strong>Taalvaardigheid</strong>: De mate van beheersing en competentie in een taal, in dit geval Nederlands.</li>
+<li><strong>Taalvaardigheden</strong>: De bekwaamheid in het spreken, schrijven, luisteren, en lezen in een taal.</li>
+<li><strong>Moedertaalsprekers</strong>: Mensen voor wie Nederlands de moedertaal is en die als taalpartners kunnen dienen in de app.</li>
+<li><strong>Taaluitwisselingsmodule</strong>: Een onderdeel van de app dat gebruikers verbindt met moedertaalsprekers voor praktijkgerichte taaluitwisseling.</li>
+<li><strong>Taalmaatje</strong>: Een partner om mee te oefenen in de taaluitwisselingsmodule.</li>
+<li><strong>Videocall</strong>: Video-oproepfunctie voor live gesprekken binnen de app.</li>
+<li><strong>Platform</strong>: De digitale omgeving of infrastructuur van de app.</li>
+</ul>
+<h3 id="verb-analysis">Verb analysis:</h3>
+<blockquote>
+<p>De werkwoorden beschrijven de acties en doelstellingen van de app. 'Voorbereiden', 'Leren', en 'Helpen' geven de primaire functies aan: educatie en ondersteuning bij het leren van Nederlands. 'Maken' en 'Bevatten' verwijzen naar de opbouw van de app met diverse leermaterialen en oefeningen. 'Uitnodigen', 'Deelnemen', en 'Vergelijken' suggereren sociale interactie en competitieve elementen. 'Behalen' en 'Volgen' duiden op het bereiken van mijlpalen en het persoonlijk volgen van een leertraject. 'Aanpassen' en 'Integreren/Encouragen' wijzen op de flexibiliteit van de app en de nadruk op praktische toepassing van de taal in het dagelijks leven. 'Verbinden' en 'Plannen/Inplannen' belichten de mogelijkheid om te interageren met moedertaalsprekers en persoonlijke leerervaringen te organiseren.</p>
+</blockquote>
+<ul>
+<li><strong>Integreren</strong>: De app integreert taalgebruik in het dagelijks leven en moedigt praktische toepassing aan.</li>
+<li><strong>Leren</strong>: Het hoofddoel van de app, waarbij gebruikers Nederlands leren.</li>
+<li><strong>Bevatten</strong>: De app omvat verschillende soorten leermateriaal en oefeningen.</li>
+<li><strong>Aanleveren/Structureren</strong>: Docenten leveren en structureren de inhoud van de app.</li>
+<li><strong>Volgen</strong>: Gebruikers kunnen hun eigen leerpad volgen door hoofdstukken.</li>
+<li><strong>Voorbereiden</strong>: Het proces van studeren of trainen voor het Nederlandse examen.</li>
+<li><strong>Ontworpen</strong>: Het creëren of structureren van de app met een bepaald doel.</li>
+<li><strong>Maken</strong>: In deze context, het aantrekkelijk maken van het leerproces.</li>
+<li><strong>Bevat</strong>: Het hebben of omvatten van bepaalde elementen of functies in de app.</li>
+<li><strong>Helpen</strong>: Het bieden van ondersteuning of vergemakkelijking in het leerproces.</li>
+<li><strong>Gericht zijn op</strong>: De focus of doelstelling van de app richten op specifieke vaardigheidsniveaus.</li>
+<li><strong>Uitnodigen</strong>: De actie van gebruikers om anderen aan te moedigen deel te nemen.</li>
+<li><strong>Deelnemen</strong>: Actief betrokken zijn bij het leerproces of activiteiten.</li>
+<li><strong>Ontstaan</strong>: Het tot stand komen of vormen van een omgeving of situatie.</li>
+<li><strong>Vergelijken</strong>: Het beoordelen of evalueren van prestaties ten opzichte van anderen.</li>
+<li><strong>Toevoegen</strong>: Het introduceren van nieuwe elementen of aspecten in de ervaring.</li>
+<li><strong>Behalen</strong>: Het succesvol voltooien of verkrijgen van een doel, zoals een badge of diploma.</li>
+<li><strong>Aangeleverd worden</strong>: Het verstrekken of bezorgen van educatieve inhoud door een docent.</li>
+<li><strong>Bestaan uit</strong>: Samengesteld zijn of gevormd worden door bepaalde elementen.</li>
+<li><strong>Opleveren</strong>: Resulteren in of het verkrijgen van iets, zoals een score.</li>
+<li><strong>Afronden</strong>: Het voltooien of afmaken van een hoofdstuk of collectie.</li>
+<li><strong>Verdienen</strong>: Het ontvangen van een beloning of erkenning voor prestaties.</li>
+<li><strong>Zien</strong>: Het visueel waarnemen of bekijken van informatie, zoals scores of voortgang.</li>
+<li><strong>Uitgenodigd worden</strong>: Het ontvangen van een uitnodiging om deel te nemen.</li>
+<li><strong>Aanpassen</strong>: Het wijzigen of personaliseren van de app naar het leertempo van de gebruiker.</li>
+<li><strong>Moedigen aan</strong>: Het stimuleren of bevorderen van bepaald gedrag, zoals het gebruik van Nederlands.</li>
+<li><strong>Worden vergroot</strong>: Het toenemen of verbeteren van vaardigheden.</li>
+<li><strong>Getracked worden</strong>: Het volgen of monitoren van activiteiten of prestaties.</li>
+<li><strong>Verbinden</strong>: Het tot stand brengen van een relatie of connectie tussen gebruikers.</li>
+<li><strong>Leggen</strong>: Het maken van een connectie of het initiëren van communicatie.</li>
+<li><strong>Maken</strong>: In deze context, het plannen of organiseren van afspraken of videogesprekken.</li>
+<li><strong>Inplannen</strong>: Het vaststellen of organiseren van een bepaalde activiteit op een specifiek moment.</li>
+<li><strong>Samenvatten</strong>: Het beknopt overzien of beschrijven van de essentie van de app.</li>
+</ul>
+<h2 id="3-conceptueel-model">3. Conceptueel model.</h2>
+<p>Ik heb een kleine analyse gemaakt van zelfstandige naamwoorden en werkwoorden die in de casus voorkomen. Deze zal ik hieronder benoemen en later zal ik de belangrijkste onderdelen van de &quot;LingoPartner&quot; app en hoe ze samenwerken in een conceptueel model weergeven.</p>
+<h3 id="entiteiten-zelfstandige-naamwoorden">Entiteiten (Zelfstandige Naamwoorden):</h3>
+<ul>
+<li><strong>Gebruikers</strong>: Centraal in het model, omvatten individuen, families, vrienden en taalmaatjes.</li>
+<li><strong>Leeractiviteiten</strong>: Hieronder vallen interactieve spelletjes, invuloefeningen, multiple choice vragen, Taaluitwisselingsmodule, etc., gericht op verschillende taalaspecten zoals woordbegrip, grammatica en spelling.</li>
+<li><strong>Educatieve Inhoud</strong>: Bestaande uit collecties en hoofdstukken, aangeleverd en gestructureerd door docenten. Deze inhoud vormt de basis voor de leeractiviteiten.</li>
+<li><strong>Voortgang</strong>: De voortgang van gebruikers in het leerproces, inclusief scores, badges, diploma's en voortgangsindicatoren.</li>
+<li><strong>Beloningen</strong>: Badges en diploma's. Dit systeem motiveert gebruikers door het zichtbaar maken van hun voortgang.</li>
+<li><strong>Sociale Interactie</strong>: Mogelijkheden voor gebruikers om vrienden uit te nodigen en deel te nemen aan leeractiviteiten, evenals het vergelijken van scores en voortgang.</li>
+<li><strong>Taaluitwisselingsmodule</strong>: Verbindt gebruikers met moedertaalsprekers voor praktische taaloefeningen, waaronder het plannen van afspraken of videocalls.</li>
+<li><strong>Voortgangsregistratie</strong>: Houdt de voortgang van gebruikers bij, waardoor het leerverloop op individuele basis gevolgd kan worden.</li>
+<li><strong>Platform</strong>: De digitale omgeving waarbinnen al deze componenten functioneren.</li>
+</ul>
+<h3 id="relaties-werkwoorden">Relaties (Werkwoorden):</h3>
+<ul>
+<li><strong>Integreren</strong>: De app integreert Nederlands in het dagelijks leven van gebruikers, wat bijdraagt aan de ontwikkeling van praktische taalvaardigheden.</li>
+<li><strong>Leren</strong>: Gebruikers leren Nederlands door interactieve activiteiten en oefeningen die door de app worden aangeboden.</li>
+<li><strong>Bevatten en Aanleveren/Structureren</strong>: De app bevat een breed scala aan educatief materiaal, gestructureerd en aangeleverd door docenten, waardoor een solide leerbasis wordt geboden.</li>
+<li><strong>Volgen</strong>: Gebruikers kunnen hun eigen leerpad volgen door middel van gestructureerde hoofdstukken en collecties, wat leidt tot een gepersonaliseerde leerervaring.</li>
+<li><strong>Voorbereiden</strong>: De app bereidt gebruikers voor op het Nederlandse inburgeringsexamen door gerichte inhoud en oefeningen aan te bieden.</li>
+<li><strong>Maken, Helpen, Gericht Zijn Op</strong>: De app is ontworpen om het leerproces aantrekkelijk te maken en helpt gebruikers door zich te richten op specifieke vaardigheidsniveaus (A1 of A2).</li>
+<li><strong>Uitnodigen en Deelnemen</strong>: Gebruikers kunnen vrienden uitnodigen om deel te nemen aan de leerervaring, wat zorgt voor interactie en samenwerking.</li>
+<li><strong>Vergelijken, Toevoegen, Behalen, Verdienen</strong>: Gebruikers kunnen scores en voortgang vergelijken met vrienden, wat een element van competitie toevoegt. Het behalen van badges en diploma's wordt een motiverende factor.</li>
+<li><strong>Zien en Worden Uitgenodigd</strong>: Gebruikers kunnen hun voortgang en behaalde badges/diploma's zien. Ze kunnen ook worden uitgenodigd door anderen om deel te nemen aan leeractiviteiten.</li>
+<li><strong>Aanpassen</strong>: De app past zich aan het individuele leertempo van elke gebruiker aan, wat bijdraagt aan een effectievere en persoonlijke leerervaring.</li>
+<li><strong>Aanmoedigen en Worden Vergroot</strong>: De app moedigt gebruikers aan om Nederlands te gebruiken in hun dagelijks leven, waardoor hun taalvaardigheden worden vergroot.</li>
+<li><strong>Getracked Worden</strong>: De voortgang van de gebruiker op verschillende niveaus en onderwerpen wordt gevolgd, wat helpt bij het identificeren van leergebieden en vooruitgang.</li>
+<li><strong>Verbinden, Leggen, Maken, Inplannen</strong>: De taaluitwisselingsmodule stelt gebruikers in staat om verbindingen te leggen met moedertaalsprekers, wat leidt tot praktische taaloefening. Gebruikers kunnen afspraken en videocalls plannen voor verdere taalpraktijk.</li>
+<li><strong>Samenvatten</strong>: Ten slotte, &quot;LingoPartner&quot; wordt samengevat als een platform dat niet alleen dient als een leermiddel maar ook als een manier om contact te maken met anderen, wat de taalleerervaring verrijkt en verbreedt.</li>
+</ul>
+<h3 id="conceptueel-model">Conceptueel model.</h3>
+<p>Het conceptuele model hieronder laat de belangrijkste onderdelen van de &quot;LingoPartner&quot; app en hoe ze samenwerken zien open visuele manier. Dit omvat gebruikers, soorten leeractiviteiten, lesmateriaal, hoe ver iemand is met leren, beloningen, manieren om met anderen te communiceren, een speciaal deel voor taaluitwisseling, en hoe de app de voortgang van een gebruiker volgt. Het laat zien hoe al deze delen samen een app vormen die op een leuke en nuttige manier helpt bij het leren van Nederlands, met aandacht voor zowel theorie als praktijk.</p>
+<p><img src="https://www.plantuml.com/plantuml/png/VLAnhjim3Dpz5OAMJ7djMpiKGPe2BT2jGASkZCNOQcGga6dtzvyGWRPf1nvzlkFTKJpr38c7BbG9QmPg0ffVY2buQbRGFK7TyWByapoIgmvcXhwxeGRsEE9FQkFW3FJ6pg0fg5MQRp64_E5HeJzYlBcUX_iTQHK4CddqZ5w5YJ5n0ohr6KEaN4GDllX7Y1qex0okqVQ_O-qXv1PS_F3Pf3H62lvVpxg5BEq2VNkDa4frGSq4swgQbsdi-ziRMNDqyJyTlygdBcc-c80Z9guEs_sASbfYPb-nPm0sWy-InPzZyatBcRpSRUR7ReJCrB0CtcIvuWWlezZtdI9ANCbQYYRWZNSqbX0xDWun603wIv_C634z-zdLA6beFpzdbVSoUKYBsIIdrlGfhTs-toJIWTR2-V3cTvgWGXuUAuzvj03RtSdn2bbFbQexz8DS-Z84gRp2BFUlmxxaYOcOJcpnobpVxnABrOP6qcZdEJX6ukg4v8OkV000" alt="conceptueel_model.svg"></p>
+<details>
+```plantuml
+@startuml
+rectangle Leerling
+rectangle Leerkracht
+rectangle Vriend
+' rectangle EducatieveInhoud as "Educatieve Inhoud"
+' rectangle Collectie
+' rectangle Hoofdstukken
+rectangle Leeractiviteit
+rectangle Voortgang
+rectangle Beloning
+' rectangle Diploma
+' rectangle Badge
+' rectangle SocialeInteractie as "Vriendenlijst"
+' rectangle LeerlingDashboard as "Leerling Dashboard"
+<p>Leerkracht &quot;1..n&quot; -down-&gt; &quot;1..n&quot; Leeractiviteit : levert
+' EducatieveInhoud -down-&gt; Collectie : bestaat uit
+' Collectie -right-&gt; Hoofdstukken : omvat
+' Hoofdstukken -down-&gt; Leeractiviteit : bevat
+' EducatieveInhoud &quot;1&quot; -down-&gt; &quot;1..n&quot; Leeractiviteit : bevat</p>
+<p>Leerling &quot;1&quot; -left-&gt; &quot;1..n&quot; Leeractiviteit : &quot;neemt deel aan\n/ voert uit&quot;
+Leerling &quot;1&quot; -right-&gt; &quot;0..n&quot; Vriend  : heeft
+' Leerling &quot;1&quot; -down-&gt; &quot;1&quot; LeerlingDashboard : heeft
+Leeractiviteit &quot;1&quot; -down-&gt; &quot;1&quot; Voortgang : levert
+Voortgang &quot;1&quot; -up-&gt; &quot;1&quot; Leerling : heeft
+Leerling &quot;1&quot; -down-&gt; &quot;1..n&quot; Beloning : heeft
+Voortgang &quot;1&quot; -right-&gt; &quot;1..n&quot; Beloning : heeft
+' Diploma &quot;1&quot; -up-&gt; &quot;n&quot; Voortgang : heeft
+' Badge &quot;1&quot; -up-&gt; &quot;1&quot; Voortgang : heeft
+' Beloning &quot;1..n&quot; -up-&gt; &quot;1&quot; Diploma : is
+' Beloning &quot;1..n&quot; -up-&gt; &quot;1&quot; Badge : is
+' Beloning &quot;n&quot; -right-&gt; &quot;1&quot; LeerlingDashboard : toont
+@enduml</p>
+</details>
+<h2 id="4-use-case-diagram">4. Use case diagram.</h2>
+<h4 id="actoren">Actoren:</h4>
+<ul>
+<li><strong>Leerling</strong>: <em>De gebruiker van de app, die deelneemt aan leeractiviteiten, voortgang maakt, beloningen verdient, en communiceert met vrienden en taalmaatjes.</em></li>
+<li><strong>Leerkracht</strong>: <em>De leverancier van educatieve inhoud, die collecties en hoofdstukken aanmaakt en aanlevert.</em></li>
+<li><strong>Vriend</strong>: <em>Een andere gebruiker van de app, met wie de leerling scores en voortgang kan vergelijken, en met wie de leerling kan communiceren.</em></li>
+<li><strong>Admin</strong>: <em>Een beheerder van de app, die gebruikersaccounts kan aanmaken en beheren.</em></li>
+</ul>
+<h4 id="usecases">Usecases:</h4>
+<ul>
+<li><strong>Gebruiker Aanmaken</strong>: <em>Een nieuwe gebruiker maakt een account aan om de app te gebruiken.</em></li>
+<li><strong>Profiel Aanpassen</strong>: <em>Een gebruiker past zijn of haar profiel aan, inclusief persoonlijke informatie en voorkeuren.</em></li>
+<li><strong>Collectie aanmaken</strong>: <em>Een leerkracht maakt een nieuwe collectie aan, bestaande uit verschillende hoofdstukken.</em></li>
+<li><strong>Leeractiviteit Aanmaken</strong>: <em>Een leerkracht maakt een nieuwe leeractiviteit aan, die deel uitmaakt van een hoofdstuk.</em></li>
+<li><strong>Voortgang bekijken</strong>: <em>Een leerling, leerkracht of vriend bekijkt zijn of haar voortgang, inclusief scores, badges, diploma's en voortgangsindicatoren.</em></li>
+<li><strong>Leeractiviteit Uitvoeren</strong>: <em>Een leerling voert een leeractiviteit uit, zoals een interactief spel, invuloefening of multiple choice vraag.</em></li>
+<li><strong>Woorden Leren</strong>: <em>Een leerling leert nieuwe woorden en zinnen door middel van educatieve activiteiten.</em></li>
+<li><strong>Invuloefening en Meerkeuzevraag Uitvoeren</strong>: <em>Een leerling voert een invuloefening of meerkeuzevraag uit als onderdeel van een leeractiviteit.</em></li>
+<li><strong>Reeds Gestarte Collectie Hervatten</strong>: <em>Een leerling hervat een collectie die eerder is gestart, om de voortgang voort te zetten.</em></li>
+<li><strong>Voortgang Delen met Vrienden</strong>: <em>Een leerling deelt zijn of haar voortgang met vrienden, om scores en badges te vergelijken.</em></li>
+</ul>
+<p><img src="https://www.plantuml.com/plantuml/png/VPBVIyCm4CVVyrSSUo_eVWz49XEcC648cy-tzjR5fib8hdrG_DzDNRT5KtnhFldasyjTvexHSbKgeMZFm0Qip0yCcRIKiZHQOCh6maDMolFtYiWggVDskRMIT1Ri5HRJ0mlH9A3E5K5lvNMpHikQVDRns8DF0L0vIj7vxINjR2MBPWzrYGNf7g23pU8sjDRMx2MfnZcYSnUf7qeBerHJEG7-ZXg4LbCcUgkMJ9B__dKOgbjZBEV-7h2ZGhvVhT4_WHl9jI5xSSUX--OJCzAm2eH9A3phkbA6zgHzsy2RBqrNgVgWsYBcKVeqFFnAb3bOqizW2QxzU29R8_FbrApxbe-aI4D9t0xsEeiR8U3q4219xjlfd1z3Y_en6iLe7AD9ZAOnciN8bmN1iplJBjZlWeCkEEo2_Y9jJs9mboIdMhx4tA-hKdq3" alt="Usecase Diagram"></p>
+<details>
+
+<pre><code><code>⚠️No PlantUML server, specify one with "plantuml.server".
+
+@startuml
+left to right direction
+actor Admin
+actor Leerling
+actor Vriend
+actor Leerkracht
+
+rectangle "LingoPartner App" {
+  usecase "Gebruiker Aanmaken" as UC1
+  usecase "Profiel Aanpassen" as UC2
+  usecase "Collectie aanmaken" as UC3
+  usecase "Leeractiviteit Aanmaken" as UC4
+  usecase "Voortgang bekijken" as UC5
+  usecase "Leeractiviteit Uitvoeren" as UC6
+  usecase "Woorden Leren" as UC7
+  usecase "Invuloefening en Meerkeuzevraag Uitvoeren" as UC8
+  usecase "Reeds Gestarte Collectie Hervatten" as UC9
+  usecase "Voortgang Delen met Vrienden" as UC10
+
+  Admin --> UC1
+  Leerling --> UC2
+  Leerling --> UC5
+  Leerling --> UC6
+  Leerling --> UC7
+  Leerling --> UC8
+  Leerling --> UC9
+  Leerling --> UC10
+  Leerkracht --> UC1
+  Leerkracht --> UC2
+  Leerkracht --> UC3
+  Leerkracht --> UC4
+  Leerkracht --> UC5
+  Vriend --> UC5
+  Vriend <-- UC10
+}
+@enduml
+</code></code></pre></details>
+<h2 id="5-class-diagram">5. Class diagram.</h2>
+<h3 id="classes">Classes:</h3>
+<p><img src="https://www.plantuml.com/plantuml/png/fLLVZwCs47_dKrZtKbQtgxwZQdi4k3rqBAI1L6hVV7YIjGGcPvjDLrM_UnriPsr88hMN5sT-C_xDZESFduJ4N8vz5mJ0nXuLW3cZR1-tahvI-TQy7G3z7I3rUzuMJRukikHBbIVP17tEYo8lco_PgeZBhnEKbtMpsIPDNfMJ_Dis_pFunx1_vXGOsS3t4OIi9PQZCEHnacJh9aid8SqIHMk4TLQcUVaq_K_YCicAmcXMHPLyLVyj-mQEc1CdubI5Mpt7sZXEdxApwPeFUmv2U34arRDApmQHb-jDzRJ9wdeIowgfctYZj0iIzusgT5ja9gCc_prl_ZYP_uHMM01gEom4sWqSjKFV3moD0ZZ2KdBwRPGW0lnDI8vRQIotIcs87oY9q7QaH4ixoeKiSGyHgjLjjjTmJmdfO8bt-98rmHAgtOfo-HAXL0aQXXxJphSyg6YE0oSU-d5xE36eLzZH3i95IFT8X-DZ7PvRBSAuHoO4Qp5tV-VwLsJ_sxb7b9sSXfvhJxysKOJBS5I9TSLYqbD6JqMKT62cTXzZGcev4c0o5FgCa07kpXODuFO5U2Zr6I43U35Sexb7uwGdzKpXtRxcudoxcIcSp0o2u2y9Z3YzgQEtU-Dv86C7OJyT4V9XXyw4Tv6kVXcEThR2kmZP_-zQFUcJig12_gBbntTwt-_b6MBBWG3HSdeubSvJw0JznHXYyoT2SvLvymtqmolyrtiwmPcAmdkkyrjJrYRjkUv74t-GQhL55pyARb-TSsF-OFki6hpAgBl3Pc9hRZFePXT-NN8u4NkhMUDYslJHRFERzMQm52IcdN2VG9V3ACAxomlGj2hnhplThllpLZKMZ-vypIxNw7Q0pafglu-OCebP2yx0waznk9iEVrtOrhrfKYlC-vnVfHA7WP5cy8svFYFamSu4Q5oitdIXGbC_trxhx6GOnyuQy8pjymi50J_7gK4EBT3N1Np3g-vMV-6V-dGd7nxH1_R14YrCEDs_61kxLHSsP3WoO-Alii0NVRR5HDWj-p0Uj8dN3O7nViCTYb3B0KiGF_UOuJq8z6XPlMjs22ugTIi7hcyd9EzjW-2J4iQ--nS0" alt="ClassDiagram"></p>
+<details>
+
+<pre><code><code>⚠️No PlantUML server, specify one with "plantuml.server".
+
+@startuml
+
+enum LearningActivityType {
+    MULTIPLECHOICE
+    FILLINTHEBLANK
+    INSTRUCTION
+    QUIZ
+}
+
+enum FriendRequestStatus {
+    ACCEPTED
+    DECLINED
+    PENDING
+    CANCELLED
+    BLOCKED
+}
+
+enum RewardType {
+    DIPLOMA
+    BADGE
+}
+
+enum ProgressStatus {
+    COMPLETED
+    INPROGRESS
+    NOTSTARTED
+}
+
+enum ProgressType {
+    MODULE
+    ACTIVITY
+}
+
+' Base class for common user attributes
+abstract class User {
+    -id: Uuid
+    -firstName: String
+    -middleName: String
+    -lastName: String
+    -dateOfBirth: Date
+    -email: String
+    -password: String
+    +UpdateProfile(firstName: String, middleName: String, lastName: String, dateOfBirth: Date, email: String, password: String)
+    +UpdateName(firstName: String, middleName: String, lastName: String)
+    +UpdateEmail(email: String)
+    +UpdatePassword(password: String)
+}
+
+class Administration {
+    +AddStudent(student: Student)
+    +AddTeacher(teacher: Teacher)
+    +UpdateStudent(student: Student, updatedStudent: Student)
+    +UpdateTeacher(teacher: Teacher, updatedTeacher: Teacher)
+}
+
+class Teacher extends User {
+    +AddLearningModule(module: LearningModule)
+}
+
+class Student extends User {
+    +ShowProgress(): Progress
+    +ShowRewards(): List<Reward>
+}
+
+class LearningModule {
+    -id: Uuid
+    -name: String
+    -description: String
+    +AddLearningActivity(activity: LearningActivity)
+    +RemoveLearningActivity(activity: LearningActivity)
+    +ShowLearningActivities(): List<LearningActivity>
+}
+
+
+class LearningActivity {
+    -id: Uuid
+    -name: String
+    -description: String
+    -type: LearningActivityType
+    +UpdateActivity(name: String, description: String, type: LearningActivityType)
+}
+
+
+
+class Progress {
+    -learningActivity?: LearningActivity
+    -type: ProgressType
+    -status: ProgressStatus
+    -progressDetails: String
+    +ShowDetails(): String
+    +UpdateProgress(details: String)
+}
+
+class Reward {
+    -id: Uuid
+    -name: String
+    -type: RewardType
+    -description: String
+    +ShowDetails(): String
+}
+
+class Acquaintance {
+    +AddFriend(friend: Student)
+    +RemoveFriend(friend: Student)
+    +SendFriendRequest(friend: Student)
+    +RespondToFriendRequest(request: FriendRequest)
+    +ShowFriendsByStatus(status: FriendRequestStatus): List<Student>
+}
+
+class FriendRequest {
+    -sender: Student
+    -receiver: Student
+    -status: FriendRequestStatus
+}
+
+
+
+Administration -left-> "n" Student
+Administration -right-> "n" Teacher
+Administration -down-> "n" LearningModule
+LearningModule -right-> "n" LearningActivity
+Student -up-> "n" Acquaintance
+Teacher -down-> "n" LearningModule : creates/manages >
+Student -down-> "n" Progress
+Student -down-> "n" Reward
+Acquaintance -up-> "n" FriendRequest
+
+@enduml
+</code></code></pre></details>
+
+            
+            
+        </body>
+        </html>
