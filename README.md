@@ -3,6 +3,16 @@ Opdracht voor semester 2 Fontys HBO ICT opleiding
 
 ## Changelog
 
+### 17 maart. 
+- Added final version of the class diagram. 
+
+### 14 maart
+- Added final usecase diagram. 
+- Added conceptueel model.
+
+### 11 maart efteling usecase. 
+- Added usecase diagram for efteling.
+
 ### 26 feb
 - Added pitch/showcase to documentation
 
