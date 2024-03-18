@@ -5,6 +5,8 @@ Opdracht voor semester 2 Fontys HBO ICT opleiding
 
 ### 17 maart. 
 - Added final version of the class diagram. 
+- Added pdf version of the class diagram for examenation by teacher.
+- added html version of the class diagram for examenation by teacher.
 
 ### 14 maart
 - Added final usecase diagram. 
