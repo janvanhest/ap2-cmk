@@ -13,11 +13,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "/Users/janvanhest/fontys/console_apps/ap2-cmk/domain/domain.csproj",
-      "projectName": "domain",
-      "projectPath": "/Users/janvanhest/fontys/console_apps/ap2-cmk/domain/domain.csproj",
+      "projectUniqueName": "/Users/janvanhest/fontys/console_apps/ap2-cmk/LingoPartnerDomain/LingoPartnerDomain.csproj",
+      "projectName": "LingoPartnerDomain",
+      "projectPath": "/Users/janvanhest/fontys/console_apps/ap2-cmk/LingoPartnerDomain/LingoPartnerDomain.csproj",
       "packagesPath": "/Users/janvanhest/.nuget/packages/",
-      "outputPath": "/Users/janvanhest/fontys/console_apps/ap2-cmk/domain/obj/",
+      "outputPath": "/Users/janvanhest/fontys/console_apps/ap2-cmk/LingoPartnerDomain/obj/",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "/Users/janvanhest/.nuget/NuGet/NuGet.Config"
