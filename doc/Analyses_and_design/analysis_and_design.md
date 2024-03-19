@@ -17,9 +17,11 @@ De taaluitwisselingsmodule verbindt leerlingen met moedertaalsprekers en biedt d
 
 Samenvattend is "LingoPartner" meer dan een leermiddel; het is een platform om contact te maken met anderen, of het nu familie of vrienden zijn, met als gemeenschappelijk doel taalvaardigheid, waardoor de reis naar het beheersen van het Nederlands interactief en plezierig wordt.
 
-## 2. Noun verb analysis. 
+## 2. Functioneel ontwerp. 
+### 2.a Noun - verb analysis. 
 > Deze zelfstandige naamwoorden en werkwoorden een compleet beeld van een veelzijdige, interactieve taalleerapplicatie, ontworpen om gebruikers op een effectieve en aangename manier Nederlands te leren, met nadruk op zowel theoretische kennis als praktische toepassing.
-### Nouns analysis: 
+
+#### Nouns analysis: 
 > De zelfstandige naamwoorden omschrijven de sleutelcomponenten en gebruikers van de app. Ze omvatten niet alleen de basis elementen zoals 'App', 'Applicatie', en 'Talen', maar ook specifieke aspecten zoals 'Activiteiten', 'Spelletjes', en 'Invuloefeningen', die wijzen op interactieve en educatieve onderdelen binnen de app. Belangrijke gebruikersgroepen zoals 'Gebruikers', 'Vrienden', en 'Families' worden benoemd, wat aangeeft dat de app zich richt op individueel én groepsleren. 'Scores', 'Voortgang', en 'Badges' duiden op een systeem van voortgangsbewaking en motivatie. Meer geavanceerde functies zoals de 'Taaluitwisselingsmodule' en 'Videocall' benadrukken interactie en praktische toepassing van de taal.
 
 - **App (Applicatie)**: Een softwaretoepassing voor het leren van talen.
@@ -57,7 +59,7 @@ Samenvattend is "LingoPartner" meer dan een leermiddel; het is een platform om c
 - **Videocall**: Video-oproepfunctie voor live gesprekken binnen de app.
 - **Platform**: De digitale omgeving of infrastructuur van de app.
 
-### Verb analysis:
+#### Verb analysis:
 > De werkwoorden beschrijven de acties en doelstellingen van de app. 'Voorbereiden', 'Leren', en 'Helpen' geven de primaire functies aan: educatie en ondersteuning bij het leren van Nederlands. 'Maken' en 'Bevatten' verwijzen naar de opbouw van de app met diverse leermaterialen en oefeningen. 'Uitnodigen', 'Deelnemen', en 'Vergelijken' suggereren sociale interactie en competitieve elementen. 'Behalen' en 'Volgen' duiden op het bereiken van mijlpalen en het persoonlijk volgen van een leertraject. 'Aanpassen' en 'Integreren/Encouragen' wijzen op de flexibiliteit van de app en de nadruk op praktische toepassing van de taal in het dagelijks leven. 'Verbinden' en 'Plannen/Inplannen' belichten de mogelijkheid om te interageren met moedertaalsprekers en persoonlijke leerervaringen te organiseren.
 
 - **Integreren**: De app integreert taalgebruik in het dagelijks leven en moedigt praktische toepassing aan.    
@@ -94,11 +96,10 @@ Samenvattend is "LingoPartner" meer dan een leermiddel; het is een platform om c
 - **Inplannen**: Het vaststellen of organiseren van een bepaalde activiteit op een specifiek moment.
 - **Samenvatten**: Het beknopt overzien of beschrijven van de essentie van de app.
 
-## 3. Conceptueel model. 
+### 2.b Conceptueel model. 
 Ik heb een kleine analyse gemaakt van zelfstandige naamwoorden en werkwoorden die in de casus voorkomen. Deze zal ik hieronder benoemen en later zal ik de belangrijkste onderdelen van de "LingoPartner" app en hoe ze samenwerken in een conceptueel model weergeven.
 
-### Entiteiten (Zelfstandige Naamwoorden):
-
+#### Entiteiten (Zelfstandige Naamwoorden):
 - **Gebruikers**: Centraal in het model, omvatten individuen, families, vrienden en taalmaatjes.    
 - **Leeractiviteiten**: Hieronder vallen interactieve spelletjes, invuloefeningen, multiple choice vragen, Taaluitwisselingsmodule, etc., gericht op verschillende taalaspecten zoals woordbegrip, grammatica en spelling.    
 - **Educatieve Inhoud**: Bestaande uit collecties en hoofdstukken, aangeleverd en gestructureerd door docenten. Deze inhoud vormt de basis voor de leeractiviteiten.    
@@ -109,8 +110,7 @@ Ik heb een kleine analyse gemaakt van zelfstandige naamwoorden en werkwoorden di
 - **Voortgangsregistratie**: Houdt de voortgang van gebruikers bij, waardoor het leerverloop op individuele basis gevolgd kan worden.    
 - **Platform**: De digitale omgeving waarbinnen al deze componenten functioneren.
 
-### Relaties (Werkwoorden):
-
+#### Relaties (Werkwoorden):
 - **Integreren**: De app integreert Nederlands in het dagelijks leven van gebruikers, wat bijdraagt aan de ontwikkeling van praktische taalvaardigheden.
 - **Leren**: Gebruikers leren Nederlands door interactieve activiteiten en oefeningen die door de app worden aangeboden.
 - **Bevatten en Aanleveren/Structureren**: De app bevat een breed scala aan educatief materiaal, gestructureerd en aangeleverd door docenten, waardoor een solide leerbasis wordt geboden.
@@ -126,12 +126,10 @@ Ik heb een kleine analyse gemaakt van zelfstandige naamwoorden en werkwoorden di
 - **Verbinden, Leggen, Maken, Inplannen**: De taaluitwisselingsmodule stelt gebruikers in staat om verbindingen te leggen met moedertaalsprekers, wat leidt tot praktische taaloefening. Gebruikers kunnen afspraken en videocalls plannen voor verdere taalpraktijk.
 - **Samenvatten**: Ten slotte, "LingoPartner" wordt samengevat als een platform dat niet alleen dient als een leermiddel maar ook als een manier om contact te maken met anderen, wat de taalleerervaring verrijkt en verbreedt.
 
-### Conceptueel model. 
+### 2.c Conceptueel model. 
 Het conceptuele model hieronder laat de belangrijkste onderdelen van de "LingoPartner" app en hoe ze samenwerken zien open visuele manier. Dit omvat gebruikers, soorten leeractiviteiten, lesmateriaal, hoe ver iemand is met leren, beloningen, manieren om met anderen te communiceren, een speciaal deel voor taaluitwisseling, en hoe de app de voortgang van een gebruiker volgt. Het laat zien hoe al deze delen samen een app vormen die op een leuke en nuttige manier helpt bij het leren van Nederlands, met aandacht voor zowel theorie als praktijk.
 
 ![conceptueel_model.svg](https://www.plantuml.com/plantuml/png/VLAnhjim3Dpz5OAMJ7djMpiKGPe2BT2jGASkZCNOQcGga6dtzvyGWRPf1nvzlkFTKJpr38c7BbG9QmPg0ffVY2buQbRGFK7TyWByapoIgmvcXhwxeGRsEE9FQkFW3FJ6pg0fg5MQRp64_E5HeJzYlBcUX_iTQHK4CddqZ5w5YJ5n0ohr6KEaN4GDllX7Y1qex0okqVQ_O-qXv1PS_F3Pf3H62lvVpxg5BEq2VNkDa4frGSq4swgQbsdi-ziRMNDqyJyTlygdBcc-c80Z9guEs_sASbfYPb-nPm0sWy-InPzZyatBcRpSRUR7ReJCrB0CtcIvuWWlezZtdI9ANCbQYYRWZNSqbX0xDWun603wIv_C634z-zdLA6beFpzdbVSoUKYBsIIdrlGfhTs-toJIWTR2-V3cTvgWGXuUAuzvj03RtSdn2bbFbQexz8DS-Z84gRp2BFUlmxxaYOcOJcpnobpVxnABrOP6qcZdEJX6ukg4v8OkV000)
-
-
 
 <details>
 ```plantuml
@@ -171,7 +169,7 @@ Voortgang "1" -right-> "1..n" Beloning : heeft
 @enduml
 </details>
 
-## 4. Use case diagram.
+### 2.d Use case diagram.
 #### Actoren:
 - **Leerling**: _De gebruiker van de app, die deelneemt aan leeractiviteiten, voortgang maakt, beloningen verdient, en communiceert met vrienden en taalmaatjes._
 - **Leerkracht**: _De leverancier van educatieve inhoud, die collecties en hoofdstukken aanmaakt en aanlevert._
@@ -236,11 +234,10 @@ rectangle "LingoPartner App" {
 
 </details>
 
-## 5. Class diagram.
+## 3. Technisch ontwerp.
+### 3.a Class diagram.
 
-### Classes:
-
-![ClassDiagram](https://www.plantuml.com/plantuml/png/fLLVZwCs47_dKrZtKbQtgxwZQdi4k3rqBAI1L6hVV7YIjGGcPvjDLrM_UnriPsr88hMN5sT-C_xDZESFduJ4N8vz5mJ0nXuLW3cZR1-tahvI-TQy7G3z7I3rUzuMJRukikHBbIVP17tEYo8lco_PgeZBhnEKbtMpsIPDNfMJ_Dis_pFunx1_vXGOsS3t4OIi9PQZCEHnacJh9aid8SqIHMk4TLQcUVaq_K_YCicAmcXMHPLyLVyj-mQEc1CdubI5Mpt7sZXEdxApwPeFUmv2U34arRDApmQHb-jDzRJ9wdeIowgfctYZj0iIzusgT5ja9gCc_prl_ZYP_uHMM01gEom4sWqSjKFV3moD0ZZ2KdBwRPGW0lnDI8vRQIotIcs87oY9q7QaH4ixoeKiSGyHgjLjjjTmJmdfO8bt-98rmHAgtOfo-HAXL0aQXXxJphSyg6YE0oSU-d5xE36eLzZH3i95IFT8X-DZ7PvRBSAuHoO4Qp5tV-VwLsJ_sxb7b9sSXfvhJxysKOJBS5I9TSLYqbD6JqMKT62cTXzZGcev4c0o5FgCa07kpXODuFO5U2Zr6I43U35Sexb7uwGdzKpXtRxcudoxcIcSp0o2u2y9Z3YzgQEtU-Dv86C7OJyT4V9XXyw4Tv6kVXcEThR2kmZP_-zQFUcJig12_gBbntTwt-_b6MBBWG3HSdeubSvJw0JznHXYyoT2SvLvymtqmolyrtiwmPcAmdkkyrjJrYRjkUv74t-GQhL55pyARb-TSsF-OFki6hpAgBl3Pc9hRZFePXT-NN8u4NkhMUDYslJHRFERzMQm52IcdN2VG9V3ACAxomlGj2hnhplThllpLZKMZ-vypIxNw7Q0pafglu-OCebP2yx0waznk9iEVrtOrhrfKYlC-vnVfHA7WP5cy8svFYFamSu4Q5oitdIXGbC_trxhx6GOnyuQy8pjymi50J_7gK4EBT3N1Np3g-vMV-6V-dGd7nxH1_R14YrCEDs_61kxLHSsP3WoO-Alii0NVRR5HDWj-p0Uj8dN3O7nViCTYb3B0KiGF_UOuJq8z6XPlMjs22ugTIi7hcyd9EzjW-2J4iQ--nS0)
+![ClassDiagram](https://www.plantuml.com/plantuml/png/dLLHRwCu47xdLrXzEQfjTRfNjAgM0Dj5Io4No4btRrwOf9R0P6tJNdMw_tuE7YSOcaYzl11_y_7DD_Pu-28L5MheMiy3FdGa0oeuu_kmLko5gRVgxG3a7u_etzCsgz9rbaJVYZHAHkXhccLfNdrBLbcOVn-XD2-hpJQgqY8Vrxzlqx-yVr7zgs30cmty742gKb4rI1GFeoXPLqayBk8aqhAuM2TvdEQFu_yepACaop2ooehek_vlrJVmIaKpSHnhkyLJQCXX_9YSg6lHxmL8wNY8YYTTdZMHvkjDyRX9od9SvaLLLk56HnSYqpqgucsMO4LL-aTQ_Nca_q9ML0AfMoebsVM2r7tNzPmC4WIXIWdsOr0WFVf3Aa5hXSoj3gFm_Ou9gNBQGK1ApUTx0tUiQLfOuYrzZzrG1SLknOHw3aYi5mQ6ZhBMPHvq_jTUD0xwQNiuAkYwTwm5Vs7fZg0T1slfdBMmSKUi1MJCqzzEyskn_vlS5KgEINqdjHDVemj_QKSVgZcZiEaOPyTZKwpdU5gVmgOfrT00Lxuqpu0WS7jYL43hPn2-Ci-08E1uk2HpHuOntfIpWFFsfHIdjwjPO58P8WJ-Li2RSpUYUpifdlfcQC7lnaT0N7WYX_RUbIkV-rTxc_pRWDZ_vwYvssCmOr9zDkk7ixoRrzuQlhm286l13iV3SW9OaZFyV8f_0Z8FuIvleEjVu8FlOKcp48DpTVEtnZgnq7diuwNUApsmWdT7_RHtJjLmvqQvgWXUL9nq0CxdfL_7rcIANwi2zp06HLchDyw6pjbi3zbyxSpSqkx4XJFR3Ix7JqKm-tJWj4GCxLptkPodjlCRmvfE6HmozS-1Cguehs5o1StdrD-D3tS0sDQyIYarvdoIBqh9Gy-RgdV9mZm3ui2J3ZUuNBsPlV9n2rs-YTdEnyIJY-sGxM5A3O4u-JIWW1hOomA-alMOnHtWnpxPgVi7SiDlhCo28jZ-6JbsIYuuJV_AaUAE9izTkcgBbhIzCKO_6zKb2s_MpMzdpcc4shbxFnnC4gURFFH_nJ09I2s0Af2_TfJJFKZoO5MlfSIWsL2yrjuqzyIISpQUzqKlXgxz3m00)
 
 <details>
 
@@ -280,7 +277,6 @@ enum ProgressType {
 
 ' Base class for common user attributes
 abstract class User {
-    -id: Uuid
     -firstName: String
     -middleName: String
     -lastName: String
@@ -310,7 +306,6 @@ class Student extends User {
 }
 
 class LearningModule {
-    -id: Uuid
     -name: String
     -description: String
     +AddLearningActivity(activity: LearningActivity)
@@ -320,32 +315,27 @@ class LearningModule {
 
 
 class LearningActivity {
-    -id: Uuid
     -name: String
     -description: String
     -type: LearningActivityType
     +UpdateActivity(name: String, description: String, type: LearningActivityType)
 }
 
-
-
-class Progress {
-    -learningActivity?: LearningActivity
-    -type: ProgressType
-    -status: ProgressStatus
-    -progressDetails: String
-    +ShowDetails(): String
-    +UpdateProgress(details: String)
-}
-
 class Reward {
-    -id: Uuid
     -name: String
     -type: RewardType
     -description: String
     +ShowDetails(): String
 }
 
+class Progress {
+    -learningActivity: LearningActivity
+    -type: ProgressType
+    -status: ProgressStatus
+    -progressDetails: String
+    +ShowDetails(): String
+    +UpdateProgress(details: String)
+}
 class Acquaintance {
     +AddFriend(friend: Student)
     +RemoveFriend(friend: Student)
@@ -360,19 +350,18 @@ class FriendRequest {
     -status: FriendRequestStatus
 }
 
-
-
 Administration -left-> "n" Student
 Administration -right-> "n" Teacher
 Administration -down-> "n" LearningModule
 LearningModule -right-> "n" LearningActivity
+Progress "n" <-down- LearningActivity
+Reward "1" <-down- Progress
 Student -up-> "n" Acquaintance
 Teacher -down-> "n" LearningModule : creates/manages >
-Student -down-> "n" Progress
-Student -down-> "n" Reward
+Student "1" <-down- Progress
+Student "1" <-left- Reward
 Acquaintance -up-> "n" FriendRequest
 
 @enduml
 ```
-
 </details>
