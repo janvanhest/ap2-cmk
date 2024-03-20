@@ -4,6 +4,4 @@ LingoPartnerApi/obj/LingoPartnerApi.csproj.*.*.*
 LingoPartnerApi/obj/**
 LingoPartnerApi/obj/LingoPartnerApi.csproj.*.*.*
 LingoPartnerDomain/LearningActivityTypeENUM.cs
-LingoPartnerDomain/bin/Debug/net8.0/LingoPartnerDomain.deps.json
-LingoPartnerDomain/bin/Debug/net8.0/LingoPartnerDomain.dll
-LingoPartnerDomain/bin/Debug/net8.0/LingoPartnerDomain.pdb
+**/bin/**
