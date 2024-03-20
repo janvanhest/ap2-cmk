@@ -96,6 +96,7 @@ class Progress {
     +ShowDetails(): String
     +UpdateProgress(details: String)
 }
+
 class Acquaintance {
     +AddFriend(friend: Student)
     +RemoveFriend(friend: Student)
