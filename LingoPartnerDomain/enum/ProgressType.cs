@@ -1,4 +1,4 @@
-﻿namespace LingoPartnerDomain;
+﻿namespace LingoPartnerDomain.enums;
 using System.ComponentModel;
 public enum ProgressType
 {
