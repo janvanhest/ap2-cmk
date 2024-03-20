@@ -1,4 +1,4 @@
-﻿namespace LingoPartnerDomain.ENUM;
+﻿namespace LingoPartnerDomain.enums;
 using System.ComponentModel;
 public enum LearningActivityType
 {
