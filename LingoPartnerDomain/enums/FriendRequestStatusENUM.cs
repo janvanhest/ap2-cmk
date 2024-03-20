@@ -11,6 +11,7 @@ public enum FriendRequestStatusENUM
   [Description("Canceled")]
   CANCELED,
   [Description("Blocked")]
-  BLOCKED
-
+  BLOCKED, 
+  [Description("Unblocked")]
+  UNBLOCKED
 }
