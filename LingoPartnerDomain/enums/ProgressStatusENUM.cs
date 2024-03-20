@@ -1,6 +1,6 @@
 ﻿namespace LingoPartnerDomain;
 
-public class Class1
+public enum ProgressStatusENUM
 {
 
 }
