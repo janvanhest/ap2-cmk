@@ -1,6 +1,6 @@
 ﻿namespace LingoPartnerDomain.enums;
 using System.ComponentModel;
-public enum FriendRequestStatusENUM
+public enum FriendRequestStatus
 {
   [Description("Accepted")]
   ACCEPTED,
