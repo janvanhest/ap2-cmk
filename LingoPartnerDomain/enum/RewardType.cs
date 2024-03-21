@@ -1,6 +1,6 @@
 ﻿namespace LingoPartnerDomain.enums;
 using System.ComponentModel;
-public enum RewardTypeENUM
+public enum RewardType
 {
   [Description("Points")]
   POINTS,
