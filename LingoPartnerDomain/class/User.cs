@@ -1,96 +1,67 @@
-﻿namespace LingoPartnerDomain;
-using System;
+﻿using System;
+using System.ComponentModel.DataAnnotations;
 using System.Net.Mail;
-using System.Text.RegularExpressions;
 
-public abstract class User
+namespace LingoPartnerDomain
 {
-  // Private fields
-  private Guid id;
-  private string firstName;
-  private string middleName;
-  private string lastName;
-  private DateTime dateOfBirth;
-  private string email;
-  private string password;
-
-  // Constructor
-  protected User(Guid id, string firstName, string middleName, string lastName, DateTime dateOfBirth, string email, string password)
+  public abstract class User
   {
-    this.id = id;
-    this.firstName = firstName;
-    this.middleName = middleName;
-    this.lastName = lastName;
-    this.dateOfBirth = dateOfBirth;
-    if (IsValidPassword(password))
+    public Guid Id { get; private set; }
+    [Required, MaxLength(50)]
+    public string FirstName { get; private set; }
+    [MaxLength(50)]
+    public string MiddleName { get; private set; }
+    [Required, MaxLength(50)]
+    public string LastName { get; private set; }
+    public DateTime DateOfBirth { get; private set; }
+    [Required, EmailAddress]
+    public MailAddress Email { get; private set; }
+    // Consider a secure way to store password
+    private string Password;
+
+    public User(Guid id, string firstName, string middleName, string lastName, DateTime dateOfBirth, MailAddress email, string password)
     {
-      this.password = password;
+      Id = id.Equals(Guid.Empty) ? Guid.NewGuid() : id;
+      FirstName = firstName;
+      MiddleName = middleName;
+      LastName = lastName;
+      DateOfBirth = dateOfBirth;
+      Email = email;
+      this.Password = password;
     }
-    else
+
+    public void UpdateProfile(string firstName, string middleName, string lastName, DateTime dateOfBirth, MailAddress email, string password)
     {
-      throw new ArgumentException("Invalid password", nameof(password));
+      FirstName = firstName;
+      MiddleName = middleName;
+      LastName = lastName;
+      DateOfBirth = dateOfBirth;
+      Email = email;
+      this.Password = password;
     }
-    if (IsValidEmail(email))
+
+    public void UpdateName(string firstName, string middleName, string lastName)
     {
-      this.email = email;
+      FirstName = firstName;
+      MiddleName = middleName;
+      LastName = lastName;
     }
-    else
+
+    public void UpdateEmail(MailAddress email)
     {
-      throw new ArgumentException("Invalid email address", nameof(email));
+      Email = email;
     }
-  }
 
-  // Method to update profile
-  public void UpdateProfile(string firstName, string middleName, string lastName, DateTime dateOfBirth, string email, string password)
-  {
-    this.firstName = firstName;
-    this.middleName = middleName;
-    this.lastName = lastName;
-    this.dateOfBirth = dateOfBirth;
-    this.email = email;
-    this.password = password;
-  }
-
-  // Method to update name
-  public void UpdateName(string firstName, string middleName, string lastName)
-  {
-    this.firstName = firstName;
-    this.middleName = middleName;
-    this.lastName = lastName;
-  }
-
-  // Method to update email
-  public void UpdateEmail(string email)
-  {
-    this.email = email;
-  }
-
-  // Method to update password
-  public void UpdatePassword(string password)
-  {
-    this.password = password;
-  }
-
-  // Additional methods or properties can be added as needed
-  public bool IsValidPassword(string password)
-  {
-    // Example: Minimum eight characters, at least one uppercase letter, one lowercase letter, one number and one special character
-    var passwordPattern = "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[^\\da-zA-Z]).{8,}$";
-
-    return Regex.IsMatch(password, passwordPattern);
-  }
-
-  public bool IsValidEmail(string email)
-  {
-    try
+    public void UpdatePassword(string password)
     {
-      var mailAddress = new MailAddress(email);
-      return true;
+      this.Password = password;
     }
-    catch (FormatException)
-    {
-      return false;
-    }
-  }
 
+    public string GetFullName()
+    {
+      return string.IsNullOrEmpty(MiddleName) ? $"{FirstName} {LastName}" : $"{FirstName} {MiddleName} {LastName}";
+    }
+
+    // Additional methods or properties can be added as needed
+  }
 }
