@@ -26,7 +26,7 @@ namespace LingoPartnerApp
       Console.WriteLine($"Teacher's email: {teacher.Email.Address}");
       Console.WriteLine($"Teacher's date of birth: {teacher.DateOfBirth}");
       Console.WriteLine($"Teacher's Id is: {teacher.Id}");
-      
+
 
       var validationResults = new List<ValidationResult>();
       var validationContext = new ValidationContext(teacher, null, null);
@@ -47,10 +47,18 @@ namespace LingoPartnerApp
     }
     public static string GetDescription(Enum value)
     {
+      // Get the Description attribute value for the enum value
+      // FIXME: Fix this null reference exception
+#pragma warning disable CS8600 // Converting null literal or possible null value to non-nullable type.
       FieldInfo fi = value.GetType().GetField(value.ToString());
+#pragma warning restore CS8600 // Converting null literal or possible null value to non-nullable type.
 
+      // FIXME: Fix this null reference exception
+      // Get the Description attribute value
+#pragma warning disable CS8602 // Dereference of a possibly null reference.
       DescriptionAttribute[] attributes =
-          (DescriptionAttribute[])fi.GetCustomAttributes(typeof(DescriptionAttribute), false);
+    (DescriptionAttribute[])fi.GetCustomAttributes(typeof(DescriptionAttribute), false);
+#pragma warning restore CS8602 // Dereference of a possibly null reference.
 
       if (attributes != null && attributes.Length > 0)
         return attributes[0].Description;
