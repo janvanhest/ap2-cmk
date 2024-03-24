@@ -63,3 +63,6 @@ _ReSharper*/
 # Rider
 .idea/
 
+LingoPartnerDomain/obj/Debug/net8.0/LingoPartnerDomain.AssemblyInfo.cs
+LingoPartnerDomain/obj/Debug/net8.0/LingoPartnerDomain.AssemblyInfoInputs.cache
+.gitignore
