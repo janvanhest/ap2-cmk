@@ -33,13 +33,13 @@ enum ProgressType {
 
 ' Base class for common user attributes
 abstract class User {
-    -id: Uuid
-    -firstName: String
-    -middleName: String
-    -lastName: String
-    -dateOfBirth: Date
+    +id: Uuid
+    +firstName: String
+    +middleName: String
+    +lastName: String
+    +dateOfBirth: Date
     -email: String
-    -password: String
+    #password: String
     +UpdateProfile(firstName: String, middleName: String, lastName: String, dateOfBirth: Date, email: String, password: String)
     +UpdateName(firstName: String, middleName: String, lastName: String)
     +UpdateEmail(email: String)
@@ -112,10 +112,11 @@ class FriendRequest {
 }
 
 Administration -left-> "n" Student
+Administration --> "n" Progress
 Administration -right-> "n" Teacher
 Administration -down-> "n" LearningModule
 LearningModule -right-> "n" LearningActivity
-Progress "n" <-down- LearningActivity
+Progress "1" -down-> "1" LearningActivity
 Reward "1" <-down- Progress
 Student -up-> "n" Acquaintance
 Teacher -down-> "n" LearningModule : creates/manages >
