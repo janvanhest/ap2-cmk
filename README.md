@@ -19,7 +19,17 @@ There is a noun-verb analysis and, a contextdiagram, a usecase diagram and a cla
 ### Class diagram
 ![ClassDiagram](https://www.plantuml.com/plantuml/png/fLLVZwCs47_dKrZtKbQtgxwZQdi4k3rqBAI1L6hVV7YIjGGcPvjDLrM_UnriPsr88hMN5sT-C_xDZESFduJ4N8vz5mJ0nXuLW3cZR1-tahvI-TQy7G3z7I3rUzuMJRukikHBbIVP17tEYo8lco_PgeZBhnEKbtMpsIPDNfMJ_Dis_pFunx1_vXGOsS3t4OIi9PQZCEHnacJh9aid8SqIHMk4TLQcUVaq_K_YCicAmcXMHPLyLVyj-mQEc1CdubI5Mpt7sZXEdxApwPeFUmv2U34arRDApmQHb-jDzRJ9wdeIowgfctYZj0iIzusgT5ja9gCc_prl_ZYP_uHMM01gEom4sWqSjKFV3moD0ZZ2KdBwRPGW0lnDI8vRQIotIcs87oY9q7QaH4ixoeKiSGyHgjLjjjTmJmdfO8bt-98rmHAgtOfo-HAXL0aQXXxJphSyg6YE0oSU-d5xE36eLzZH3i95IFT8X-DZ7PvRBSAuHoO4Qp5tV-VwLsJ_sxb7b9sSXfvhJxysKOJBS5I9TSLYqbD6JqMKT62cTXzZGcev4c0o5FgCa07kpXODuFO5U2Zr6I43U35Sexb7uwGdzKpXtRxcudoxcIcSp0o2u2y9Z3YzgQEtU-Dv86C7OJyT4V9XXyw4Tv6kVXcEThR2kmZP_-zQFUcJig12_gBbntTwt-_b6MBBWG3HSdeubSvJw0JznHXYyoT2SvLvymtqmolyrtiwmPcAmdkkyrjJrYRjkUv74t-GQhL55pyARb-TSsF-OFki6hpAgBl3Pc9hRZFePXT-NN8u4NkhMUDYslJHRFERzMQm52IcdN2VG9V3ACAxomlGj2hnhplThllpLZKMZ-vypIxNw7Q0pafglu-OCebP2yx0waznk9iEVrtOrhrfKYlC-vnVfHA7WP5cy8svFYFamSu4Q5oitdIXGbC_trxhx6GOnyuQy8pjymi50J_7gK4EBT3N1Np3g-vMV-6V-dGd7nxH1_R14YrCEDs_61kxLHSsP3WoO-Alii0NVRR5HDWj-p0Uj8dN3O7nViCTYb3B0KiGF_UOuJq8z6XPlMjs22ugTIi7hcyd9EzjW-2J4iQ--nS0)
 
+### Additional Scenario's
+A few scenario's that are not implemented in this project but could be implemented in the future. Though they might have some impact on the current implementation.
+- Max enrollment reached. 
+- 
+
 ## Changelog
+
+### Zondag 24 maart. 
+- Updated the class diagram with the correct relations.
+  - Also changed the protection level of several properties to public/protected.
+- 
 
 ### 17 maart. 
 - Added final version of the class diagram. 
