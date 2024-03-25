@@ -1,0 +1,50 @@
+@startuml
+
+class MissionHistory {
+    +AddMission(): void
+    +RemoveMission(): void
+    +GetMissionByAstronaut(Astronaut astronaut): Mission
+    +GetMissionByDate()
+    +GetMissionByCrewMember()
+}
+
+class User {
+    -String FirstName
+    -String MiddleName
+    -String LastName
+    -String Email
+    -String Password
+    -String PhoneNumber
+    -String Address
+    -String City
+    -String Nationality
+    +UpdateProfile()
+    +DeleteProfile()
+}
+
+class Astronaut {
+    GetMissionHistory()
+
+}
+
+class Employee {
+}
+
+class Mission {
+    +String missionName
+    +Date launchDate
+    +Date landingDate
+    ' -List<Astronaut> crew '
+    +List<Astronaut> GetCrewMembers()
+    +GetMissionDuration()
+    +AddCrewMember(Astronaut astronaut): List<Astronaut> 
+}
+
+User <|-- Astronaut
+User <|-- Employee
+
+Astronaut "1" -down- "1" MissionHistory : has >
+MissionHistory "*" -right- "*" Mission : contains >
+
+@enduml
+
