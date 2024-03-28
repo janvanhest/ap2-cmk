@@ -1,5 +1,7 @@
 ﻿// See https://aka.ms/new-console-template for more information
+using LingoPartnerConsole.Views;
 using LingoPartnerDomain;
+using LingoPartnerDomain.classes;
 using System;
 
 namespace LingoPartnerApp
@@ -10,7 +12,10 @@ namespace LingoPartnerApp
     {
       // Create new administration
       Administration schoolAdministration = new Administration();
-      
+      Menu menu = new Menu(schoolAdministration);
+      menu.Show();
+      // log
+
     }
   }
 }
