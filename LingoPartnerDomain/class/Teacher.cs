@@ -9,8 +9,8 @@ public class Teacher : User
   // Other teacher-specific properties can be added here
 
   // Constructor
-  public Teacher(Guid id, string firstName, string middleName, string lastName, DateTime dateOfBirth, MailAddress email, string password, string department)
-      : base(id, firstName, middleName, lastName, dateOfBirth, email, password)
+  public Teacher(Guid id, string firstName, string middleName, string lastName, DateTime dateOfBirth, MailAddress email, string password, string username, string department)
+      : base(id, firstName, middleName, lastName, dateOfBirth, email, password, username)
   {
     Department = department;
   }
