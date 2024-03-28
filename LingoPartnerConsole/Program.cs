@@ -15,7 +15,6 @@ namespace LingoPartnerApp
       Menu menu = new Menu(schoolAdministration);
       menu.Show();
       // log
-
     }
   }
 }

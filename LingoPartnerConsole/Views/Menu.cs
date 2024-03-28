@@ -33,8 +33,8 @@ namespace LingoPartnerConsole.Views
       switch (choice)
       {
         case "1":
-          // AddTeacher();
-          Console.WriteLine("Let's add an teacher!");
+          TeacherAdd addTeacher = new TeacherAdd(SchoolAdministration);
+          addTeacher.Show();
           break;
         case "11":
           Environment.Exit(0);
@@ -45,6 +45,7 @@ namespace LingoPartnerConsole.Views
       }
       Console.WriteLine("Press any key to continue...");
       Console.ReadKey();
+      Console.Clear();
       Show();
     }
   }
