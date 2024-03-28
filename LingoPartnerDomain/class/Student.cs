@@ -13,8 +13,8 @@ public class Student : User
 
   // Constructor
   public Student(Guid id, string firstName, string middleName, string lastName,
-                 DateTime dateOfBirth, MailAddress email, string password)
-      : base(id, firstName, middleName, lastName, dateOfBirth, email, password)
+                 DateTime dateOfBirth, MailAddress email, string password, string userName)
+      : base(id, firstName, middleName, lastName, dateOfBirth, email, password, userName)
   {
     ProgressRecords = new List<Progress>();
     Rewards = new List<Reward>();
