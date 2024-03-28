@@ -1,9 +1,10 @@
 ﻿// See https://aka.ms/new-console-template for more information
 using LingoPartnerDomain;
+using System;
 
 namespace LingoPartnerApp
 {
-  class Program
+  internal class Program
   {
     static void Main(string[] args)
     {
@@ -13,4 +14,3 @@ namespace LingoPartnerApp
     }
   }
 }
-
