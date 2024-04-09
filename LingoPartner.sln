@@ -9,6 +9,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LingoPartnerConsole", "Ling
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LingoPartnerDomain", "LingoPartnerDomain\LingoPartnerDomain.csproj", "{23DD6583-865D-44E0-80F7-8D42F052A96F}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LingoPartnerInfrastructure", "LingoPartnerInfrastructure\LingoPartnerInfrastructure.csproj", "{E0AC2D9C-D49B-49F4-AD3B-E2E4FF7E7FCC}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -30,5 +32,9 @@ Global
 		{23DD6583-865D-44E0-80F7-8D42F052A96F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{23DD6583-865D-44E0-80F7-8D42F052A96F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{23DD6583-865D-44E0-80F7-8D42F052A96F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E0AC2D9C-D49B-49F4-AD3B-E2E4FF7E7FCC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E0AC2D9C-D49B-49F4-AD3B-E2E4FF7E7FCC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E0AC2D9C-D49B-49F4-AD3B-E2E4FF7E7FCC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E0AC2D9C-D49B-49F4-AD3B-E2E4FF7E7FCC}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
