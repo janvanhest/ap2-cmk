@@ -1,6 +1,7 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
 using System.Net.Mail;
+using System.Numerics;
 
 namespace LingoPartnerDomain
 {
@@ -8,17 +9,17 @@ namespace LingoPartnerDomain
   {
     public Guid Id { get; private set; }
     [Required, MaxLength(50)]
-    public string FirstName { get; set;}
+    public string FirstName { get; private set; }
     [MaxLength(50)]
-    public string MiddleName { get; set; }
+    public string MiddleName { get; private set; }
     [Required, MaxLength(50)]
-    public string LastName { get; set; }
-    public DateTime DateOfBirth { get; set; }
+    public string LastName { get; private set; }
+    public DateTime DateOfBirth { get; private set; }
     [Required, EmailAddress]
-    protected MailAddress Email { get; private set; }
+    public MailAddress Email { get; protected set; }
     // Consider a secure way to store password
     [Required, MaxLength(50)]
-    protected string UserName;
+    public string UserName { get; protected set; }
     // Minimum eight characters, at least one uppercase letter, one lowercase letter, one number and one special character
     [Required, MaxLength(50), RegularExpression(@"^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[^\da-zA-Z]).{8,15}$")]
     protected string Password;
@@ -33,7 +34,7 @@ namespace LingoPartnerDomain
       {
         throw new ArgumentException("User must be at least 4 years old.");
       }
-
+      Id = id;
       FirstName = firstName;
       MiddleName = middleName;
       LastName = lastName;
@@ -74,14 +75,6 @@ namespace LingoPartnerDomain
     public string GetFullName()
     {
       return string.IsNullOrEmpty(MiddleName) ? $"{FirstName} {LastName}" : $"{FirstName} {MiddleName} {LastName}";
-    }
-    public string GetUserName()
-    {
-      return UserName;
-    }
-    public string GetEmail()
-    {
-      return Email.Address;
     }
   }
 }

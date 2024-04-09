@@ -8,6 +8,22 @@ public class Administration
   private List<Teacher> teachers;
   private List<Student> students;
   private List<LearningActivity> learningActivities;
+  public IReadOnlyList<Teacher> Teachers => teachers;
+  public IReadOnlyList<Student> Students => students;
+  // private IReadOnlyList<Teacher> Teachers
+  // {
+  //   get
+  //   {
+  //     return teachers.AsReadOnly();
+  //   }
+  // }
+  // private IReadOnlyList<Student> Students
+  // {
+  //   get
+  //   {
+  //     return students.AsReadOnly();
+  //   }
+  // }
 
   public Administration()
   {
