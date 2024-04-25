@@ -1,34 +1,13 @@
 ﻿namespace LingoPartnerDomain;
 using System;
 using System.Collections.Generic;
-using LingoPartnerDomain.classes;
 
 public class Administration
 {
-  private List<Teacher> teachers;
-  private List<Student> students;
-  private List<LearningActivity> learningActivities;
-  public IReadOnlyList<Teacher> Teachers => teachers;
-  public IReadOnlyList<Student> Students => students;
-  // private IReadOnlyList<Teacher> Teachers
-  // {
-  //   get
-  //   {
-  //     return teachers.AsReadOnly();
-  //   }
-  // }
-  // private IReadOnlyList<Student> Students
-  // {
-  //   get
-  //   {
-  //     return students.AsReadOnly();
-  //   }
-  // }
-
+  private List<User> users;
+  private List<LearningModule> learningModules;
   public Administration()
   {
-    teachers = new List<Teacher>();
-    students = new List<Student>();
     learningActivities = new List<LearningActivity>();
   }
 
