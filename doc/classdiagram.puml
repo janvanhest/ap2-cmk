@@ -1,5 +1,10 @@
 @startuml
 
+enum UserRole {
+    TEACHER
+    STUDENT
+}
+
 enum LearningActivityType {
     MULTIPLECHOICE
     FILLINTHEBLANK
