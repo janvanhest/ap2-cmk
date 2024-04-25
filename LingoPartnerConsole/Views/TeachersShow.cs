@@ -17,18 +17,18 @@ namespace LingoPartnerConsole.Views
 
     public void Show()
     {
-      Console.WriteLine("\n\n");
-      Console.WriteLine("Teachers:");
-      foreach (Teacher teacher in SchoolAdministration.Teachers)
-      {
-        Console.WriteLine("tada");
-        Console.WriteLine("teacher id is: " + teacher.Id.ToString());
-        ConsoleHelper.PrintTeacher(teacher);
-      }
-      Console.WriteLine("Press any key to continue...");
-      Console.ReadKey();
-      Console.Clear();
-      MenuHelper.ReturnToMenu(SchoolAdministration);
+      //   Console.WriteLine("\n\n");
+      //   Console.WriteLine("Teachers:");
+      //   foreach (Teacher teacher in SchoolAdministration.Teachers)
+      //   {
+      //     Console.WriteLine("tada");
+      //     Console.WriteLine("teacher id is: " + teacher.Id.ToString());
+      //     ConsoleHelper.PrintTeacher(teacher);
+      //   }
+      //   Console.WriteLine("Press any key to continue...");
+      //   Console.ReadKey();
+      //   Console.Clear();
+      //   MenuHelper.ReturnToMenu(SchoolAdministration);
     }
   }
 }

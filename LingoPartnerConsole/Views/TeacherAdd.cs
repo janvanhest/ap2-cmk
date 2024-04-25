@@ -28,18 +28,18 @@ namespace LingoPartnerConsole.Views
       string password = ConsoleHelper.GetPasswordInput();
       string username = ConsoleHelper.GetStringInput("Enter username:");
       string department = ConsoleHelper.GetStringInput("Enter department:");
-      Teacher teacher = new Teacher(
-          id,
-          firstName,
-          middleName,
-          lastName,
-          dateOfBirth,
-          email,
-          password,
-          username,
-          department
-      );
-      SchoolAdministration.AddTeacher(teacher);
+      // Teacher teacher = new Teacher(
+      //     id,
+      //     firstName,
+      //     middleName,
+      //     lastName,
+      //     dateOfBirth,
+      //     email,
+      //     password,
+      //     username,
+      //     department
+      // );
+      // SchoolAdministration.AddTeacher(teacher);
     }
   }
 }

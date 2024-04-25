@@ -1,4 +1,4 @@
-﻿namespace LingoPartnerDomain;
+﻿namespace LingoPartnerDomain.classes;
 
 using System;
 using System.Collections.Generic;
@@ -60,7 +60,7 @@ public class LearningActivity
     Description = description;
     Type = type;
   }
-    public void UpdateActivity(string newName, string newDescription, LearningActivityType newType)
+  public void UpdateActivity(string newName, string newDescription, LearningActivityType newType)
   {
     Name = newName ?? throw new ArgumentNullException(nameof(newName));
     Description = newDescription ?? throw new ArgumentNullException(nameof(newDescription));

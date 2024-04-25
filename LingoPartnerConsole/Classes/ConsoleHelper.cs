@@ -1,4 +1,5 @@
 ﻿using System.Net.Mail;
+using LingoPartnerDomain;
 using LingoPartnerDomain.classes;
 
 namespace LingoPartnerConsole.Classes;
@@ -95,14 +96,10 @@ public static class ConsoleHelper
     // var regex = new Regex(@"^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[^a-zA-Z\d]).{8,}$");
     // return regex.IsMatch(password);
   }
-  public static void PrintTeacher(Teacher teacher)
+  public static void PrintTeacher(User user)
   {
     Console.WriteLine("\n====================================");
-    Console.WriteLine($"Teacher ID: {teacher.Id}");
-    Console.WriteLine($"Teacher's name: {teacher.GetFullName()}");
-    Console.WriteLine($"Date of Birth: {teacher.DateOfBirth}");
-    Console.WriteLine($"Email: {teacher.Email.ToString()}");
-    Console.WriteLine($"Username: {teacher.UserName}");
+    Console.WriteLine($"Username: {user.UserName}");
     Console.WriteLine("====================================\n");
   }
 }

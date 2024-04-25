@@ -11,9 +11,9 @@ namespace LingoPartnerApp
     static void Main(string[] args)
     {
       // Create new administration
-      Administration schoolAdministration = new Administration();
-      Menu menu = new Menu(schoolAdministration);
-      menu.Show();
+      // Administration schoolAdministration = new Administration();
+      // Menu menu = new Menu(schoolAdministration);
+      // menu.Show();
       // log
     }
   }
