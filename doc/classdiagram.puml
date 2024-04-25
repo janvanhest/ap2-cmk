@@ -3,7 +3,7 @@
 enum UserRole {
     TEACHER
     STUDENT
-
+    ADMIN
 }
 enum LearningActivityType {
     MULTIPLECHOICE
