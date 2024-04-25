@@ -3,8 +3,8 @@
 enum UserRole {
     TEACHER
     STUDENT
-}
 
+}
 enum LearningActivityType {
     MULTIPLECHOICE
     FILLINTHEBLANK
@@ -36,39 +36,15 @@ enum ProgressType {
     ACTIVITY
 }
 
-' Base class for common user attributes
-abstract class User {
-    -id: Uuid
-    -firstName: String
-    -middleName: String
-    -lastName: String
-    -dateOfBirth: Date
-    -email: String
-    -password: String
-    +UpdateProfile(firstName: String, middleName: String, lastName: String, dateOfBirth: Date, email: String, password: String)
-    +UpdateName(firstName: String, middleName: String, lastName: String)
-    +UpdateEmail(email: String)
-    +UpdatePassword(password: String)
-}
-
 class Administration {
-    +AddStudent(student: Student)
-    +AddTeacher(teacher: Teacher)
-    +UpdateStudent(student: Student, updatedStudent: Student)
-    +UpdateTeacher(teacher: Teacher, updatedTeacher: Teacher)
-}
-
-class Teacher extends User {
-    +AddLearningModule(module: LearningModule)
-}
-
-class Student extends User {
-    +ShowProgress(): Progress
-    +ShowRewards(): List<Reward>
+    + AddUser(user: User)
+    + UpdateUser(user: User)
+    + AddLearningModule(module: LearningModule)
+    + RemoveLearningModule(module: LearningModule)
 }
 
 class LearningModule {
-    -id: Uuid
+    -id: Int
     -name: String
     -description: String
     +AddLearningActivity(activity: LearningActivity)
@@ -78,7 +54,7 @@ class LearningModule {
 
 
 class LearningActivity {
-    -id: Uuid
+    -id: Int
     -name: String
     -description: String
     -type: LearningActivityType
@@ -86,9 +62,36 @@ class LearningActivity {
 }
 
 
+class User {
+    -id: Int
+    -firstName: String
+    -middleName: String
+    -lastName: String
+    -dateOfBirth: Date
+    -email: String
+    -password: String
+    -role: UserRole
+    +UpdateProfile(firstName: String, middleName: String, lastName: String, email: String, password: String)
+    +SetRole(role: UserRole)
+}
+
+class Reward {
+    -name: String
+    -type: RewardType
+    -description: String
+    +ShowDetails(): String
+}
+
+class FriendRequest {
+    - id: Int
+    - sender: User
+    - recipient: User
+    - status: FriendRequestStatus
+    + UpdateStatus(status: FriendRequestStatus)
+}
 
 class Progress {
-    -learningActivity?: LearningActivity
+    -id: Int
     -type: ProgressType
     -status: ProgressStatus
     -progressDetails: String
@@ -96,38 +99,18 @@ class Progress {
     +UpdateProgress(details: String)
 }
 
-class Reward {
-    -id: Uuid
-    -name: String
-    -type: RewardType
-    -description: String
-    +ShowDetails(): String
-}
+Administration "1" -right-> "n" User
+Administration "1" -down-> "n" LearningModule
 
-class Acquaintance {
-    +AddFriend(friend: Student)
-    +RemoveFriend(friend: Student)
-    +SendFriendRequest(friend: Student)
-    +RespondToFriendRequest(request: FriendRequest)
-    +ShowFriendsByStatus(status: FriendRequestStatus): List<Student>
-}
+User -up-> "n" Reward
+User -right-> "n" Progress
 
-class FriendRequest {
-    -sender: Student
-    -receiver: Student
-    -status: FriendRequestStatus
-}
+User "1" -up-> "n" FriendRequest : sent
+User "1" <-up- "n" FriendRequest : received
 
+Progress "1" -down-> "1" LearningActivity
 
+LearningModule "1" --> "n" LearningActivity
 
-Administration -left-> "n" Student
-Administration -right-> "n" Teacher
-Administration -down-> "n" LearningModule
-LearningModule -right-> "n" LearningActivity
-Student -up-> "n" Acquaintance
-Teacher -down-> "n" LearningModule : creates/manages >
-Student -down-> "n" Progress
-Student -down-> "n" Reward
-Acquaintance -up-> "n" FriendRequest
 
 @enduml
