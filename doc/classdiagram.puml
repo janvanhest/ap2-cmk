@@ -37,6 +37,7 @@ enum ProgressType {
 }
 
 class Administration {
+    + Administration()
     + AddUser(user: User)
     + UpdateUser(user: User)
     + AddLearningModule(module: LearningModule)
@@ -47,6 +48,7 @@ class LearningModule {
     -id: Int
     -name: String
     -description: String
+    +LearningModule(name: String, description: String)
     +AddLearningActivity(activity: LearningActivity)
     +RemoveLearningActivity(activity: LearningActivity)
     +ShowLearningActivities(): List<LearningActivity>
@@ -58,6 +60,7 @@ class LearningActivity {
     -name: String
     -description: String
     -type: LearningActivityType
+    +LearningActivity(name: String, description: String, type: LearningActivityType)
     +UpdateActivity(name: String, description: String, type: LearningActivityType)
 }
 
@@ -71,6 +74,7 @@ class User {
     -email: String
     -password: String
     -role: UserRole
+    +User(firstName: String, middleName: String, lastName: String, dateOfBirth: Date, email: String, password: String, role: UserRole)
     +UpdateProfile(firstName: String, middleName: String, lastName: String, email: String, password: String)
     +SetRole(role: UserRole)
 }
@@ -79,6 +83,8 @@ class Reward {
     -name: String
     -type: RewardType
     -description: String
+    -date: Date
+    +Reward(name: String, type: RewardType, description: String, date: Date)
     +ShowDetails(): String
 }
 
@@ -87,7 +93,8 @@ class FriendRequest {
     - sender: User
     - recipient: User
     - status: FriendRequestStatus
-    + UpdateStatus(status: FriendRequestStatus)
+    +FriendRequest(sender: User, recipient: User)
+    +UpdateStatus(status: FriendRequestStatus)
 }
 
 class Progress {
@@ -95,6 +102,7 @@ class Progress {
     -type: ProgressType
     -status: ProgressStatus
     -progressDetails: String
+    +Progress(type: ProgressType, status: ProgressStatus, progressDetails: String)
     +ShowDetails(): String
     +UpdateProgress(details: String)
 }
