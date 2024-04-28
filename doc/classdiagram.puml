@@ -1,17 +1,5 @@
 @startuml
 
-enum UserRole {
-    TEACHER
-    STUDENT
-    ADMIN
-}
-enum LearningActivityType {
-    MULTIPLECHOICE
-    FILLINTHEBLANK
-    INSTRUCTION
-    QUIZ
-}
-
 enum FriendRequestStatus {
     ACCEPTED
     DECLINED
@@ -20,9 +8,12 @@ enum FriendRequestStatus {
     BLOCKED
 }
 
-enum RewardType {
-    DIPLOMA
-    BADGE
+enum LearningActivityType {
+    MULTIPLECHOICE
+    FILLINTHEBLANK
+    TRUEFALSE
+    INSTRUCTION
+    QUIZ
 }
 
 enum ProgressStatus {
@@ -32,8 +23,21 @@ enum ProgressStatus {
 }
 
 enum ProgressType {
+    LEARNINGACTIVITY
+    ASSESMENT
     MODULE
-    ACTIVITY
+    PROJECT
+}
+
+enum RewardType {
+    DIPLOMA
+    BADGE
+}
+
+enum UserRole {
+    TEACHER
+    STUDENT
+    ADMIN
 }
 
 class Administration {
@@ -42,6 +46,24 @@ class Administration {
     + UpdateUser(user: User)
     + AddLearningModule(module: LearningModule)
     + RemoveLearningModule(module: LearningModule)
+}
+
+class FriendRequest {
+    - id: Int
+    - sender: User
+    - recipient: User
+    - status: FriendRequestStatus
+    +FriendRequest(sender: User, recipient: User)
+    +UpdateStatus(status: FriendRequestStatus)
+}
+
+class LearningActivity {
+    -id: Int
+    -name: String
+    -description: String
+    -type: LearningActivityType
+    +LearningActivity(name: String, description: String, type: LearningActivityType)
+    +UpdateActivity(name: String, description: String, type: LearningActivityType)
 }
 
 class LearningModule {
@@ -54,16 +76,24 @@ class LearningModule {
     +ShowLearningActivities(): List<LearningActivity>
 }
 
-
-class LearningActivity {
+class Progress {
     -id: Int
-    -name: String
-    -description: String
-    -type: LearningActivityType
-    +LearningActivity(name: String, description: String, type: LearningActivityType)
-    +UpdateActivity(name: String, description: String, type: LearningActivityType)
+    -type: ProgressType
+    -status: ProgressStatus
+    -progressDetails: String
+    +Progress(type: ProgressType, status: ProgressStatus, progressDetails: String)
+    +ShowDetails(): String
+    +UpdateProgress(details: String)
 }
 
+class Reward {
+    -name: String
+    -type: RewardType
+    -description: String
+    -date: Date
+    +Reward(name: String, type: RewardType, description: String, date: Date)
+    +ShowDetails(): String
+}
 
 class User {
     -id: Int
@@ -77,34 +107,6 @@ class User {
     +User(firstName: String, middleName: String, lastName: String, dateOfBirth: Date, email: String, password: String, role: UserRole)
     +UpdateProfile(firstName: String, middleName: String, lastName: String, email: String, password: String)
     +SetRole(role: UserRole)
-}
-
-class Reward {
-    -name: String
-    -type: RewardType
-    -description: String
-    -date: Date
-    +Reward(name: String, type: RewardType, description: String, date: Date)
-    +ShowDetails(): String
-}
-
-class FriendRequest {
-    - id: Int
-    - sender: User
-    - recipient: User
-    - status: FriendRequestStatus
-    +FriendRequest(sender: User, recipient: User)
-    +UpdateStatus(status: FriendRequestStatus)
-}
-
-class Progress {
-    -id: Int
-    -type: ProgressType
-    -status: ProgressStatus
-    -progressDetails: String
-    +Progress(type: ProgressType, status: ProgressStatus, progressDetails: String)
-    +ShowDetails(): String
-    +UpdateProgress(details: String)
 }
 
 Administration "1" -right-> "n" User
