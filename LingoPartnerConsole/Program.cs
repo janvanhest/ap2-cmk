@@ -1,8 +1,8 @@
 ﻿// See https://aka.ms/new-console-template for more information
+using dotenv.net;
 using LingoPartnerConsole.Views;
-using LingoPartnerDomain;
+
 using LingoPartnerDomain.classes;
-using System;
 
 namespace LingoPartnerApp
 {
@@ -10,11 +10,13 @@ namespace LingoPartnerApp
   {
     static void Main(string[] args)
     {
+      DotEnv.Load();
+      Console.WriteLine("Welcome to LingoPartner!");
       // Create new administration
-      // Administration schoolAdministration = new Administration();
-      // Menu menu = new Menu(schoolAdministration);
-      // menu.Show();
-      // log
+      Administration schoolAdministration = new();
+      Menu menu = new Menu(schoolAdministration);
+      menu.Show();
+
     }
   }
 }
