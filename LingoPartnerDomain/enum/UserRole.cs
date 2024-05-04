@@ -1,8 +1,8 @@
-﻿namespace LingoPartnerDomain;
+﻿namespace LingoPartnerDomain.enums;
 
 public enum UserRole
 {
-  Admin,
-  Teacher,
-  Student
+  ADMIN,
+  TEACHER,
+  STUDENT
 }
