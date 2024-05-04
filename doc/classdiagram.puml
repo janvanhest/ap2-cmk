@@ -43,7 +43,7 @@ enum UserRole {
 class Administration {
     + Administration()
     + AddUser(user: User)
-    + UpdateUser(user: User)
+    + UpdateUserProfile(user: User)
     + AddLearningModule(module: LearningModule)
     + RemoveLearningModule(module: LearningModule)
 }
@@ -67,13 +67,14 @@ class LearningActivity {
 }
 
 class LearningModule {
-    -id: Int
+    -id: int
     -name: String
     -description: String
     +LearningModule(name: String, description: String)
     +AddLearningActivity(activity: LearningActivity)
     +RemoveLearningActivity(activity: LearningActivity)
     +ShowLearningActivities(): List<LearningActivity>
+    +UpdateModule(name: String, description: String)
 }
 
 class Progress {
