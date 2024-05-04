@@ -3,7 +3,7 @@ using LingoPartnerDomain.enums;
 
 public class LearningActivity
 {
-  public Guid Id { get; private set; }
+  public int Id { get; private set; }
   public string Name { get; private set; }
   public string Description { get; private set; }
   public LearningActivityType Type { get; private set; }
@@ -11,7 +11,6 @@ public class LearningActivity
   // Constructor to initialize a new LearningActivity
   public LearningActivity(string name, string description, LearningActivityType type)
   {
-    Id = Guid.NewGuid(); // Unique identifier for each activity
     Name = name ?? throw new ArgumentNullException(nameof(name));
     Description = description ?? throw new ArgumentNullException(nameof(description));
     Type = type;

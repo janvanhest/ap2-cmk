@@ -4,7 +4,7 @@ using System;
 
 public class Reward
 {
-  public Guid Id { get; private set; }
+  public int Id { get; private set; }
   public string Name { get; private set; }
   public RewardType Type { get; private set; }
   public string Description { get; private set; }
@@ -13,7 +13,6 @@ public class Reward
   // Constructor to initialize a new Reward
   public Reward(string name, RewardType type, string description, string criteria)
   {
-    Id = Guid.NewGuid(); // Unique identifier for each reward
     Name = name ?? throw new ArgumentNullException(nameof(name));
     Type = type;
     Description = description ?? throw new ArgumentNullException(nameof(description));
