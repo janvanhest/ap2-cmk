@@ -66,4 +66,24 @@ A few scenario's that are not implemented in this project but could be implement
 
 https://youtu.be/PmDJIooZjBE?si=6jwojAC2ss44tyl_
 
+## Reminders
+
+Klassendiagram
+Encapsulatie
+Abstractie
+Inheritance
+Polymorphisme
+
+Composition over inheritance. 
+Loose coupling vs tight coupling.
+
+SOLID
+S - Single-responsibility Principle
+O - Open-closed Principle
+L - Liskov Substitution Principle
+I - Interface Segregation Principle
+D - Dependency Inversion Principle
+
+GRASPc
+
 

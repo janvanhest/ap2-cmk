@@ -32,7 +32,12 @@ namespace LingoPartnerDomain.Helpers.ObjectMappers
     public static User ToDomain(this UserDTO dto)
     {
       UserRole role = Enum.Parse<UserRole>(dto.Role);
-      User user = new User(0, dto.FirstName, dto.MiddleName, dto.LastName, dto.DateOfBirth, new System.Net.Mail.MailAddress(dto.Email), dto.Password, dto.Username, role);
+      if (dto.Id == null)
+      {
+        throw new ArgumentNullException(nameof(dto.Id), "Id cannot be null when mapping to a User domain object.");
+      }
+      int id = dto.Id ?? 0; // use 0 as the default value
+      User user = new User(id, dto.FirstName, dto.MiddleName, dto.LastName, dto.DateOfBirth, new System.Net.Mail.MailAddress(dto.Email), dto.Password, dto.Username, role);
       return user;
     }
   }
