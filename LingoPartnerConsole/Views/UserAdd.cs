@@ -19,7 +19,7 @@ namespace LingoPartnerConsole.Views
     {
       Console.WriteLine("Add a new user");
       string firstName = ConsoleHelper.GetStringInput("Enter first name:");
-      string middleName = ConsoleHelper.GetStringInput("Enter middle name:");
+      string middleName = ConsoleHelper.GetStringInput("Enter middle name: (- for none)");
       string lastName = ConsoleHelper.GetStringInput("Enter last name:");
       DateTime dateOfBirth = ConsoleHelper.GetDateInput("Enter date of birth (YYYY-MM-DD):");
       MailAddress email = ConsoleHelper.GetEmailInput("Enter email address:");
@@ -30,7 +30,7 @@ namespace LingoPartnerConsole.Views
       // Create the user object
       User newUser = new User(
           firstName: firstName,
-          middleName: middleName,
+          middleName: middleName == "-" ? string.Empty : middleName,
           lastName: lastName,
           dateOfBirth: dateOfBirth,
           email: email,
@@ -42,7 +42,6 @@ namespace LingoPartnerConsole.Views
       // Add the user to the administration
       SchoolAdministration.Add(newUser);
       Console.WriteLine($"User {firstName} {lastName} successfully added as {role}.");
-
     }
   }
 }
