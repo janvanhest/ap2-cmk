@@ -29,7 +29,7 @@ A few scenario's that are not implemented in this project but could be implement
 ## Changelog
 
 ### 10 mei.
-- Storing and retrieving of User and learningModule entities is succesfull.
+- Storing and retrieving of User and learningModule entities is succesfull. `
 
 ### Zondag 24 maart. 
 - Updated the class diagram with the correct relations.
