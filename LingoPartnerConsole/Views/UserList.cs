@@ -1,6 +1,4 @@
-﻿using LingoPartnerConsole.Classes;
-using LingoPartnerDomain.enums;
-using LingoPartnerDomain.classes;
+﻿using LingoPartnerDomain.classes;
 
 namespace LingoPartnerConsole.Views
 {
