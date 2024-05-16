@@ -9,9 +9,3 @@ services:
       MARIADB_DATABASE: lp_db
     ports:
       - 3306:3306
-
-  adminer:
-    image: adminer
-    restart: always
-    ports:
-      - 8080:8080
