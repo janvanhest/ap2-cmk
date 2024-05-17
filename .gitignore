@@ -48,3 +48,4 @@ _ReSharper*/
 .idea/
 .env
 log.txt
+trace.log
