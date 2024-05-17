@@ -2,6 +2,8 @@
 
   <ItemGroup>
     <ProjectReference Include="..\LingoPartnerDomain\LingoPartnerDomain.csproj" />
+    <ProjectReference Include="..\LingoPartnerInfrastructure\LingoPartnerInfrastructure.csproj" />
+    <ProjectReference Include="..\LingoPartnerShared\LingoPartnerShared.csproj" />
   </ItemGroup>
 
   <ItemGroup>
