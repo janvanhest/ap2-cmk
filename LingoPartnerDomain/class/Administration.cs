@@ -1,64 +1,85 @@
-﻿using LingoPartnerInfrastructure;
-using LingoPartnerDomain.Helpers.ObjectMappers;
-using LingoPartnerInfrastructure.DTO;
+﻿using System.Diagnostics;
+using LingoPartnerDomain.interfaces;
+using LingoPartnerDomain.Interfaces;
+using LingoPartnerShared.Helpers;
 
 namespace LingoPartnerDomain.classes
 {
   public class Administration
   {
-    private List<User> Users = new List<User>();
-    public IReadOnlyList<User> users
-    { get { return this.Users; } }
-    private List<LearningModule> LearningModules = new List<LearningModule>();
-    public IReadOnlyList<LearningModule> learningModules
-    { get { return this.LearningModules; } }
-    public Administration()
+    private readonly IUserRepository userRepository;
+    private readonly ILearningModuleRepository learningModuleRepository;
+    private List<User> users = new List<User>();
+    public IReadOnlyList<User> Users
     {
-      // Users = new List<User>();
-      // LearningModules = new List<LearningModule>();
-      UserRepository userRepository = new UserRepository();
-      List<UserDTO> userDTOs = userRepository.GetUsers();
-      foreach (UserDTO userDTO in userDTOs)
-      {
-        User user = userDTO.ToDomain();
-        Users.Add(user);
-      }
+      get { return this.users; }
+    }
+    private List<LearningModule> learningModules = new List<LearningModule>();
+    public IReadOnlyList<LearningModule> LearningModules
+    {
+      get { return this.learningModules; }
+    }
+    public Administration(IUserRepository userRepository, ILearningModuleRepository learningModuleRepository)
+    {
+      this.userRepository = userRepository;
+      this.learningModuleRepository = learningModuleRepository;
 
+      this.learningModules = (List<LearningModule>)learningModuleRepository.GetAllLearningModules();
+      this.users = userRepository.GetUsers();
     }
     public void Add(User user)
     {
-      // Users.Add(user);
-      // FIXME: implement correct logging. Only loggin in views
-      new UserRepository().AddUser(user.ToDTO());
-      Console.WriteLine($"User {user.FirstName} {user.LastName} added.");
-
+      users.Add(user);
+      User Result = userRepository.AddUser(user);
+      // Check if Result is has written to the database
+      if (Result == null)
+      {
+        Trace.TraceError("User not added.");
+        return;
+      }
     }
     public void Add(LearningModule module)
     {
-      // LearningModules.Add(module);
-      // new LearningModuleRepository().AddLearningModule(module.ToDTO());
-      // Console.WriteLine($"Learning module '{module.Name}' added.");
+      learningModules.Add(module);
+      LearningModule Result = learningModuleRepository.AddLearningModule(module);
+      // Check if Result is has written to the database
+      if (Result == null)
+      {
+        Trace.TraceError("Learning module not added.");
+        return;
+      }
     }
-    public void UpdateUserProfile(User updatedUser, string? newPassword)
+    public User? UpdateUserProfile(User updatedUser, string? newPassword)
     {
-      var user = Users.Find(u => u.Id == updatedUser.Id);
+      var user = users.Find(u => u.Id == updatedUser.Id);
       if (user != null)
       {
-        user.UpdateProfile(updatedUser.FirstName, updatedUser.MiddleName, updatedUser.LastName, updatedUser.Email, newPassword ?? string.Empty);
-        Console.WriteLine($"JHE: User {updatedUser.FirstName} {updatedUser.LastName} updated.");
+        // Ensure that the new password is not empty
+        if (string.IsNullOrWhiteSpace(newPassword))
+        {
+
+          LoggingHelper
+          .LogError(new ArgumentException("Password cannot be empty."), "Password cannot be empty.");
+          throw new ArgumentException("Password cannot be empty.");
+        }
+
+        // Update the user's profile
+        user.UpdateProfile(updatedUser.FirstName, updatedUser.MiddleName, updatedUser.LastName, updatedUser.Email, newPassword);
+        return user;
       }
       else
       {
-        // TODO: Log error Or create domain exception
-        Console.WriteLine("User not found.");
+        LoggingHelper.LogWarning("User not found.");
+        return null;
       }
     }
     public void RemoveLearningModule(int moduleId)
     {
-      var module = LearningModules.Find(m => m.Id == moduleId);
+      var module = learningModules.Find(m => m.Id == moduleId);
       if (module != null)
       {
-        LearningModules.Remove(module);
+        learningModules.Remove(module);
+        // TODO: Remove learning module from the database throug a repository
         Console.WriteLine($"Learning module '{module.Name}' removed.");
       }
       else

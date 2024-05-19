@@ -1,8 +1,8 @@
 ﻿// See https://aka.ms/new-console-template for more information
 using System.Diagnostics;
 using dotenv.net;
-using LingoPartnerConsole.Views;
 
+using LingoPartnerConsole.Views;
 using LingoPartnerDomain.classes;
 using LingoPartnerInfrastructure.Helpers;
 using LingoPartnerInfrastructure.Repository;
@@ -15,8 +15,7 @@ namespace LingoPartnerApp
     {
       DotEnv.Load();
       ConfigureTrace();
-      var infrastructureHelper = new InfrastructureHelper();
-      if (!infrastructureHelper.IsServerAvailable())
+      if (!InfrastructureHelper.IsServerAvailable())
       {
         Console.WriteLine("Database server is not available. Exiting...");
       }
@@ -33,17 +32,20 @@ namespace LingoPartnerApp
       Administration schoolAdministration = new Administration(
         userRepository,
         learningModuleRepository
-        );
+      );
       Menu menu = new Menu(schoolAdministration);
       menu.Show();
     }
 
     private static void FirstWelcomeMessage()
     {
+      Console.Clear();
       DateTime dateTime = DateTime.Now;
-      Trace.TraceInformation("\n\nApplication started at: " + dateTime);
-      Console.WriteLine("Welcome to LingoPartner!");
-      Console.WriteLine("Press a key to continue...");
+      String traceMessage = $"\n\nApplication started at: {dateTime}";
+      Trace.TraceInformation(traceMessage);
+
+      Console.WriteLine("Welcome to LingoPartner!\n");
+      Console.WriteLine("Press a key to continue...\n");
       Console.ReadKey();
     }
 

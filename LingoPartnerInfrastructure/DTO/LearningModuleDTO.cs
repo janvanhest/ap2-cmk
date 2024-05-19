@@ -1,5 +1,5 @@
 ﻿using System;
-
+// TODO: These might be deleted. 
 namespace LingoPartnerInfrastructure.DTO
 {
   public class LearningModuleDTO
