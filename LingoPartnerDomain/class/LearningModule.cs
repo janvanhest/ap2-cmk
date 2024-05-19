@@ -1,4 +1,4 @@
-﻿namespace LingoPartnerDomain;
+﻿namespace LingoPartnerDomain.classes;
 
 using System;
 using System.Collections.Generic;
@@ -6,17 +6,28 @@ using LingoPartnerDomain.enums;
 
 public class LearningModule
 {
-  public Guid Id { get; private set; }
+  public int? Id { get; private set; }
   public string Name { get; private set; }
   public string Description { get; private set; }
-  private List<LearningActivity> learningActivities;
+  private List<LearningActivity> LearningActivities = new List<LearningActivity>();
+  public IReadOnlyList<LearningActivity> learningActivities
+  { get { return learningActivities; } }
 
+
+  public void Initialize(string name, string description)
+  {
+    Name = name ?? throw new ArgumentNullException(nameof(name));
+    Description = description ?? throw new ArgumentNullException(nameof(description));
+  }
   public LearningModule(string name, string description)
   {
-    Id = Guid.NewGuid();
-    Name = name;
-    Description = description;
-    learningActivities = new List<LearningActivity>();
+    Initialize(name, description);
+  }
+
+  public LearningModule(int id, string name, string description)
+  {
+    Id = id;
+    Initialize(name, description);
   }
 
   public void AddLearningActivity(LearningActivity activity)
@@ -25,13 +36,12 @@ public class LearningModule
     {
       throw new ArgumentNullException(nameof(activity));
     }
-
-    learningActivities.Add(activity);
+    LearningActivities.Add(activity);
   }
 
   public bool RemoveLearningActivity(LearningActivity activity)
   {
-    return learningActivities.Remove(activity);
+    return LearningActivities.Remove(activity);
   }
 
   public List<LearningActivity> ShowLearningActivities()
@@ -43,27 +53,5 @@ public class LearningModule
   {
     Name = newName ?? throw new ArgumentNullException(nameof(newName));
     Description = newDescription ?? throw new ArgumentNullException(nameof(newDescription));
-  }
-}
-
-public class LearningActivity
-{
-  public Guid Id { get; private set; }
-  public string Name { get; private set; }
-  public string Description { get; private set; }
-  public LearningActivityType Type { get; private set; }
-
-  public LearningActivity(string name, string description, LearningActivityType type)
-  {
-    Id = Guid.NewGuid();
-    Name = name;
-    Description = description;
-    Type = type;
-  }
-    public void UpdateActivity(string newName, string newDescription, LearningActivityType newType)
-  {
-    Name = newName ?? throw new ArgumentNullException(nameof(newName));
-    Description = newDescription ?? throw new ArgumentNullException(nameof(newDescription));
-    Type = newType;
   }
 }

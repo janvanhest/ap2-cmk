@@ -1,18 +1,25 @@
-﻿using LingoPartnerDomain.classes;
-using LingoPartnerDomain.enums;
+﻿using LingoPartnerDomain.enums;
 
-namespace LingoPartnerDomain;
-
-public class FriendRequest
+namespace LingoPartnerDomain.classes
 {
-  public Student Sender { get; set; }
-  public Student Receiver { get; set; }
-  public FriendRequestStatus Status { get; set; }
-
-  public FriendRequest(Student sender, Student receiver)
+  public class FriendRequest
   {
-    Sender = sender;
-    Receiver = receiver;
-    Status = FriendRequestStatus.PENDING;
+    public int Id { get; private set; }
+    public User Sender { get; private set; }
+    public User Recipient { get; private set; }
+    public FriendRequestStatus Status { get; private set; }
+
+    public FriendRequest(int id, User sender, User recipient)
+    {
+      Id = id;
+      Sender = sender;
+      Recipient = recipient;
+      Status = FriendRequestStatus.PENDING;  // Default status
+    }
+
+    public void UpdateStatus(FriendRequestStatus newStatus)
+    {
+      Status = newStatus;
+    }
   }
 }

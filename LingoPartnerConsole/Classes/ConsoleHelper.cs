@@ -1,5 +1,6 @@
 ﻿using System.Net.Mail;
 using LingoPartnerDomain.classes;
+using LingoPartnerDomain.enums;
 
 namespace LingoPartnerConsole.Classes;
 
@@ -95,14 +96,31 @@ public static class ConsoleHelper
     // var regex = new Regex(@"^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[^a-zA-Z\d]).{8,}$");
     // return regex.IsMatch(password);
   }
-  public static void PrintTeacher(Teacher teacher)
+
+  public static UserRole GetUserRole(
+    string promptMessage = "Enter a role (Admin, Teacher, Student):")
+  {
+    UserRole role;
+    bool isValidRole;
+    do
+    {
+      Console.WriteLine(promptMessage);
+      string input = Console.ReadLine() ?? string.Empty;
+      isValidRole = Enum.TryParse(input, true, out role); // Try to parse the input to a UserRole
+      if (!isValidRole)
+      {
+        Console.WriteLine("Invalid role. Please try again.");
+      }
+    } while (!isValidRole);
+    return role;
+  }
+  public static void PrintUser(User user)
   {
     Console.WriteLine("\n====================================");
-    Console.WriteLine($"Teacher ID: {teacher.Id}");
-    Console.WriteLine($"Teacher's name: {teacher.GetFullName()}");
-    Console.WriteLine($"Date of Birth: {teacher.DateOfBirth}");
-    Console.WriteLine($"Email: {teacher.Email.ToString()}");
-    Console.WriteLine($"Username: {teacher.UserName}");
+    Console.WriteLine($"Username: {user.FirstName} {user.MiddleName} {user.LastName}");
+    Console.WriteLine($"Email: {user.Email}");
+    Console.WriteLine($"Role: {user.Role}");
     Console.WriteLine("====================================\n");
   }
+
 }

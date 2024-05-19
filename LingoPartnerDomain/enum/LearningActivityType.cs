@@ -11,7 +11,7 @@ public enum LearningActivityType
   [Description("Matching")]
   MATCHING,
   [Description("Instructional Text")]
-  INSTRUCTIONAL_TEXT,
+  INSTRUCTION,
   [Description("Quiz")]
   QUIZ
 

@@ -1,0 +1,89 @@
+@startuml
+entity "User" as User {
+    + id : int [PK]
+    + firstName : varchar
+    + middleName : varchar
+    + lastName : varchar
+    + dateOfBirth : date
+    + email : varchar
+    + password : varchar
+    + role_id : int [FK]
+}
+
+entity "FriendRequest" as FriendRequest {
+    + id : int [PK]
+    + sender_id : int [FK]
+    + recipient_id : int [FK]
+    + status_id : int [FK]
+}
+
+entity "LearningActivity" as LearningActivity {
+    + id : int [PK]
+    + name : varchar
+    + description : varchar
+    + type_id : int [FK]
+}
+
+entity "LearningModule" as LearningModule {
+    + id : int [PK]
+    + name : varchar
+    + description : varchar
+}
+
+entity "Progress" as Progress {
+    + id : int [PK]
+    + type_id : int [FK]
+    + status_id : int [FK]
+    + progressDetails : varchar
+    + user_id : int [FK]
+    + learningActivity_id : int [FK]
+}
+
+entity "Reward" as Reward {
+    + id : int [PK]
+    + name : varchar
+    + type_id : int [FK]
+    + description : varchar
+    + date : date
+    + user_id : int [FK]
+}
+
+entity "UserRole" as UserRole {
+    + id : int [PK]
+    + name : varchar
+}
+
+entity "FriendRequestStatus" as FriendRequestStatus {
+    + id : int [PK]
+    + name : varchar
+}
+
+entity "LearningActivityType" as LearningActivityType {
+    + id : int [PK]
+    + name : varchar
+}
+
+entity "ProgressStatus" as ProgressStatus {
+    + id : int [PK]
+    + name : varchar
+}
+
+entity "ProgressType" as ProgressType {
+    + id : int [PK]
+    + name : varchar
+}
+
+entity "RewardType" as RewardType {
+    + id : int [PK]
+    + name : varchar
+}
+
+' Relationships
+User }o-- UserRole : "has"
+User }o-- Reward : "earns >"
+User }o-- Progress : "tracks >"
+User ||--o{ FriendRequest : "sends >"
+User ||--o{ FriendRequest : "receives >"
+LearningActivity ||--o{ Progress : "tracked by >"
+LearningModule ||--o{ LearningActivity : "contains >"
+@enduml

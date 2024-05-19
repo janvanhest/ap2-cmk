@@ -1,0 +1,17 @@
+services:
+  db:
+    image: mariadb:latest
+    restart: always
+    environment:
+      MARIADB_USER: user
+      MARIADB_PASSWORD: password
+      MARIADB_ROOT_PASSWORD: rootpassword
+      MARIADB_DATABASE: lp_db
+    ports:
+      - 3306:3306
+
+  adminer:
+    image: adminer
+    restart: always
+    ports:
+      - 8080:8080

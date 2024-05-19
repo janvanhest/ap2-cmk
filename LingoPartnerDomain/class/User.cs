@@ -1,80 +1,105 @@
-﻿using System;
-using System.ComponentModel.DataAnnotations;
-using System.Net.Mail;
-using System.Numerics;
+﻿using System.Net.Mail;
+using LingoPartnerDomain.enums;
 
-namespace LingoPartnerDomain
+namespace LingoPartnerDomain.classes
 {
-  public abstract class User
+  public class User
   {
-    public Guid Id { get; private set; }
-    [Required, MaxLength(50)]
-    public string FirstName { get; private set; }
-    [MaxLength(50)]
-    public string MiddleName { get; private set; }
-    [Required, MaxLength(50)]
-    public string LastName { get; private set; }
+    public int? Id { get; private set; }
+    public string FirstName { get; private set; } = string.Empty; // Default empty string
+    public string MiddleName { get; private set; } = string.Empty;
+    public string LastName { get; private set; } = string.Empty;
     public DateTime DateOfBirth { get; private set; }
-    [Required, EmailAddress]
-    public MailAddress Email { get; protected set; }
-    // Consider a secure way to store password
-    [Required, MaxLength(50)]
-    public string UserName { get; protected set; }
-    // Minimum eight characters, at least one uppercase letter, one lowercase letter, one number and one special character
-    [Required, MaxLength(50), RegularExpression(@"^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[^\da-zA-Z]).{8,15}$")]
-    protected string Password;
+    public MailAddress Email { get; private set; } // Ensured as non-nullable
+    public string Password { get; private set; } // FIXME: Consider security practices for password storage
+    public string Username { get; private set; }
+    public UserRole Role { get; private set; }
 
-    public User(Guid id, string firstName, string middleName, string lastName, DateTime dateOfBirth, MailAddress email, string password, string userName)
+    // Main constructor for initialization with validation
+    private void Initialize(string firstName, string middleName, string lastName, DateTime dateOfBirth, MailAddress email, string password, string username, UserRole role)
     {
-      if (string.IsNullOrEmpty(firstName) || string.IsNullOrEmpty(lastName) || email == null || string.IsNullOrEmpty(password) || string.IsNullOrEmpty(userName))
+      FirstName = firstName ?? throw new ArgumentNullException(nameof(firstName), "First name cannot be null.");
+      MiddleName = middleName ?? string.Empty; // MiddleName can be empty, allowed to be null
+      LastName = lastName ?? throw new ArgumentNullException(nameof(lastName), "Last name cannot be null.");
+      DateOfBirth = dateOfBirth; // Assuming validation of date is handled elsewhere if needed
+      Email = email ?? throw new ArgumentNullException(nameof(email), "Email address cannot be null.");
+      Password = password ?? throw new ArgumentNullException(nameof(password), "Password cannot be null.");
+      Username = username ?? throw new ArgumentNullException(nameof(username), "Username cannot be null.");
+      Role = role;
+    }
+
+    // Constructor without ID (for new users)
+#pragma warning disable CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider declaring as nullable.
+    public User(string firstName, string middleName, string lastName, DateTime dateOfBirth, MailAddress email, string password, string username, UserRole role)
+#pragma warning restore CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider declaring as nullable.
+    {
+      Initialize(firstName, middleName, lastName, dateOfBirth, email, password, username, role);
+    }
+
+    // Constructor with ID (typically used for retrieving existing users)
+#pragma warning disable CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider declaring as nullable.
+    public User(int id, string firstName, string middleName, string lastName, DateTime dateOfBirth, MailAddress email, string password, string username, UserRole role)
+#pragma warning restore CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider declaring as nullable.
+    {
+      Id = id; // Additional check can be added if ID should not be zero or negative
+      Initialize(firstName, middleName, lastName, dateOfBirth, email, password, username, role);
+    }
+
+    // Update only first, middle, and last names
+    public void UpdateProfile(string firstName, string middleName, string lastName)
+    {
+      SetNames(firstName, middleName, lastName);
+      Console.WriteLine("Names updated successfully.");
+    }
+
+    // Update names and email address
+    public void UpdateProfile(string firstName, string middleName, string lastName, MailAddress email)
+    {
+      SetNames(firstName, middleName, lastName);
+      SetEmail(email);
+      Console.WriteLine("Names and email updated successfully.");
+    }
+
+    // Update names, email address, and password
+    public void UpdateProfile(string firstName, string middleName, string lastName, MailAddress email, string newPassword)
+    {
+      SetNames(firstName, middleName, lastName);
+      SetEmail(email);
+      SetPassword(newPassword);
+      Console.WriteLine("Names, email, and password updated successfully.");
+    }
+
+    private void SetNames(string firstName, string? middleName, string lastName)
+    {
+      // if firstName or lastName is null, throw an exception
+      if (firstName == null || lastName == null)
       {
-        throw new ArgumentNullException("One or more required fields are empty.");
+        throw new ArgumentNullException(nameof(firstName));
       }
-      if (dateOfBirth > DateTime.Now.AddYears(-4))
-      {
-        throw new ArgumentException("User must be at least 4 years old.");
-      }
-      Id = id;
       FirstName = firstName;
-      MiddleName = middleName;
-      LastName = lastName;
-      DateOfBirth = dateOfBirth;
-      Email = email;
-      Password = password;
-      UserName = userName;
-    }
-
-    public void UpdateUserProfile(string firstName, string middleName, string lastName, DateTime dateOfBirth)
-    {
-      FirstName = firstName;
-      MiddleName = middleName;
-      LastName = lastName;
-      DateOfBirth = dateOfBirth;
-    }
-
-    public void UpdateName(string firstName, string middleName, string lastName)
-    {
-      FirstName = firstName;
-      MiddleName = middleName;
+      MiddleName = middleName ?? string.Empty; // MiddleName can be empty, assuming it's nullable logic
       LastName = lastName;
     }
 
-    public void UpdateEmail(MailAddress email)
+    private void SetEmail(MailAddress email)
     {
-      Email = email;
+      Email = email ?? throw new ArgumentNullException(nameof(email), "Email cannot be null");
     }
 
-    public void UpdatePassword(string password)
+    private void SetPassword(string newPassword)
     {
-      Password = password;
+      Password = newPassword; // Consider security practices for password storage
     }
-    public void UpdateUserName(string userName)
+
+    public void SetRole(UserRole newRole)
     {
-      UserName = userName;
+      Role = newRole;
     }
-    public string GetFullName()
+
+    public bool VerifyPassword(string attemptedPassword)
     {
-      return string.IsNullOrEmpty(MiddleName) ? $"{FirstName} {LastName}" : $"{FirstName} {MiddleName} {LastName}";
+      // Implement password verification
+      return attemptedPassword == Password; // Simplified for example, consider password hashing
     }
   }
 }

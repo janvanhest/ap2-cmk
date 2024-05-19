@@ -7,5 +7,8 @@ public enum RewardType
   [Description("Badge")]
   BADGE,
   [Description("Certificate")]
-  CERTIFICATE
+  CERTIFICATE,
+  [Description("Diploma")]
+  DIPLOMA
+
 }

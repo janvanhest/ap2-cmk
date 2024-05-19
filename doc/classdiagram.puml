@@ -1,12 +1,5 @@
 @startuml
 
-enum LearningActivityType {
-    MULTIPLECHOICE
-    FILLINTHEBLANK
-    INSTRUCTION
-    QUIZ
-}
-
 enum FriendRequestStatus {
     ACCEPTED
     DECLINED
@@ -15,9 +8,12 @@ enum FriendRequestStatus {
     BLOCKED
 }
 
-enum RewardType {
-    DIPLOMA
-    BADGE
+enum LearningActivityType {
+    MULTIPLECHOICE
+    FILLINTHEBLANK
+    TRUEFALSE
+    INSTRUCTION
+    QUIZ
 }
 
 enum ProgressStatus {
@@ -27,102 +23,105 @@ enum ProgressStatus {
 }
 
 enum ProgressType {
+    LEARNINGACTIVITY
+    ASSESMENT
     MODULE
-    ACTIVITY
+    PROJECT
 }
 
-' Base class for common user attributes
-abstract class User {
-    -id: Uuid
+enum RewardType {
+    DIPLOMA
+    BADGE
+}
+
+enum UserRole {
+    TEACHER
+    STUDENT
+    ADMIN
+}
+
+class Administration {
+    + Administration()
+    + AddUser(user: User)
+    + UpdateUserProfile(user: User)
+    + AddLearningModule(module: LearningModule)
+    + RemoveLearningModule(module: LearningModule)
+}
+
+class FriendRequest {
+    - id: Int
+    - sender: User
+    - recipient: User
+    - status: FriendRequestStatus
+    +FriendRequest(sender: User, recipient: User)
+    +UpdateStatus(status: FriendRequestStatus)
+}
+
+class LearningActivity {
+    -id: Int
+    -name: String
+    -description: String
+    -type: LearningActivityType
+    +LearningActivity(name: String, description: String, type: LearningActivityType)
+    +UpdateActivity(name: String, description: String, type: LearningActivityType)
+}
+
+class LearningModule {
+    -id: int
+    -name: String
+    -description: String
+    +LearningModule(name: String, description: String)
+    +AddLearningActivity(activity: LearningActivity)
+    +RemoveLearningActivity(activity: LearningActivity)
+    +ShowLearningActivities(): List<LearningActivity>
+    +UpdateModule(name: String, description: String)
+}
+
+class Progress {
+    -id: Int
+    -type: ProgressType
+    -status: ProgressStatus
+    -progressDetails: String
+    +Progress(type: ProgressType, status: ProgressStatus, progressDetails: String)
+    +ShowDetails(): String
+    +UpdateProgress(details: String)
+}
+
+class Reward {
+    -name: String
+    -type: RewardType
+    -description: String
+    -date: Date
+    +Reward(name: String, type: RewardType, description: String, date: Date)
+    +ShowDetails(): String
+}
+
+class User {
+    -id: Int
     -firstName: String
     -middleName: String
     -lastName: String
     -dateOfBirth: Date
     -email: String
     -password: String
-    +UpdateProfile(firstName: String, middleName: String, lastName: String, dateOfBirth: Date, email: String, password: String)
-    +UpdateName(firstName: String, middleName: String, lastName: String)
-    +UpdateEmail(email: String)
-    +UpdatePassword(password: String)
+    -role: UserRole
+    +User(firstName: String, middleName: String, lastName: String, dateOfBirth: Date, email: String, password: String, role: UserRole)
+    +UpdateProfile(firstName: String, middleName: String, lastName: String, email: String, password: String)
+    +SetRole(role: UserRole)
 }
 
-class Administration {
-    +AddStudent(student: Student)
-    +AddTeacher(teacher: Teacher)
-    +UpdateStudent(student: Student, updatedStudent: Student)
-    +UpdateTeacher(teacher: Teacher, updatedTeacher: Teacher)
-}
+Administration "1" -right-> "n" User
+Administration "1" -down-> "n" LearningModule
 
-class Teacher extends User {
-    +AddLearningModule(module: LearningModule)
-}
+User -up-> "n" Reward
+User -right-> "n" Progress
 
-class Student extends User {
-    +ShowProgress(): Progress
-    +ShowRewards(): List<Reward>
-}
+User "1" -up-> "n" FriendRequest : sent
+User "1" <-up- "n" FriendRequest : received
 
-class LearningModule {
-    -id: Uuid
-    -name: String
-    -description: String
-    +AddLearningActivity(activity: LearningActivity)
-    +RemoveLearningActivity(activity: LearningActivity)
-    +ShowLearningActivities(): List<LearningActivity>
-}
+Progress "1" -down-> "1" LearningActivity
 
+LearningModule "1" --> "n" LearningActivity
 
-class LearningActivity {
-    -id: Uuid
-    -name: String
-    -description: String
-    -type: LearningActivityType
-    +UpdateActivity(name: String, description: String, type: LearningActivityType)
-}
-
-
-
-class Progress {
-    -learningActivity?: LearningActivity
-    -type: ProgressType
-    -status: ProgressStatus
-    -progressDetails: String
-    +ShowDetails(): String
-    +UpdateProgress(details: String)
-}
-
-class Reward {
-    -id: Uuid
-    -name: String
-    -type: RewardType
-    -description: String
-    +ShowDetails(): String
-}
-
-class Acquaintance {
-    +AddFriend(friend: Student)
-    +RemoveFriend(friend: Student)
-    +SendFriendRequest(friend: Student)
-    +RespondToFriendRequest(request: FriendRequest)
-    +ShowFriendsByStatus(status: FriendRequestStatus): List<Student>
-}
-
-class FriendRequest {
-    -sender: Student
-    -receiver: Student
-    -status: FriendRequestStatus
-}
-
-
-
-Administration -left-> "n" Student
-Administration -right-> "n" Teacher
-Administration -down-> "n" LearningModule
-LearningModule -right-> "n" LearningActivity
-Student -up-> "n" Acquaintance
-Teacher -down-> "n" LearningModule : creates/manages >
-Student -down-> "n" Progress
-Student -down-> "n" Reward
-Acquaintance -up-> "n" FriendRequest
 
 @enduml

@@ -1,59 +1,70 @@
-﻿namespace LingoPartnerDomain;
-using System;
-using System.Collections.Generic;
-using LingoPartnerDomain.classes;
+﻿using LingoPartnerInfrastructure;
+using LingoPartnerDomain.Helpers.ObjectMappers;
+using LingoPartnerInfrastructure.DTO;
 
-public class Administration
+namespace LingoPartnerDomain.classes
 {
-  private List<Teacher> teachers;
-  private List<Student> students;
-  private List<LearningActivity> learningActivities;
-  public IReadOnlyList<Teacher> Teachers => teachers;
-  public IReadOnlyList<Student> Students => students;
-  // private IReadOnlyList<Teacher> Teachers
-  // {
-  //   get
-  //   {
-  //     return teachers.AsReadOnly();
-  //   }
-  // }
-  // private IReadOnlyList<Student> Students
-  // {
-  //   get
-  //   {
-  //     return students.AsReadOnly();
-  //   }
-  // }
-
-  public Administration()
+  public class Administration
   {
-    teachers = new List<Teacher>();
-    students = new List<Student>();
-    learningActivities = new List<LearningActivity>();
-  }
-
-  public void AddTeacher(Teacher teacher)
-  {
-    if (teacher == null)
+    private List<User> Users = new List<User>();
+    public IReadOnlyList<User> users
+    { get { return this.Users; } }
+    private List<LearningModule> LearningModules = new List<LearningModule>();
+    public IReadOnlyList<LearningModule> learningModules
+    { get { return this.LearningModules; } }
+    public Administration()
     {
-      throw new ArgumentNullException(nameof(teacher));
-    }
-    if (teachers.Any(teacher => teacher.Id == teacher.Id))
-    {
-      throw new ArgumentException("Teacher already exists.");
-    }
-    teachers.Add(teacher);
-  }
+      // Users = new List<User>();
+      // LearningModules = new List<LearningModule>();
+      UserRepository userRepository = new UserRepository();
+      List<UserDTO> userDTOs = userRepository.GetUsers();
+      foreach (UserDTO userDTO in userDTOs)
+      {
+        User user = userDTO.ToDomain();
+        Users.Add(user);
+      }
 
-  public void UpdateStudent(Guid studentId, Student updatedStudent)
-  {
-    var student = this.students.Find(s => s.Id == studentId);
-    if (student != null)
+    }
+    public void Add(User user)
     {
-      // Update the student's details here. If a value is changed it shoudl be replaced with the new value
-      student.UpdateUserProfile(updatedStudent.FirstName, updatedStudent.MiddleName, updatedStudent.LastName, updatedStudent.DateOfBirth);
-      // This can involve updating fields like name, email, etc.
+      // Users.Add(user);
+      // FIXME: implement correct logging. Only loggin in views
+      new UserRepository().AddUser(user.ToDTO());
+      Console.WriteLine($"User {user.FirstName} {user.LastName} added.");
+
+    }
+    public void Add(LearningModule module)
+    {
+      // LearningModules.Add(module);
+      // new LearningModuleRepository().AddLearningModule(module.ToDTO());
+      // Console.WriteLine($"Learning module '{module.Name}' added.");
+    }
+    public void UpdateUserProfile(User updatedUser, string? newPassword)
+    {
+      var user = Users.Find(u => u.Id == updatedUser.Id);
+      if (user != null)
+      {
+        user.UpdateProfile(updatedUser.FirstName, updatedUser.MiddleName, updatedUser.LastName, updatedUser.Email, newPassword ?? string.Empty);
+        Console.WriteLine($"JHE: User {updatedUser.FirstName} {updatedUser.LastName} updated.");
+      }
+      else
+      {
+        // TODO: Log error Or create domain exception
+        Console.WriteLine("User not found.");
+      }
+    }
+    public void RemoveLearningModule(int moduleId)
+    {
+      var module = LearningModules.Find(m => m.Id == moduleId);
+      if (module != null)
+      {
+        LearningModules.Remove(module);
+        Console.WriteLine($"Learning module '{module.Name}' removed.");
+      }
+      else
+      {
+        Console.WriteLine("Learning module not found.");
+      }
     }
   }
-
 }

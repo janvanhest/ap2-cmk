@@ -1,4 +1,4 @@
-﻿using LingoPartnerDomain;
+﻿using LingoPartnerDomain.classes;
 
 namespace LingoPartnerConsole.Views
 {
