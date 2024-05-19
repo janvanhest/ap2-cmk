@@ -1,10 +1,12 @@
-﻿using System.Runtime.CompilerServices;
+﻿using System.Diagnostics;
+using System.Runtime.CompilerServices;
+using MySql.Data.MySqlClient;
 
-namespace LingoPartnerInfrastructure
+namespace LingoPartnerInfrastructure.Helpers
 {
   public class InfrastructureHelper
   {
-    public string CreateConnectionString()
+    public static string CreateConnectionString()
     {
       string server = Environment.GetEnvironmentVariable("DB_SERVER") ?? "localhost";
       string database = Environment.GetEnvironmentVariable("DB_NAME") ?? "lp_db";
@@ -12,6 +14,21 @@ namespace LingoPartnerInfrastructure
       string password = Environment.GetEnvironmentVariable("DB_PASSWORD") ?? "password";
       string connectionString = $"Server={server};Database={database};User Id={userName};Password={password};";
       return connectionString;
+    }
+    public static bool IsServerAvailable()
+    {
+      try
+      {
+        using (var connection = new MySqlConnection(CreateConnectionString()))
+        {
+          connection.Open();
+          return true;
+        }
+      }
+      catch (MySqlException)
+      {
+        return false;
+      }
     }
   }
 }
