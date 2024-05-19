@@ -10,19 +10,16 @@ namespace LingoPartnerShared.Helpers
       string logMessage = FormatLogMessage("Error", message, caller, ex);
       Trace.TraceError(logMessage);
     }
-
-    public static void LogInformation(string message, [CallerMemberName] string caller = "")
+    public static void LogInformation(string message, [CallerMemberName] string caller = "", Exception? ex = null)
     {
-      string logMessage = FormatLogMessage("Info", message, caller);
+      string logMessage = FormatLogMessage("Info", message, caller, ex ?? null);
       Trace.TraceInformation(logMessage);
     }
-
-    public static void LogWarning(string message, [CallerMemberName] string caller = "")
+    public static void LogWarning(string message, [CallerMemberName] string caller = "", Exception? ex = null)
     {
-      string logMessage = FormatLogMessage("Warning", message, caller);
+      string logMessage = FormatLogMessage("Warning", message, caller, ex ?? null);
       Trace.TraceWarning(logMessage);
     }
-
     private static string FormatLogMessage(string logLevel, string message, string caller, Exception? ex = null)
     {
       string env = Environment.GetEnvironmentVariable("ENV") ?? "production";
