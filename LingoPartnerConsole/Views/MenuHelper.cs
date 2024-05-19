@@ -6,7 +6,7 @@ namespace LingoPartnerConsole.Views
   {
     public static void ReturnToMenu(Administration schoolAdministration)
     {
-      Console.WriteLine("Press any key to return to menu...");
+      Console.WriteLine("\nPress any key to return to menu...\n");
       Console.ReadKey();
       Menu menu = new Menu(schoolAdministration);
       menu.Show();
