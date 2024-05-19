@@ -25,6 +25,8 @@ A few scenario's that are not implemented in this project but could be implement
 - 
 
 ## Changelog
+### 19 mei Major update. 
+- merged with main because of implementation of repository pattern and reversed dependency injection.
 
 ### Zondag 24 maart. 
 - Updated the class diagram with the correct relations.
