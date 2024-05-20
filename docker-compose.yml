@@ -2,10 +2,14 @@ services:
   db:
     image: mariadb:latest
     restart: always
+    env_file:
+      - .env
     environment:
-      MARIADB_USER: user
-      MARIADB_PASSWORD: password
-      MARIADB_ROOT_PASSWORD: rootpassword
-      MARIADB_DATABASE: lp_db
+      MARIADB_USER: ${DB_USER}
+      MARIADB_PASSWORD: ${DB_PASSWORD}
+      MARIADB_ROOT_PASSWORD: ${DB_ROOT_PASSWORD}
+      MARIADB_DATABASE: ${DB_NAME}
     ports:
       - 3306:3306
+    volumes:
+      - ./db/var/lib/mysql:/var/lib/mysql
