@@ -2,6 +2,7 @@
 using LingoPartnerDomain.enums;
 using LingoPartnerDomain.interfaces;
 using LingoPartnerInfrastructure.Helpers;
+using LingoPartnerShared.Helpers;
 using MySql.Data.MySqlClient;
 using System.Diagnostics;
 using System.Net.Mail;
@@ -71,10 +72,9 @@ namespace LingoPartnerInfrastructure.Repository
       }
       return null;
     }
-
-    public List<User> GetUsers()
+    public IEnumerable<User> GetUsers()
     {
-      List<User> users = new List<User>();
+      var users = new List<User>();
       using (var connection = new MySqlConnection(_connectionString))
       {
         connection.Open();
@@ -101,6 +101,50 @@ namespace LingoPartnerInfrastructure.Repository
         }
       }
       return users;
+    }
+
+    public User? UpdateUser(User user)
+    {
+      using (var connection = new MySqlConnection(_connectionString))
+      {
+        connection.Open();
+        using (var transaction = connection.BeginTransaction())
+        {
+          try
+          {
+            string query = @"UPDATE User 
+                             SET FirstName = @FirstName, MiddleName = @MiddleName, LastName = @LastName, DateOfBirth = @DateOfBirth, Email = @Email, Password = @Password, Username = @Username, Role = @Role
+                             WHERE Id = @Id;";
+
+            using (var command = new MySqlCommand(query, connection, transaction))
+            {
+              command.Parameters.AddWithValue("@Id", user.Id);
+              command.Parameters.AddWithValue("@FirstName", user.FirstName);
+              command.Parameters.AddWithValue("@MiddleName", user.MiddleName);
+              command.Parameters.AddWithValue("@LastName", user.LastName);
+              command.Parameters.AddWithValue("@DateOfBirth", user.DateOfBirth);
+              command.Parameters.AddWithValue("@Email", user.Email.ToString());
+              command.Parameters.AddWithValue("@Password", user.Password); // Consider using hashed password
+              command.Parameters.AddWithValue("@Username", user.Username);
+              command.Parameters.AddWithValue("@Role", user.Role.ToString());
+
+              var result = command.ExecuteNonQuery();
+              if (result > 0)
+              {
+                transaction.Commit();
+                return user;
+              }
+            }
+          }
+          catch (MySqlException ex)
+          {
+            transaction.Rollback();
+            LoggingHelper.LogError(ex, "Database error.");
+            throw;
+          }
+        }
+      }
+      return null;
     }
   }
 }
