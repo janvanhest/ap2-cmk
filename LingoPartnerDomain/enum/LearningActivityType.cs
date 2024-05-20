@@ -3,11 +3,11 @@ using System.ComponentModel;
 public enum LearningActivityType
 {
   [Description("Multiple Choice")]
-  MULTIPLE_CHOICE,
+  MULTIPLECHOICE,
   [Description("Fill in the Blank")]
-  FILL_IN_THE_BLANK,
+  FILLINTHEBLANK,
   [Description("True or False")]
-  TRUE_FALSE,
+  TRUEFALSE,
   [Description("Matching")]
   MATCHING,
   [Description("Instructional Text")]
