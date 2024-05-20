@@ -29,11 +29,32 @@ There is a noun-verb analysis and, a contextdiagram, a usecase diagram and a cla
 #### Versie 2: 
 ![Package Diagram](https://www.plantuml.com/plantuml/png/VOwn2i8m48RtF4NetbUGWYw2W-0OCXnDJ8F9fLnoE8ZlRWMts5j_lk_kcse3QfoJKYlC3mXU3vU8eLot6JqT2zQI_A1Vwhs3d4g6Y19nnZj1RSHpOn9ltHOWxtw4-HDYzUZA4yU3Dds3LMR_xMRoAdZTg4UAOMbVfK-qSfsio7MzDtbqdDC7)
 
+![Package Diagram](https://www.plantuml.com/plantuml/png/VO-n3i8W48RtFiMbEwzWckXYuc3Ys7Iu5AH4E9e3uc1yTnqwdVNMd--3Zw5KvDfIx5QS7-WTz9T0Fb-_Apa-PYevkXvUtRlRHquvOI2DEDETiLHkSssitdLRa9tTY74dP09ZyvFC0SRVXkcV8d0H93Hn2AQjsdDo1CF1BtLJnC_qGXtNouGtEB8jnGy0)
+
 ### Additional Scenario's
 A few scenario's that are not implemented in this project but could be implemented in the future. Though they might have some impact on the current implementation.
 - Max enrollment reached. 
 
 ## Changelog
+
+### 19 mei Major update. 
+- merged with main because of implementation of repository pattern and reversed dependency injection.
+
+### 19 mei. 
+- created shared layer. 
+- changed references. Console/View and infrastructure are now referencing the domain layer.
+- All layers point to shared layer.
+- Created interfaces for user reposotories. 
+- Repository pattern implemented for user, learningModule implemented with corresponding interfaces.
+- Added a helper class for infrastructure layer to create a connection string. 
+- Added a helper class for infrastructure layer to check if database is available. 
+- Added several helper functions for input validation. 
+- Added trace functionality. 
+  - Trace functionality automiticall logs all actions to a file and to the console.
+- Added a helper class in the shared layer with a method for logging.
+- Updated script for database user and userlearningmodule tables and some test data.
+- Updated docker-compose file to include the database.
+- Added database.puml to the repository with a diagram of the database.
 
 ### 10 mei.
 - Storing and retrieving of User and learningModule entities is succesfull. `
