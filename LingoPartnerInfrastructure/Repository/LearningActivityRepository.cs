@@ -14,7 +14,8 @@ namespace LingoPartnerInfrastructure
       if (string.IsNullOrEmpty(_connectionString))
       { throw new ArgumentNullException(nameof(connectionString), "Connection string cannot be null or empty."); }
     }
-    public void AddLearningActivity(LearningActivity activity)
+
+    public LearningActivity? AddLearningActivity(LearningActivity activity)
     {
       throw new NotImplementedException();
     }
@@ -24,7 +25,7 @@ namespace LingoPartnerInfrastructure
       throw new NotImplementedException();
     }
 
-    public LearningActivity GetLearningActivityById(int activityId)
+    public LearningActivity? GetLearningActivityById(int activityId)
     {
       throw new NotImplementedException();
     }
@@ -34,7 +35,7 @@ namespace LingoPartnerInfrastructure
       throw new NotImplementedException();
     }
 
-    public void UpdateLearningActivity(LearningActivity activity)
+    public LearningActivity? UpdateLearningActivity(LearningActivity activity)
     {
       throw new NotImplementedException();
     }
