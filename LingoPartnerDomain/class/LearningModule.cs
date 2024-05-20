@@ -18,12 +18,16 @@ public class LearningModule
     Name = name ?? throw new ArgumentNullException(nameof(name));
     Description = description ?? throw new ArgumentNullException(nameof(description));
   }
+#pragma warning disable CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider adding the 'required' modifier or declaring as nullable.
   public LearningModule(string name, string description)
+#pragma warning restore CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider adding the 'required' modifier or declaring as nullable.
   {
     Initialize(name, description);
   }
 
+#pragma warning disable CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider adding the 'required' modifier or declaring as nullable.
   public LearningModule(int id, string name, string description)
+#pragma warning restore CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider adding the 'required' modifier or declaring as nullable.
   {
     Id = id;
     Initialize(name, description);
