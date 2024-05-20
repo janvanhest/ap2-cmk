@@ -14,7 +14,31 @@ namespace LingoPartnerApp
     static void Main()
     {
       DotEnv.Load();
+      SetupProgram();
+
+      UserRepository userRepository = new UserRepository();
+      LearningModuleRepository learningModuleRepository = new LearningModuleRepository();
+      LearningActivityRepository learningActivityRepository = new LearningActivityRepository();
+
+      // Create new administration
+      Administration schoolAdministration = new Administration(
+        userRepository,
+        learningModuleRepository,
+        learningActivityRepository
+      );
+      Menu menu = new Menu(schoolAdministration);
+      menu.Show();
+    }
+
+    private static void SetupProgram()
+    {
       ConfigureTrace();
+      string connectionString = InfrastructureHelper.CreateConnectionString();
+      if (string.IsNullOrEmpty(connectionString))
+      {
+        Trace.TraceError("Connection string is null or empty. Exiting...");
+        Environment.Exit(0);
+      }
       if (!InfrastructureHelper.IsServerAvailable())
       {
         Console.WriteLine("Database server is not available. Exiting...");
@@ -25,17 +49,6 @@ namespace LingoPartnerApp
         SetupDevelopmentMode();
       }
       FirstWelcomeMessage();
-
-      UserRepository userRepository = new UserRepository();
-      LearningModuleRepository learningModuleRepository = new LearningModuleRepository();
-
-      // Create new administration
-      Administration schoolAdministration = new Administration(
-        userRepository,
-        learningModuleRepository
-      );
-      Menu menu = new Menu(schoolAdministration);
-      menu.Show();
     }
 
     private static void FirstWelcomeMessage()
