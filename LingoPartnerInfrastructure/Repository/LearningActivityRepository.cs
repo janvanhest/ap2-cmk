@@ -1,10 +1,19 @@
 ﻿using LingoPartnerDomain;
 using LingoPartnerDomain.classes;
+using LingoPartnerInfrastructure.Helpers;
 
 namespace LingoPartnerInfrastructure
 {
   public class LearningActivityRepository : ILearningActivityRepository
   {
+    private readonly string _connectionString;
+    public LearningActivityRepository(string? connectionString = null)
+    {
+      _connectionString = connectionString ?? InfrastructureHelper.CreateConnectionString();
+      // FIXME: is a guard clause really necessary here?
+      if (string.IsNullOrEmpty(_connectionString))
+      { throw new ArgumentNullException(nameof(connectionString), "Connection string cannot be null or empty."); }
+    }
     public void AddLearningActivity(LearningActivity activity)
     {
       throw new NotImplementedException();
