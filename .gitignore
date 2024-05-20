@@ -48,4 +48,9 @@ _ReSharper*/
 .idea/
 .env
 log.txt
+# ignore trace.log files
 trace.log
+
+# ignore everything in the folder ./db
+db/*
+.env
