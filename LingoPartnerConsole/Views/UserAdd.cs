@@ -1,5 +1,4 @@
-﻿using System;
-using System.Net.Mail;
+﻿using System.Net.Mail;
 using LingoPartnerConsole.Classes;
 using LingoPartnerDomain.enums;
 using LingoPartnerDomain.classes;

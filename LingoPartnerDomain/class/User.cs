@@ -29,19 +29,15 @@ namespace LingoPartnerDomain.classes
     }
 
     // Constructor without ID (for new users)
-#pragma warning disable CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider declaring as nullable.
     public User(string firstName, string middleName, string lastName, DateTime dateOfBirth, MailAddress email, string password, string username, UserRole role)
-#pragma warning restore CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider declaring as nullable.
     {
       Initialize(firstName, middleName, lastName, dateOfBirth, email, password, username, role);
     }
 
     // Constructor with ID (typically used for retrieving existing users)
-#pragma warning disable CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider declaring as nullable.
     public User(int id, string firstName, string middleName, string lastName, DateTime dateOfBirth, MailAddress email, string password, string username, UserRole role)
-#pragma warning restore CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider declaring as nullable.
     {
-      Id = id; // Additional check can be added if ID should not be zero or negative
+      Id = id;
       Initialize(firstName, middleName, lastName, dateOfBirth, email, password, username, role);
     }
 

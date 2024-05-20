@@ -122,6 +122,4 @@ User "1" <-up- "n" FriendRequest : received
 Progress "1" -down-> "1" LearningActivity
 
 LearningModule "1" --> "n" LearningActivity
-
-
 @enduml

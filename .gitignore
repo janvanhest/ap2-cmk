@@ -47,3 +47,5 @@ _ReSharper*/
 # Rider
 .idea/
 .env
+log.txt
+trace.log

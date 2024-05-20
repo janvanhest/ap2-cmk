@@ -1,32 +1,76 @@
 ﻿// See https://aka.ms/new-console-template for more information
 using System.Diagnostics;
 using dotenv.net;
-using LingoPartnerConsole.Views;
 
+using LingoPartnerConsole.Views;
 using LingoPartnerDomain.classes;
+using LingoPartnerInfrastructure.Helpers;
+using LingoPartnerInfrastructure.Repository;
 
 namespace LingoPartnerApp
 {
   internal class Program
   {
-    static void Main(string[] args)
+    static void Main()
     {
       DotEnv.Load();
-      if (System.Environment.GetEnvironmentVariable("ENV") == "development")
+      ConfigureTrace();
+      if (!InfrastructureHelper.IsServerAvailable())
       {
-        Trace.Listeners.Add(new ConsoleTraceListener());
-        Trace.Listeners.Add(new TextWriterTraceListener("./log.txt"));
+        Console.WriteLine("Database server is not available. Exiting...");
       }
+      if (Environment.GetEnvironmentVariable("ENV") == "development")
+      {
+        SetupDevelopmentMode();
+      }
+      FirstWelcomeMessage();
 
-      // Example usage
-      Trace.TraceInformation("Application started");
-      Console.WriteLine("Welcome to LingoPartner!");
+      UserRepository userRepository = new UserRepository();
+      LearningModuleRepository learningModuleRepository = new LearningModuleRepository();
 
       // Create new administration
-      Administration schoolAdministration = new();
+      Administration schoolAdministration = new Administration(
+        userRepository,
+        learningModuleRepository
+      );
       Menu menu = new Menu(schoolAdministration);
       menu.Show();
+    }
 
+    private static void FirstWelcomeMessage()
+    {
+      Console.Clear();
+      DateTime dateTime = DateTime.Now;
+      String traceMessage = $"\n\nApplication started at: {dateTime}";
+      Trace.TraceInformation(traceMessage);
+
+      Console.WriteLine("Welcome to LingoPartner!\n");
+      Console.WriteLine("Press a key to continue...\n");
+      Console.ReadKey();
+    }
+
+    private static void ConfigureTrace()
+    {
+      // Create a text file trace listener
+      TextWriterTraceListener fileListener = new TextWriterTraceListener("trace.log");
+      Trace.Listeners.Add(fileListener);
+
+      // Optionally, add a console trace listener
+      ConsoleTraceListener consoleListener = new ConsoleTraceListener();
+      Trace.Listeners.Add(consoleListener);
+
+      // Set the trace level
+      Trace.AutoFlush = true;
+    }
+    private static void SetupDevelopmentMode()
+    {
+      // TODO: Which things need only to be started in development mode? 
+      Console.WriteLine("\n===========================");
+      Console.WriteLine("Running in development mode");
+      Console.WriteLine("===========================");
+      Console.WriteLine("\nPress a key to continue");
+      // pres a key to continue
+      Console.ReadKey();
     }
   }
 }

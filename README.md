@@ -22,6 +22,15 @@ There is a noun-verb analysis and, a contextdiagram, a usecase diagram and a cla
 #### Versie 2:
 ![ClassDiagram](https://www.plantuml.com/plantuml/png/hLLRJwmw57xdLpJpX95vEA_4616g4XcO0yn9pdaZqwfDk73QuiIO_TzteQtIWhelsmU7hhM-hz-wjBrYlA9yQ6h7mUtGW0F3DEzg35uT8FvA68HtC9--Y_8GmRHqd6yoDC4LRKdx61mvUIRyfNpfDMntICfudy3mBej3E9bkuYI9q_8ENYT1UZ-PuhGeyqDOnbawhVy-nFy9Sib-GmbkKOx_7p3Z1Q_um1Hv48PmNy9eMaGm5BHgiOTf5AUtqtSOf25C4kMvJhBmNdnhzXoVAefcYYCXDzi5CZY8Rk5Rw9vsZnGpPcW8ivr8Juk8qtsUtUQmAAPbcfL56UJ2ko2ProYB3WbK6PNnFt7vxnX-h2l6G80QqXB6QSL9roh4kMLspzxCQEoREuX__jH2xJdqgE9uwTGmtSDTXuOQkytqumFJhEDpt7JF-0SXEXNJePFV4kI3kELoqLQDO2Wu5M7IWZ0xKjAFMHgESsltET83AoYbNQHgZwjRgGyVs2u5qld-BAvuwawMYs3cdWc0wDs5ZReKjRABfNs_MQuj5_FchvvKATNsV5rG3tpCgVANG_U7A6V56MTtjI0FX3AUBghI48HglBJNrLhqg3bxk2QKF_aW4Wjfnar5QZEo5s9E7KMcbNOrzlNzgSexhjo5EWyibNcWhkoeXI8F66eyO2lnWA72R8YuWnv8ZNzTpnURw-d7VDpQjPNe2q7TlU3L66PxPcStzCg8stsRDUnS0gsfipa_cCDthjbHZZ0NUOlpg-FUKZ4VAPqHC6OJC16XRrvbelX8Ue7aXfLD3uo_zl99COR3dVDwDgNHUCdXVi8_wuv-gPO7JRV6UCoaNLERRwNqzSgcocXUvnhWBfaziCxgWGyOFskPTGxadiZ6Yo9O3-_chmtOKlBunBUNODDkPB_MWb1tQcMCzU8vpeW1sw6NRZM5qcfmQs4I8MaroXerVnmh_XvtCGQkned1mEGP8yVHzAPUyMtVkuvZPY01Ehb5i7CbDXoQ-Zi0)
 
+### Package Diagram
+#### Versie 1:
+![Package Diagram](https://www.plantuml.com/plantuml/png/SoWkIImgAStDuU8gI4pEJanFLL3ooSnBpmy02kUb5ZddvnNdvwGgALHprU9GufAVcvYPXq-5PrvQKM9nIL5fSabf4SmihcWiziGgwARab-VfsYb4OreHouLD4A43jvMnN0wfUIb0Nm80)
+
+#### Versie 2: 
+![Package Diagram](https://www.plantuml.com/plantuml/png/VOwn2i8m48RtF4NetbUGWYw2W-0OCXnDJ8F9fLnoE8ZlRWMts5j_lk_kcse3QfoJKYlC3mXU3vU8eLot6JqT2zQI_A1Vwhs3d4g6Y19nnZj1RSHpOn9ltHOWxtw4-HDYzUZA4yU3Dds3LMR_xMRoAdZTg4UAOMbVfK-qSfsio7MzDtbqdDC7)
+
+![Package Diagram](https://www.plantuml.com/plantuml/png/VO-n3i8W48RtFiMbEwzWckXYuc3Ys7Iu5AH4E9e3uc1yTnqwdVNMd--3Zw5KvDfIx5QS7-WTz9T0Fb-_Apa-PYevkXvUtRlRHquvOI2DEDETiLHkSssitdLRa9tTY74dP09ZyvFC0SRVXkcV8d0H93Hn2AQjsdDo1CF1BtLJnC_qGXtNouGtEB8jnGy0)
+
 ### Additional Scenario's
 A few scenario's that are not implemented in this project but could be implemented in the future. Though they might have some impact on the current implementation.
 - Max enrollment reached. 
@@ -44,6 +53,25 @@ A few scenario's that are not implemented in this project but could be implement
 - Added a helper class in the shared layer with a method for logging.
 - Updated script for database user and userlearningmodule tables and some test data.
 - Updated docker-compose file to include the database.
+
+### 19 mei Major update. 
+- merged with main because of implementation of repository pattern and reversed dependency injection.
+
+### 19 mei. 
+- created shared layer. 
+- changed references. Console/View and infrastructure are now referencing the domain layer.
+- All layers point to shared layer.
+- Created interfaces for user reposotories. 
+- Repository pattern implemented for user, learningModule implemented with corresponding interfaces.
+- Added a helper class for infrastructure layer to create a connection string. 
+- Added a helper class for infrastructure layer to check if database is available. 
+- Added several helper functions for input validation. 
+- Added trace functionality. 
+  - Trace functionality automiticall logs all actions to a file and to the console.
+- Added a helper class in the shared layer with a method for logging.
+- Updated script for database user and userlearningmodule tables and some test data.
+- Updated docker-compose file to include the database.
+- Added database.puml to the repository with a diagram of the database.
 
 ### 10 mei.
 - Storing and retrieving of User and learningModule entities is succesfull. `

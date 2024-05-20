@@ -12,6 +12,7 @@ namespace LingoPartnerConsole.Views
       "Show all teachers", // 3
       "Show all students", // 4
       "Add a LearningModule", // 5
+      "Show all LearningModules", // 6
     };
 
     public Menu(Administration schoolAdministration)
@@ -22,17 +23,12 @@ namespace LingoPartnerConsole.Views
     {
       // Two carriage returns
       Console.Clear();
-      // Console.WriteLine("\n\n");
-      // Console.WriteLine("Welcome to the LingoPartner Console Application");
-      // Console.WriteLine("1. Add a user");
-      // Console.WriteLine("2. Show all users");
-      // Console.WriteLine("3. Show all teachers");
-      // Console.WriteLine("4. Show all students");
-      // Console.WriteLine("0. Exit");
       ShowMenuOptions(MenuItems);
 
-      Console.WriteLine("Please enter your choice:");
+      Console.WriteLine("Please enter your choice:\n");
       string? choice = Console.ReadLine();
+      Console.Clear();
+      UserList userList = new UserList(SchoolAdministration);
       switch (choice)
       {
         case "1":
@@ -40,18 +36,21 @@ namespace LingoPartnerConsole.Views
           userAdd.Show();
           break;
         case "2":
-          UserList userList = new UserList(SchoolAdministration);
           userList.Show();
           break;
         case "3":
-          NotImplemented();
+          userList.Show("Teacher");
           break;
         case "4":
-          NotImplemented();
+          userList.Show("Student");
           break;
         case "5":
           LearningModuleAdd learningModuleAdd = new LearningModuleAdd(SchoolAdministration);
           learningModuleAdd.Show();
+          break;
+        case "6":
+          LearningModuleList learningModuleList = new LearningModuleList(SchoolAdministration);
+          learningModuleList.Show();
           break;
         case "0":
           Environment.Exit(0);
@@ -77,7 +76,7 @@ namespace LingoPartnerConsole.Views
         Console.WriteLine($"{index}. {item}");
         index++;
       }
-      Console.WriteLine("0. Exit");
+      Console.WriteLine("0. Exit\n");
     }
   }
 }
