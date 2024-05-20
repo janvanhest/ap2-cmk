@@ -9,45 +9,49 @@ namespace LingoPartnerDomain.classes
   {
     private readonly IUserRepository userRepository;
     private readonly ILearningModuleRepository learningModuleRepository;
-    private List<User> users = new List<User>();
-    public IReadOnlyList<User> Users
-    {
-      get { return this.users; }
-    }
-    private List<LearningModule> learningModules = new List<LearningModule>();
-    public IReadOnlyList<LearningModule> LearningModules
-    {
-      get { return this.learningModules; }
-    }
-    public Administration(IUserRepository userRepository, ILearningModuleRepository learningModuleRepository)
+    private readonly ILearningActivityRepository learningActivityRepository;
+
+    private readonly List<User> users;
+    public IReadOnlyList<User> Users => users;
+    private readonly List<LearningModule> learningModules;
+    public IReadOnlyList<LearningModule> LearningModules => learningModules;
+    private readonly List<LearningActivity> learningActivities;
+    public IReadOnlyList<LearningActivity> LearningActivities => learningActivities;
+
+    public Administration(
+      IUserRepository userRepository,
+      ILearningModuleRepository learningModuleRepository,
+      ILearningActivityRepository learningActivityRepository)
     {
       this.userRepository = userRepository;
       this.learningModuleRepository = learningModuleRepository;
+      this.learningActivityRepository = learningActivityRepository;
 
-      this.learningModules = (List<LearningModule>)learningModuleRepository.GetAllLearningModules();
-      this.users = userRepository.GetUsers();
+      this.learningModules = learningModuleRepository.GetAllLearningModules().ToList();
+      this.users = userRepository.GetUsers().ToList();
+      this.learningActivities = learningActivityRepository.GetAllLearningActivities().ToList();
     }
     public void Add(User user)
     {
-      users.Add(user);
-      User Result = userRepository.AddUser(user);
-      // Check if Result is has written to the database
-      if (Result == null)
+      var result = userRepository.AddUser(user);
+      if (result == null)
       {
-        Trace.TraceError("User not added.");
+        LoggingHelper.LogError(new Exception("User not added."), "User not added.");
         return;
       }
+      users.Add(user);
     }
     public void Add(LearningModule module)
     {
-      learningModules.Add(module);
-      LearningModule Result = learningModuleRepository.AddLearningModule(module);
+
+      var result = learningModuleRepository.AddLearningModule(module);
       // Check if Result is has written to the database
-      if (Result == null)
+      if (result == null)
       {
-        Trace.TraceError("Learning module not added.");
+        LoggingHelper.LogError(new Exception("Learning module not added."), "Learning module not added.");
         return;
       }
+      learningModules.Add(module);
     }
     public User? UpdateUserProfile(User updatedUser, string? newPassword)
     {
@@ -57,14 +61,13 @@ namespace LingoPartnerDomain.classes
         // Ensure that the new password is not empty
         if (string.IsNullOrWhiteSpace(newPassword))
         {
-
-          LoggingHelper
-          .LogError(new ArgumentException("Password cannot be empty."), "Password cannot be empty.");
+          LoggingHelper.LogError(new ArgumentException("Password cannot be empty."), "Password cannot be empty.");
           throw new ArgumentException("Password cannot be empty.");
         }
 
         // Update the user's profile
         user.UpdateProfile(updatedUser.FirstName, updatedUser.MiddleName, updatedUser.LastName, updatedUser.Email, newPassword);
+        userRepository.UpdateUser(user); // Ensure user is updated in the repository
         return user;
       }
       else
