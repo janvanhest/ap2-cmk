@@ -18,6 +18,7 @@ namespace LingoPartnerApp
       if (!InfrastructureHelper.IsServerAvailable())
       {
         Console.WriteLine("Database server is not available. Exiting...");
+        Environment.Exit(0);
       }
       if (Environment.GetEnvironmentVariable("ENV") == "development")
       {
