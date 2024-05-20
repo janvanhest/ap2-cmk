@@ -27,7 +27,7 @@ namespace LingoPartnerInfrastructure.Repository
         {
           try
           {
-            string query = @"INSERT INTO Users (FirstName, MiddleName, LastName, DateOfBirth, Email, Password, Username, Role) 
+            string query = @"INSERT INTO User (FirstName, MiddleName, LastName, DateOfBirth, Email, Password, Username, Role) 
                                          VALUES (@FirstName, @MiddleName, @LastName, @DateOfBirth, @Email, @Password, @Username, @Role);
                                          SELECT LAST_INSERT_ID();";
 
@@ -78,7 +78,7 @@ namespace LingoPartnerInfrastructure.Repository
       using (var connection = new MySqlConnection(_connectionString))
       {
         connection.Open();
-        string query = "SELECT * FROM Users";
+        string query = "SELECT * FROM User";
         using (var cmd = new MySqlCommand(query, connection))
         {
           using (var reader = cmd.ExecuteReader())

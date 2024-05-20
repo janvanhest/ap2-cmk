@@ -25,7 +25,7 @@ namespace LingoPartnerInfrastructure.Repository
           try
           {
             string query = @"
-              INSERT INTO LearningModules (Name, Description)
+              INSERT INTO LearningModule (Name, Description)
               VALUES (@Name, @Description);
               SELECT LAST_INSERT_ID();";
 
@@ -64,7 +64,7 @@ namespace LingoPartnerInfrastructure.Repository
         using (var connection = new MySqlConnection(_connectionString))
         {
           connection.Open();
-          string query = "SELECT * FROM LearningModules";
+          string query = "SELECT * FROM LearningModule";
           using (var command = new MySqlCommand(query, connection))
           {
             using (var reader = command.ExecuteReader())
