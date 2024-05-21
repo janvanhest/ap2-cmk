@@ -9,11 +9,10 @@ namespace LingoPartnerInfrastructure.Repository
 {
   public class LearningModuleRepository : ILearningModuleRepository
   {
-    private readonly string _connectionString;
+    private readonly string? _connectionString;
     public LearningModuleRepository(string? connectionString = null)
     {
-      _connectionString = connectionString ?? InfrastructureHelper.CreateConnectionString()
-          ?? throw new ArgumentNullException(nameof(connectionString), "Connection string cannot be null or empty.");
+      _connectionString = connectionString;
     }
     public LearningModule? AddLearningModule(LearningModule module)
     {

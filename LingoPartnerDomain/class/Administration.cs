@@ -11,22 +11,22 @@ namespace LingoPartnerDomain.classes
     private readonly ILearningModuleRepository learningModuleRepository;
     private readonly ILearningActivityRepository learningActivityRepository;
 
-    private readonly List<User> users;
+    private List<User> users;
     public IReadOnlyList<User> Users => users;
-    private readonly List<LearningModule> learningModules;
+    private List<LearningModule> learningModules;
     public IReadOnlyList<LearningModule> LearningModules => learningModules;
-    private readonly List<LearningActivity> learningActivities;
+    private List<LearningActivity> learningActivities;
     public IReadOnlyList<LearningActivity> LearningActivities => learningActivities;
-
     public Administration(
       IUserRepository userRepository,
       ILearningModuleRepository learningModuleRepository,
       ILearningActivityRepository learningActivityRepository)
     {
+      // Inject the repositories
       this.userRepository = userRepository;
       this.learningModuleRepository = learningModuleRepository;
       this.learningActivityRepository = learningActivityRepository;
-
+      // Get the data from the repositories
       this.learningModules = learningModuleRepository.GetAllLearningModules().ToList();
       this.users = userRepository.GetUsers().ToList();
       this.learningActivities = learningActivityRepository.GetAllLearningActivities().ToList();
@@ -39,7 +39,8 @@ namespace LingoPartnerDomain.classes
         LoggingHelper.LogError(new Exception("User not added."), "User not added.");
         return;
       }
-      users.Add(user);
+      // FIXME: Add to the list or not? Or should we just get the data from the repository?
+      this.users = userRepository.GetUsers().ToList();
     }
     public void Add(LearningModule module)
     {
@@ -51,7 +52,7 @@ namespace LingoPartnerDomain.classes
         LoggingHelper.LogError(new Exception("Learning module not added."), "Learning module not added.");
         return;
       }
-      learningModules.Add(module);
+      this.learningModules = learningModuleRepository.GetAllLearningModules().ToList();
     }
     public User? UpdateUserProfile(User updatedUser, string? newPassword)
     {
@@ -68,6 +69,7 @@ namespace LingoPartnerDomain.classes
         // Update the user's profile
         user.UpdateProfile(updatedUser.FirstName, updatedUser.MiddleName, updatedUser.LastName, updatedUser.Email, newPassword);
         userRepository.UpdateUser(user); // Ensure user is updated in the repository
+        this.users = userRepository.GetUsers().ToList(); // Ensure the list is updated
         return user;
       }
       else

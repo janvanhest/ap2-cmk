@@ -15,11 +15,11 @@ namespace LingoPartnerInfrastructure.Helpers
       string connectionString = $"Server={server};Database={database};User Id={userName};Password={password};";
       return connectionString;
     }
-    public static bool IsServerAvailable()
+    public static bool IsServerAvailable(string connectionString)
     {
       try
       {
-        using (var connection = new MySqlConnection(CreateConnectionString()))
+        using (var connection = new MySqlConnection(connectionString))
         {
           connection.Open();
           return true;

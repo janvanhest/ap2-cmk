@@ -11,13 +11,11 @@ namespace LingoPartnerInfrastructure.Repository
 {
   public class UserRepository : IUserRepository
   {
-    private readonly string _connectionString;
+    private readonly string? _connectionString;
 
     public UserRepository(string? connectionString = null)
     {
-      _connectionString = connectionString ?? InfrastructureHelper.CreateConnectionString();
-      if (string.IsNullOrEmpty(_connectionString))
-      { throw new ArgumentNullException(nameof(connectionString), "Connection string cannot be null or empty."); }
+      _connectionString = connectionString;
     }
     public User? AddUser(User user)
     {

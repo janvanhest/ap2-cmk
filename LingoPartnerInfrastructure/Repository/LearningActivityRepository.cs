@@ -2,24 +2,60 @@
 using LingoPartnerDomain.classes;
 using LingoPartnerDomain.enums;
 using LingoPartnerInfrastructure.Helpers;
+using LingoPartnerShared.Helpers;
 using MySql.Data.MySqlClient;
 
 namespace LingoPartnerInfrastructure.Repository
 {
   public class LearningActivityRepository : ILearningActivityRepository
   {
-    private readonly string _connectionString;
+    private readonly string? _connectionString;
     public LearningActivityRepository(string? connectionString = null)
     {
-      _connectionString = connectionString ?? InfrastructureHelper.CreateConnectionString();
-      // FIXME: is a guard clause really necessary here?
-      if (string.IsNullOrEmpty(_connectionString))
-      { throw new ArgumentNullException(nameof(connectionString), "Connection string cannot be null or empty."); }
+      _connectionString = connectionString;
     }
 
     public LearningActivity? AddLearningActivity(LearningActivity activity)
     {
-      throw new NotImplementedException();
+      using (var connection = new MySqlConnection(_connectionString))
+      {
+        connection.Open();
+        using (var transaction = connection.BeginTransaction())
+        {
+          try
+          {
+            string query = @"
+              INSERT INTO LearningActivity (Name, Description, Type)
+              VALUES (@Name, @Description, @Type);
+              SELECT LAST_INSERT_ID();";
+
+            using (var command = new MySqlCommand(query, connection, transaction))
+            {
+              command.Parameters.AddWithValue("@Name", activity.Name);
+              command.Parameters.AddWithValue("@Description", activity.Description);
+              command.Parameters.AddWithValue("@Type", activity.Type.ToString());
+
+              var result = command.ExecuteScalar();
+              if (result != null)
+              {
+                transaction.Commit();
+                return new LearningActivity(
+                    Convert.ToInt32(result),
+                    activity.Name,
+                    activity.Description,
+                    activity.Type
+                );
+              }
+            }
+          }
+          catch (MySqlException ex)
+          {
+            LoggingHelper.LogError(ex, "Error adding learning activity");
+            throw;
+          }
+        }
+      }
+      return null;
     }
 
     public IEnumerable<LearningActivity> GetAllLearningActivities()
@@ -27,6 +63,7 @@ namespace LingoPartnerInfrastructure.Repository
       List<LearningActivity> activities = new List<LearningActivity>();
       using (var connection = new MySqlConnection(_connectionString))
       {
+        // TEST: 
         connection.Open();
         string query = "SELECT * FROM LearningActivity";
         using (var cmd = new MySqlCommand(query, connection))

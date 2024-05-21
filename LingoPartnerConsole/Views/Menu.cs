@@ -13,6 +13,12 @@ namespace LingoPartnerConsole.Views
       "Show all students", // 4
       "Add a LearningModule", // 5
       "Show all LearningModules", // 6
+      "Show all LearningActivities", // 7
+      "Show all LearningActivities for a LearningModule", // 8
+      "Show all LearningActivities for a User", // 9
+      "Show all LearningActivities for a Teacher", // 10
+      "Show all LearningActivities for a Student", // 11
+      "Show all LearningActivities for a LearningModule and a User", // 12
     };
 
     public Menu(Administration schoolAdministration)
@@ -21,16 +27,24 @@ namespace LingoPartnerConsole.Views
     }
     public void Show()
     {
-      // Two carriage returns
       Console.Clear();
+
       ShowMenuOptions(MenuItems);
 
       Console.WriteLine("Please enter your choice:\n");
-      string? choice = Console.ReadLine();
+      Console.WriteLine($"Enter your choice (0-{MenuItems.Count}):");
+
+      var choice = Console.ReadLine();
+
+      // check if the choice is an integer
+      int menuIndex = ValidateMenuIndex(choice);
       Console.Clear();
       UserList userList = new UserList(SchoolAdministration);
       switch (choice)
       {
+        case "0":
+          GoodBey();
+          break;
         case "1":
           UserAdd userAdd = new UserAdd(SchoolAdministration);
           userAdd.Show();
@@ -52,21 +66,44 @@ namespace LingoPartnerConsole.Views
           LearningModuleList learningModuleList = new LearningModuleList(SchoolAdministration);
           learningModuleList.Show();
           break;
-        case "0":
-          Environment.Exit(0);
+        case "7":
+          LearningActivityList learningActivityList = new LearningActivityList(SchoolAdministration);
+          learningActivityList.Show();
           break;
         default:
-          Console.WriteLine("Invalid choice");
-          Show();
+          NotImplemented(menuIndex);
+          MenuHelper.ReturnToMenu(SchoolAdministration);
           break;
       }
       MenuHelper.ReturnToMenu(SchoolAdministration);
     }
-    public void NotImplemented()
+    private void GoodBey()
     {
-      Console.WriteLine("Not implemented yet.");
+      Console.WriteLine("Goodbye!");
+      Console.WriteLine("Press any key to exit...");
+      Console.ReadKey();
+      Environment.Exit(0);
     }
+    private int ValidateMenuIndex(string? choice)
+    {
+      if (int.TryParse(choice, out int result))
+      {
+        if (result >= 0 && result <= MenuItems.Count)
+        {
+          return result;
+        }
+      }
 
+      Console.WriteLine("Invalid choice. Please try again.");
+      return -1;
+    }
+    public void NotImplemented(int menuIndex)
+    {
+      string description = menuIndex >= 1 && menuIndex <= MenuItems.Count
+          ? $"\nThis is not implemented yet\nMenu Index: {menuIndex}\nMenu Description: {MenuItems[menuIndex - 1]}\n"
+          : "This feature is not implemented yet.";
+      Console.WriteLine($"{description}");
+    }
     public void ShowMenuOptions(List<string> menuItems)
     {
       Console.WriteLine("Please select on of the following options:");
