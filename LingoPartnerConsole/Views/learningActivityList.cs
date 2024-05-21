@@ -18,6 +18,5 @@ namespace LingoPartnerConsole.Views
         Console.WriteLine($"{index++}. {activity.Name} ({activity.Description})");
       }
     }
-
   }
 }
