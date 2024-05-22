@@ -14,7 +14,9 @@ namespace LingoPartnerApp
     static void Main()
     {
       DotEnv.Load();
+
       string connectionString = InfrastructureHelper.CreateConnectionString();
+
       SetupProgram(connectionString);
 
       var userRepository = new UserRepository(connectionString);
@@ -27,6 +29,9 @@ namespace LingoPartnerApp
         learningModuleRepository,
         learningActivityRepository
       );
+
+      schoolAdministration.Initialize();
+      FirstWelcomeMessage(schoolAdministration);
 
       Menu menu = new Menu(schoolAdministration);
       menu.Show();
@@ -49,10 +54,10 @@ namespace LingoPartnerApp
       {
         SetupDevelopmentMode();
       }
-      FirstWelcomeMessage();
+
     }
 
-    private static void FirstWelcomeMessage()
+    private static void FirstWelcomeMessage(Administration schoolAdministration)
     {
       Console.Clear();
       DateTime dateTime = DateTime.Now;
@@ -60,6 +65,16 @@ namespace LingoPartnerApp
       Trace.TraceInformation(traceMessage);
 
       Console.WriteLine("Welcome to LingoPartner!\n");
+
+      if (schoolAdministration.CurrentUser != null)
+      {
+        Console.WriteLine($"Welcome, {schoolAdministration.CurrentUser.getFullName()}!");
+      }
+      else
+      {
+        Console.WriteLine("Welcome, guest!");
+      }
+
       Console.WriteLine("Press a key to continue...\n");
       Console.ReadKey();
     }

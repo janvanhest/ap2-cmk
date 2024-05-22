@@ -17,10 +17,13 @@ namespace LingoPartnerDomain.classes
     public IReadOnlyList<LearningModule> LearningModules => learningModules;
     private List<LearningActivity> learningActivities;
     public IReadOnlyList<LearningActivity> LearningActivities => learningActivities;
+
+    public User? CurrentUser { get; private set; }
+
     public Administration(
-      IUserRepository userRepository,
-      ILearningModuleRepository learningModuleRepository,
-      ILearningActivityRepository learningActivityRepository)
+  IUserRepository userRepository,
+  ILearningModuleRepository learningModuleRepository,
+  ILearningActivityRepository learningActivityRepository)
     {
       // Inject the repositories
       this.userRepository = userRepository;
@@ -91,6 +94,61 @@ namespace LingoPartnerDomain.classes
       {
         Console.WriteLine("Learning module not found.");
       }
+    }
+    public void Initialize()
+    {
+      if (CurrentUser == null)
+      {
+        Authenticate();
+      }
+    }
+
+    private void Authenticate()
+    {
+      while (CurrentUser == null)
+      {
+        Console.Write("Enter username: ");
+        string username = Console.ReadLine();
+
+        Console.Write("Enter password: ");
+        string password = ReadPassword();
+
+        User? user = userRepository.GetUserByUsername(username);
+        if (user != null && user.Password == password)
+        {
+          CurrentUser = user;
+          Console.WriteLine("Authentication successful.");
+        }
+        else
+        {
+          Console.WriteLine("Authentication failed. Please try again.");
+        }
+      }
+    }
+    private string ReadPassword()
+    {
+      string password = string.Empty;
+      ConsoleKey key;
+
+      do
+      {
+        var keyInfo = Console.ReadKey(intercept: true);
+        key = keyInfo.Key;
+
+        if (key == ConsoleKey.Backspace && password.Length > 0)
+        {
+          Console.Write("\b \b");
+          password = password[0..^1];
+        }
+        else if (!char.IsControl(keyInfo.KeyChar))
+        {
+          Console.Write("*");
+          password += keyInfo.KeyChar;
+        }
+      } while (key != ConsoleKey.Enter);
+
+      Console.WriteLine();
+      return password;
     }
   }
 }

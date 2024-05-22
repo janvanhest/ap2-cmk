@@ -102,5 +102,16 @@ namespace LingoPartnerDomain.classes
       // Implement password verification
       return attemptedPassword == Password; // Simplified for example, consider password hashing
     }
+
+    public string getFullName()
+    {
+      string fullName = FirstName;
+      if (!string.IsNullOrEmpty(MiddleName))
+      {
+        fullName += $" {MiddleName}";
+      }
+      fullName += $" {LastName}";
+      return fullName;
+    }
   }
 }

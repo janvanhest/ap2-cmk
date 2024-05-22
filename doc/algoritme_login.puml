@@ -1,0 +1,31 @@
+@startuml
+!define RECTANGLE entity
+
+start
+
+:Start Application;
+:Check if CurrentUser is null;
+
+if (CurrentUser is null) then (yes)
+    :Prompt for Username;
+    :Prompt for Password;
+    :Retrieve User from UserRepository by Username;
+    if (User exists) then (yes)
+        :Check if Password matches;
+        if (Password matches) then (yes)
+            :Set CurrentUser;
+            :Authentication successful;
+        else (no)
+            :Authentication failed;
+            :Retry Authentication;
+        endif
+    else (no)
+        :Authentication failed;
+        :Retry Authentication;
+    endif
+else (no)
+    :Proceed with Application;
+endif
+
+stop
+@enduml
