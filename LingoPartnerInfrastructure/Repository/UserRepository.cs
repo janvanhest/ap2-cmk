@@ -70,6 +70,38 @@ namespace LingoPartnerInfrastructure.Repository
       }
       return null;
     }
+
+    public User? GetUserByUsername(string username)
+    {
+      using (var connection = new MySqlConnection(_connectionString))
+      {
+        connection.Open();
+        string query = "SELECT * FROM User WHERE Username = @Username";
+        using (var cmd = new MySqlCommand(query, connection))
+        {
+          cmd.Parameters.AddWithValue("@Username", username);
+          using (var reader = cmd.ExecuteReader())
+          {
+            if (reader.Read())
+            {
+              return new User(
+                  reader.GetInt32("Id"),
+                  reader.GetString("FirstName"),
+                  reader.GetString("MiddleName"),
+                  reader.GetString("LastName"),
+                  reader.GetDateTime("DateOfBirth"),
+                  new MailAddress(reader.GetString("Email")),
+                  reader.GetString("Password"),
+                  reader.GetString("Username"),
+                  Enum.Parse<UserRole>(reader.GetString("Role"))
+              );
+            }
+          }
+        }
+      }
+      return null;
+    }
+
     public IEnumerable<User> GetUsers()
     {
       var users = new List<User>();

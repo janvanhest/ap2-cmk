@@ -6,5 +6,6 @@ namespace LingoPartnerDomain.interfaces
     User? AddUser(User user);
     IEnumerable<User> GetUsers();
     User? UpdateUser(User user);
+    User? GetUserByUsername(string username);
   }
 }
