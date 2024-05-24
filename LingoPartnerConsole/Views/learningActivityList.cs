@@ -11,7 +11,6 @@ namespace LingoPartnerConsole.Views
     }
     public void Show()
     {
-      Console.WriteLine("List of all LearningActivities:\n");
       int index = 1;
       foreach (LearningActivity activity in SchoolAdministration.LearningActivities)
       {

@@ -1,4 +1,6 @@
-﻿using LingoPartnerDomain.classes;
+﻿using LingoPartnerConsole.helpers;
+using LingoPartnerDomain.classes;
+using LingoPartnerDomain.enums;
 
 namespace LingoPartnerConsole.Views
 {
@@ -14,11 +16,12 @@ namespace LingoPartnerConsole.Views
       "Add a LearningModule", // 5
       "Show all LearningModules", // 6
       "Show all LearningActivities", // 7
-      "Show all LearningActivities for a LearningModule", // 8
-      "Show all LearningActivities for a User", // 9
-      "Show all LearningActivities for a Teacher", // 10
-      "Show all LearningActivities for a Student", // 11
-      "Show all LearningActivities for a LearningModule and a User", // 12
+      "Add a LearningActivity", // 8
+      "Show all LearningActivities for a LearningModule", // 9
+      "Show all LearningActivities for a User", // 10
+      "Show all LearningActivities for a Teacher", // 11
+      "Show all LearningActivities for a Student", // 12
+      "Show all LearningActivities for a LearningModule and a User", // 13
     };
 
     public Menu(Administration schoolAdministration)
@@ -40,6 +43,10 @@ namespace LingoPartnerConsole.Views
       int menuIndex = ValidateMenuIndex(choice);
       Console.Clear();
       UserList userList = new UserList(SchoolAdministration);
+      LearningModuleAdd learningModuleAdd = new LearningModuleAdd(SchoolAdministration);
+      LearningModuleList learningModuleList = new LearningModuleList(SchoolAdministration);
+      LearningActivityList learningActivityList = new LearningActivityList(SchoolAdministration);
+      LearningActivityAdd learningActivityAdd = new LearningActivityAdd(SchoolAdministration);
       switch (choice)
       {
         case "0":
@@ -50,25 +57,37 @@ namespace LingoPartnerConsole.Views
           userAdd.Show();
           break;
         case "2":
+          ConsoleHelper.DisplayMessage("List of all users:");
           userList.Show();
           break;
         case "3":
-          userList.Show("Teacher");
+          ConsoleHelper.DisplayMessage("List of all teachers:");
+          userList.Show(UserRole.TEACHER);
           break;
         case "4":
-          userList.Show("Student");
+          ConsoleHelper.DisplayMessage("List of all students:");
+          userList.Show(UserRole.STUDENT);
           break;
         case "5":
-          LearningModuleAdd learningModuleAdd = new LearningModuleAdd(SchoolAdministration);
+          ConsoleHelper.DisplayMessage("Add a new learning module");
           learningModuleAdd.Show();
           break;
         case "6":
-          LearningModuleList learningModuleList = new LearningModuleList(SchoolAdministration);
+          ConsoleHelper.DisplayMessage("List of all LearningModules:");
           learningModuleList.Show();
           break;
         case "7":
-          LearningActivityList learningActivityList = new LearningActivityList(SchoolAdministration);
+          ConsoleHelper.DisplayMessage("List of all LearningActivities:");
           learningActivityList.Show();
+          break;
+        case "8":
+          ConsoleHelper.DisplayMessage("Add a new LearningActivity:");
+          learningModuleList.Show();
+          int learningModuleId = ConsoleHelper.GetIntInput("Enter the LearningModule ID:");
+          learningActivityAdd.Show(learningModuleId);
+          break;
+        case "9":
+          NotImplemented(menuIndex);
           break;
         default:
           NotImplemented(menuIndex);
@@ -79,7 +98,7 @@ namespace LingoPartnerConsole.Views
     }
     private void GoodBey()
     {
-      Console.WriteLine("Goodbye!");
+      ConsoleHelper.DisplayMessage("Goodbye!", MessageType.INFORMATION);
       Console.WriteLine("Press any key to exit...");
       Console.ReadKey();
       Environment.Exit(0);
@@ -106,6 +125,7 @@ namespace LingoPartnerConsole.Views
     }
     public void ShowMenuOptions(List<string> menuItems)
     {
+      ConsoleHelper.DisplayMessage("Welcome to the LingoPartner menu.", MessageType.INFORMATION);
       Console.WriteLine("Please select on of the following options:");
       int index = 1;
       foreach (string item in menuItems)

@@ -1,4 +1,4 @@
--- Creat a database named 'lp_db'
+-- Create a database named 'lp_db'
 CREATE DATABASE IF NOT EXISTS lp_db;
 
 -- Use the 'lp_db' database
@@ -6,7 +6,7 @@ USE lp_db;
 
 -- Create a user table
 CREATE TABLE `User` (
-    `Id` BIGINT NOT NULL AUTO_INCREMENT,
+    `Id` INT NOT NULL AUTO_INCREMENT,
     `FirstName` VARCHAR(50) NOT NULL,
     `MiddleName` VARCHAR(50) DEFAULT '',
     `LastName` VARCHAR(50) NOT NULL,
@@ -52,7 +52,7 @@ CREATE TABLE LearningActivity (
     id INT AUTO_INCREMENT PRIMARY KEY,
     name VARCHAR(255) NOT NULL,
     description VARCHAR(255) NOT NULL,
-    type ENUM('MULTIPLECHOICE', 'FILLINTHEBLANK', 'TRUEFALSE', 'INSTRUCTION', 'QUIZ') NOT NULL,
+    type ENUM('MULTIPLECHOICE', 'FILLINTHEBLANK', 'QUIZ', 'INSTRUCTION') NOT NULL,
     module_id INT NOT NULL,
     FOREIGN KEY (module_id) REFERENCES LearningModule(id)
 );
@@ -61,24 +61,62 @@ CREATE TABLE LearningActivity (
 -- Learning Activities for Math Basics (id=1)
 INSERT INTO LearningActivity (name, description, type, module_id)
 VALUES
-    ('Basic Addition', 'Learn how to add numbers.', 'MULTIPLECHOICE', 1),
+    ('Basic Addition', 'Learn how to add numbers.', 'QUIZ', 1),
     ('Subtraction Basics', 'Learn how to subtract numbers.', 'FILLINTHEBLANK', 1),
-    ('Multiplication Introduction', 'Introduction to multiplication.', 'TRUEFALSE', 1),
+    ('Multiplication Introduction', 'Introduction to multiplication.', 'MULTIPLECHOICE', 1),
     ('Division Basics', 'Learn how to divide numbers.', 'INSTRUCTION', 1);
 
 -- Learning Activities for History 101 (id=2)
 INSERT INTO LearningActivity (name, description, type, module_id)
 VALUES
-    ('Ancient Civilizations', 'Overview of ancient civilizations.', 'MULTIPLECHOICE', 2),
+    ('Ancient Civilizations', 'Overview of ancient civilizations.', 'QUIZ', 2),
     ('Medieval History', 'Key events from the medieval period.', 'FILLINTHEBLANK', 2),
-    ('Modern History', 'Important events of modern history.', 'TRUEFALSE', 2),
+    ('Modern History', 'Important events of modern history.', 'MULTIPLECHOICE', 2),
     ('World Wars', 'Detailed study of World Wars.', 'INSTRUCTION', 2);
 
 -- Learning Activities for Science Fundamentals (id=3)
 INSERT INTO LearningActivity (name, description, type, module_id)
 VALUES
-    ('Physics Basics', 'Introduction to basic physics concepts.', 'MULTIPLECHOICE', 3),
+    ('Physics Basics', 'Introduction to basic physics concepts.', 'QUIZ', 3),
     ('Chemistry Fundamentals', 'Basic chemistry concepts.', 'FILLINTHEBLANK', 3),
-    ('Biology Overview', 'Study of basic biology.', 'TRUEFALSE', 3),
+    ('Biology Overview', 'Study of basic biology.', 'MULTIPLECHOICE', 3),
     ('Earth Science', 'Overview of earth science.', 'INSTRUCTION', 3),
     ('Environmental Science', 'Introduction to environmental science.', 'QUIZ', 3);
+
+-- Create a table for progress
+CREATE TABLE Progress (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    progress_type ENUM('LEARNINGACTIVITY', 'ASSESMENT', 'MODULE', 'PROJECT') NOT NULL,
+    status ENUM('NOT_STARTED', 'IN_PROGRESS', 'COMPLETED') NOT NULL,
+    progressDetails VARCHAR(255) NOT NULL,
+    user_id INT NOT NULL,
+    learningActivity_id INT NOT NULL,
+    FOREIGN KEY (user_id) REFERENCES `User`(Id),
+    FOREIGN KEY (learningActivity_id) REFERENCES LearningActivity(id)
+);
+
+-- Insert Progress Records for Sample Users
+
+-- User: John Doe (id=1)
+INSERT INTO Progress (progress_type, status, progressDetails, user_id, learningActivity_id)
+VALUES
+    ('LEARNINGACTIVITY', 'IN_PROGRESS', 'Working on basic addition.', 1, 1),
+    ('LEARNINGACTIVITY', 'NOT_STARTED', 'Not started subtraction basics.', 1, 2),
+    ('LEARNINGACTIVITY', 'COMPLETED', 'Completed multiplication introduction.', 1, 3);
+
+-- User: Michael Johnson (id=3)
+INSERT INTO Progress (progress_type, status, progressDetails, user_id, learningActivity_id)
+VALUES
+    ('LEARNINGACTIVITY', 'IN_PROGRESS', 'Studying ancient civilizations.', 3, 5),
+    ('LEARNINGACTIVITY', 'COMPLETED', 'Finished medieval history.', 3, 6),
+    ('LEARNINGACTIVITY', 'NOT_STARTED', 'Modern history not started.', 3, 7),
+    ('LEARNINGACTIVITY', 'IN_PROGRESS', 'Studying world wars.', 3, 8);
+
+-- User: Emily Williams (id=4)
+INSERT INTO Progress (progress_type, status, progressDetails, user_id, learningActivity_id)
+VALUES
+    ('LEARNINGACTIVITY', 'COMPLETED', 'Completed physics basics.', 4, 9),
+    ('LEARNINGACTIVITY', 'NOT_STARTED', 'Chemistry fundamentals not started.', 4, 10),
+    ('LEARNINGACTIVITY', 'IN_PROGRESS', 'Studying biology overview.', 4, 11),
+    ('LEARNINGACTIVITY', 'NOT_STARTED', 'Earth science not started.', 4, 12),
+    ('LEARNINGACTIVITY', 'IN_PROGRESS', 'Working on environmental science.', 4, 13);

@@ -1,7 +1,6 @@
 ﻿using System.Diagnostics;
 using LingoPartnerDomain.classes;
-using LingoPartnerDomain.Interfaces;
-using LingoPartnerInfrastructure.Helpers;
+using LingoPartnerDomain.interfaces;
 using LingoPartnerShared.Helpers;
 using MySql.Data.MySqlClient;
 

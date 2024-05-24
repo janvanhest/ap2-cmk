@@ -11,11 +11,13 @@ namespace LingoPartnerInfrastructure.Repository
 {
   public class UserRepository : IUserRepository
   {
-    private readonly string? _connectionString;
+    private readonly string _connectionString;
 
-    public UserRepository(string? connectionString = null)
+    public UserRepository(string connectionString)
     {
-      _connectionString = connectionString;
+      _connectionString = connectionString != null ?
+        connectionString :
+        InfrastructureHelper.CreateConnectionString();
     }
     public User? AddUser(User user)
     {
@@ -26,9 +28,10 @@ namespace LingoPartnerInfrastructure.Repository
         {
           try
           {
-            string query = @"INSERT INTO User (FirstName, MiddleName, LastName, DateOfBirth, Email, Password, Username, Role) 
-                                         VALUES (@FirstName, @MiddleName, @LastName, @DateOfBirth, @Email, @Password, @Username, @Role);
-                                         SELECT LAST_INSERT_ID();";
+            string query = @"
+              INSERT INTO User (FirstName, MiddleName, LastName, DateOfBirth, Email, Password, Username, Role)
+              VALUES (@FirstName, @MiddleName, @LastName, @DateOfBirth, @Email, @Password, @Username, @Role);
+              SELECT LAST_INSERT_ID();";
 
             using (var command = new MySqlCommand(query, connection, transaction))
             {
@@ -62,7 +65,6 @@ namespace LingoPartnerInfrastructure.Repository
           catch (MySqlException ex)
           {
             transaction.Rollback();
-            Console.WriteLine($"Database error: {ex.Message}");
             Trace.TraceError($"Database error: {ex.Message}");
             throw;
           }
@@ -142,9 +144,10 @@ namespace LingoPartnerInfrastructure.Repository
         {
           try
           {
-            string query = @"UPDATE User 
-                             SET FirstName = @FirstName, MiddleName = @MiddleName, LastName = @LastName, DateOfBirth = @DateOfBirth, Email = @Email, Password = @Password, Username = @Username, Role = @Role
-                             WHERE Id = @Id;";
+            string query = @"
+              UPDATE User
+              SET FirstName = @FirstName, MiddleName = @MiddleName, LastName = @LastName, DateOfBirth = @DateOfBirth, Email = @Email, Password = @Password, Username = @Username, Role = @Role
+              WHERE Id = @Id;";
 
             using (var command = new MySqlCommand(query, connection, transaction))
             {
