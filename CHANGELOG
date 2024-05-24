@@ -1,1 +1,13 @@
 
+### 24 mei Versie 0.4 
+- Most important entities are added with repos so most important algorithms can be implemented. 
+  - User
+  - Progress
+  - LearningModule
+  - Learning Activities
+  - etc. 
+- Alle entities have a repository and are supported by simple interface options for showing and storing data.
+  - Show Users
+  - Show User by Role. 
+  - Show Learning Modules
+  - Show Learning Activities
