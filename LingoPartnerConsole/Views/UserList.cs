@@ -10,29 +10,18 @@ namespace LingoPartnerConsole.Views
     {
       SchoolAdministration = schoolAdministration;
     }
-    public void Show(string? role = null)
+    public void Show(UserRole? role = null)
     {
-      Console.WriteLine(role == null ? "List of all users:\n" : $"List of all {role}s:\n");
-
       UserRole? roleToFilter = null;
-      if (!string.IsNullOrEmpty(role))
+      if (role != null)
       {
-        if (Enum.TryParse(typeof(UserRole), role, true, out var result))
-        {
-          roleToFilter = (UserRole)result;
-        }
-        else
-        {
-          Console.WriteLine("Invalid role specified.");
-          return;
-        }
+        roleToFilter = role;
       }
-      int index = 1;
       foreach (User user in SchoolAdministration.Users)
       {
         if (roleToFilter == null || user.Role == roleToFilter)
         {
-          Console.WriteLine($"{index++}. {user.FirstName} {user.MiddleName} {user.LastName} ({user.Role})");
+          Console.WriteLine($"{user.Id}. {user.FirstName} {user.MiddleName} {user.LastName} ({user.Role})");
         }
       }
     }

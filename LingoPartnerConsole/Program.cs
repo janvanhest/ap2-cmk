@@ -1,20 +1,23 @@
 ﻿// See https://aka.ms/new-console-template for more information
 using System.Diagnostics;
 using dotenv.net;
-
+using LingoPartnerConsole.helpers;
 using LingoPartnerConsole.Views;
 using LingoPartnerDomain.classes;
+using LingoPartnerDomain.enums;
 using LingoPartnerInfrastructure.Helpers;
 using LingoPartnerInfrastructure.Repository;
 
-namespace LingoPartnerApp
+namespace LingoPartnerConsole
 {
   internal class Program
   {
     static void Main()
     {
       DotEnv.Load();
+
       string connectionString = InfrastructureHelper.CreateConnectionString();
+
       SetupProgram(connectionString);
 
       var userRepository = new UserRepository(connectionString);
@@ -27,6 +30,8 @@ namespace LingoPartnerApp
         learningModuleRepository,
         learningActivityRepository
       );
+
+      InitializeProgram(schoolAdministration);
 
       Menu menu = new Menu(schoolAdministration);
       menu.Show();
@@ -49,43 +54,114 @@ namespace LingoPartnerApp
       {
         SetupDevelopmentMode();
       }
-      FirstWelcomeMessage();
+
     }
 
-    private static void FirstWelcomeMessage()
+    private static void InitializeProgram(Administration schoolAdministration)
     {
       Console.Clear();
+
       DateTime dateTime = DateTime.Now;
       String traceMessage = $"\n\nApplication started at: {dateTime}";
       Trace.TraceInformation(traceMessage);
 
-      Console.WriteLine("Welcome to LingoPartner!\n");
+
+      ConsoleHelper.DisplayTypingAnimation("\nWelcome to LingoPartner!\n", true);
+
+      Authenticate(schoolAdministration);
+
+      string welcomeMessage = "Welcome Guest!";
+      if (schoolAdministration.CurrentUser != null)
+      {
+        welcomeMessage = $"\nHave a nice schoolday! Or something like that, {schoolAdministration.CurrentUser.getFullName()}!\n";
+      }
+      Console.WriteLine(welcomeMessage);
       Console.WriteLine("Press a key to continue...\n");
       Console.ReadKey();
     }
 
-    private static void ConfigureTrace()
+    public static void ConfigureTrace(
+      string logFilePath = "trace.log",
+      bool addConsoleListener = true
+      )
     {
-      // Create a text file trace listener
-      TextWriterTraceListener fileListener = new TextWriterTraceListener("trace.log");
-      Trace.Listeners.Add(fileListener);
+      try
+      {
+        // Create a text file trace listener
+        TextWriterTraceListener fileListener = new TextWriterTraceListener(logFilePath);
+        Trace.Listeners.Add(fileListener);
 
-      // Optionally, add a console trace listener
-      ConsoleTraceListener consoleListener = new ConsoleTraceListener();
-      Trace.Listeners.Add(consoleListener);
+        // Optionally, add a console trace listener
+        if (addConsoleListener)
+        {
+          ConsoleTraceListener consoleListener = new ConsoleTraceListener();
+          Trace.Listeners.Add(consoleListener);
+        }
 
-      // Set the trace level
-      Trace.AutoFlush = true;
+        // Set the trace level
+        Trace.AutoFlush = true;
+
+        Trace.WriteLine("Trace configuration initialized.");
+      }
+      catch (Exception ex)
+      {
+        Console.WriteLine("Error configuring trace: " + ex.Message);
+        // Optionally log the exception or handle it as needed
+      }
     }
     private static void SetupDevelopmentMode()
     {
       // TODO: Which things need only to be started in development mode? 
-      Console.WriteLine("\n===========================");
-      Console.WriteLine("Running in development mode");
-      Console.WriteLine("===========================");
-      Console.WriteLine("\nPress a key to continue");
+      Console.WriteLine();
+      ConsoleHelper.DisplayMessage("Development mode is on", MessageType.SUCCES);
+      Console.WriteLine("\nPress a key to continue\n");
       // pres a key to continue
       Console.ReadKey();
+    }
+
+    private static void Authenticate(Administration administration)
+    {
+      while (administration.CurrentUser == null)
+      {
+        string username = ConsoleHelper.GetStringInput("Enter username: ");
+        string? password = ReadPassword();
+
+        if (administration.Authenticate(username, password))
+        {
+          // successful authentication
+          Console.WriteLine("Authentication successful.");
+        }
+        else
+        {
+          Console.WriteLine("Authentication failed. Please try again.");
+        }
+      }
+    }
+
+    private static string ReadPassword()
+    {
+      Console.Write("Enter password:\n");
+      string password = string.Empty;
+      ConsoleKey key;
+      do
+      {
+        var keyInfo = Console.ReadKey(intercept: true);
+        key = keyInfo.Key;
+
+        if (key == ConsoleKey.Backspace && password.Length > 0)
+        {
+          Console.Write("\b \b");
+          password = password[0..^1];
+        }
+        else if (!char.IsControl(keyInfo.KeyChar))
+        {
+          Console.Write("*");
+          password += keyInfo.KeyChar;
+        }
+      } while (key != ConsoleKey.Enter);
+
+      Console.WriteLine();
+      return password;
     }
   }
 }

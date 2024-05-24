@@ -1,7 +1,7 @@
 ﻿using LingoPartnerDomain.classes;
 using System.Collections.Generic;
 
-namespace LingoPartnerDomain.Interfaces
+namespace LingoPartnerDomain.interfaces
 {
   public interface ILearningModuleRepository
   {

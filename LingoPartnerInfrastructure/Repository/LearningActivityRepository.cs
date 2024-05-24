@@ -25,8 +25,8 @@ namespace LingoPartnerInfrastructure.Repository
           try
           {
             string query = @"
-              INSERT INTO LearningActivity (Name, Description, Type)
-              VALUES (@Name, @Description, @Type);
+              INSERT INTO LearningActivity (Name, Description, Type, Module_id)
+              VALUES (@Name, @Description, @Type, @LearningModuleId);
               SELECT LAST_INSERT_ID();";
 
             using (var command = new MySqlCommand(query, connection, transaction))
@@ -34,6 +34,7 @@ namespace LingoPartnerInfrastructure.Repository
               command.Parameters.AddWithValue("@Name", activity.Name);
               command.Parameters.AddWithValue("@Description", activity.Description);
               command.Parameters.AddWithValue("@Type", activity.Type.ToString());
+              command.Parameters.AddWithValue("@LearningModuleId", activity.LearningModuleId);
 
               var result = command.ExecuteScalar();
               if (result != null)
@@ -43,7 +44,8 @@ namespace LingoPartnerInfrastructure.Repository
                     Convert.ToInt32(result),
                     activity.Name,
                     activity.Description,
-                    activity.Type
+                    activity.Type,
+                    activity.LearningModuleId
                 );
               }
             }
@@ -60,7 +62,7 @@ namespace LingoPartnerInfrastructure.Repository
 
     public IEnumerable<LearningActivity> GetAllLearningActivities()
     {
-      List<LearningActivity> activities = new List<LearningActivity>();
+      List<LearningActivity> activities = [];
       using (var connection = new MySqlConnection(_connectionString))
       {
         // TEST: 
@@ -72,12 +74,14 @@ namespace LingoPartnerInfrastructure.Repository
           {
             while (reader.Read())
             {
-              int id = reader.GetInt32("Id");
-              string name = reader.GetString("Name");
-              string description = reader.GetString("Description");
-              string type = reader.GetString("Type");
-              LearningActivityType activityType = (LearningActivityType)Enum.Parse(typeof(LearningActivityType), type);
-              activities.Add(new LearningActivity(id, name, description, activityType));
+              LearningActivity activity = new(
+                (int)reader.GetInt32("Id"),
+                reader.GetString("Name"),
+                reader.GetString("Description"),
+                (LearningActivityType)Enum.Parse(typeof(LearningActivityType), reader.GetString("Type")),
+                (int)reader.GetInt32("Module_id")
+              );
+              activities.Add(activity);
             }
           }
         }

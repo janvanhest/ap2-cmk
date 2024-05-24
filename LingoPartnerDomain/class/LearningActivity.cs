@@ -7,28 +7,31 @@ public class LearningActivity
   public string Name { get; private set; }
   public string Description { get; private set; }
   public LearningActivityType Type { get; private set; }
+  public int LearningModuleId { get; private set; }
 
   // Constructor to initialize a new LearningActivity
-  public LearningActivity(string name, string description, LearningActivityType type)
+  public LearningActivity(string name, string description, LearningActivityType type, int learningModuleId)
   {
     Name = name ?? throw new ArgumentNullException(nameof(name));
     Description = description ?? throw new ArgumentNullException(nameof(description));
     Type = type;
+    LearningModuleId = learningModuleId;
   }
 
-  public LearningActivity(int id, string name, string description, LearningActivityType type)
+  public LearningActivity(int id, string name, string description, LearningActivityType type, int learningModuleId)
   {
-    Id = id;
+    Id = id == 0 ? throw new ArgumentNullException(nameof(id)) : id;
     Name = name ?? throw new ArgumentNullException(nameof(name));
     Description = description ?? throw new ArgumentNullException(nameof(description));
     Type = type;
+    LearningModuleId = learningModuleId == 0 ? throw new ArgumentNullException(nameof(learningModuleId)) : learningModuleId;
   }
 
   // Method to update the details of the learning activity
-  public void UpdateActivity(string newName, string newDescription, LearningActivityType newType)
+  public void UpdateActivity(LearningActivity newActivity)
   {
-    Name = newName ?? throw new ArgumentNullException(nameof(newName));
-    Description = newDescription ?? throw new ArgumentNullException(nameof(newDescription));
-    Type = newType;
+    Name = newActivity.Name;
+    Description = newActivity.Description;
+    Type = newActivity.Type;
   }
 }
