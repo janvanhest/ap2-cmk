@@ -1,6 +1,5 @@
 ﻿using System.Diagnostics;
 using LingoPartnerDomain.interfaces;
-using LingoPartnerDomain.Interfaces;
 using LingoPartnerShared.Helpers;
 
 namespace LingoPartnerDomain.classes
@@ -21,18 +20,16 @@ namespace LingoPartnerDomain.classes
     public User? CurrentUser { get; private set; }
 
     public Administration(
-  IUserRepository userRepository,
-  ILearningModuleRepository learningModuleRepository,
-  ILearningActivityRepository learningActivityRepository)
+      IUserRepository userRepository,
+      ILearningModuleRepository learningModuleRepository,
+      ILearningActivityRepository learningActivityRepository)
     {
       // Inject the repositories
-      this.userRepository = userRepository;
-      this.learningModuleRepository = learningModuleRepository;
-      this.learningActivityRepository = learningActivityRepository;
+      this.userRepository = userRepository ?? throw new ArgumentNullException(nameof(userRepository));
+      this.learningModuleRepository = learningModuleRepository ?? throw new ArgumentNullException(nameof(learningModuleRepository));
+      this.learningActivityRepository = learningActivityRepository ?? throw new ArgumentNullException(nameof(learningActivityRepository));
       // Get the data from the repositories
-      this.learningModules = learningModuleRepository.GetAllLearningModules().ToList();
-      this.users = userRepository.GetUsers().ToList();
-      this.learningActivities = learningActivityRepository.GetAllLearningActivities().ToList();
+      RetrieveAllData();
     }
     public void Add(User user)
     {
@@ -47,7 +44,6 @@ namespace LingoPartnerDomain.classes
     }
     public void Add(LearningModule module)
     {
-
       var result = learningModuleRepository.AddLearningModule(module);
       // Check if Result is has written to the database
       if (result == null)
@@ -92,63 +88,49 @@ namespace LingoPartnerDomain.classes
       }
       else
       {
+        // FIXME: Put the console output in view layer
+        // retourneer iets waarom iets niet is gelukt. 
+        // Console writeline weghalen. 
+        // exception gooien vertraagt het programma door het opbouwen van stacktrace. 
         Console.WriteLine("Learning module not found.");
       }
     }
-    public void Initialize()
+    public bool Authenticate(string username, string password)
     {
-      if (CurrentUser == null)
+      User? user = userRepository.GetUserByUsername(username);
+      if (user != null && user.Password == password)
       {
-        Authenticate();
+        CurrentUser = user;
+        return true;
       }
+      return false;
+    }
+    public void RetrieveAllData()
+    {
+      this.users = userRepository.GetUsers().ToList();
+      this.learningModules = learningModuleRepository.GetAllLearningModules().ToList();
+      this.learningActivities = learningActivityRepository.GetAllLearningActivities().ToList();
     }
 
-    private void Authenticate()
+    public LearningActivity? AddLearningActivity(int learningModuleId, LearningActivity newLearningActivity)
     {
-      while (CurrentUser == null)
+      var module = learningModules.Find(m => m.Id == learningModuleId);
+      if (module != null)
       {
-        Console.Write("Enter username: ");
-        string username = Console.ReadLine();
-
-        Console.Write("Enter password: ");
-        string password = ReadPassword();
-
-        User? user = userRepository.GetUserByUsername(username);
-        if (user != null && user.Password == password)
+        var result = learningActivityRepository.AddLearningActivity(newLearningActivity);
+        if (result == null)
         {
-          CurrentUser = user;
-          Console.WriteLine("Authentication successful.");
+          LoggingHelper.LogError(new Exception("Learning activity not added."), "Learning activity not added.");
+          return null;
         }
-        else
-        {
-          Console.WriteLine("Authentication failed. Please try again.");
-        }
+        this.learningActivities = learningActivityRepository.GetAllLearningActivities().ToList();
+        return result;
       }
-    }
-    private string ReadPassword()
-    {
-      string password = string.Empty;
-      ConsoleKey key;
-
-      do
+      else
       {
-        var keyInfo = Console.ReadKey(intercept: true);
-        key = keyInfo.Key;
-
-        if (key == ConsoleKey.Backspace && password.Length > 0)
-        {
-          Console.Write("\b \b");
-          password = password[0..^1];
-        }
-        else if (!char.IsControl(keyInfo.KeyChar))
-        {
-          Console.Write("*");
-          password += keyInfo.KeyChar;
-        }
-      } while (key != ConsoleKey.Enter);
-
-      Console.WriteLine();
-      return password;
+        LoggingHelper.LogWarning("Learning module not found.");
+        return null;
+      }
     }
   }
 }

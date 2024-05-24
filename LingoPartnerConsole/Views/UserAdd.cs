@@ -1,7 +1,7 @@
 ﻿using System.Net.Mail;
-using LingoPartnerConsole.Classes;
 using LingoPartnerDomain.enums;
 using LingoPartnerDomain.classes;
+using LingoPartnerConsole.helpers;
 
 namespace LingoPartnerConsole.Views
 {
