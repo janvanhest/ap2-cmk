@@ -52,7 +52,7 @@ CREATE TABLE LearningActivity (
     id INT AUTO_INCREMENT PRIMARY KEY,
     name VARCHAR(255) NOT NULL,
     description VARCHAR(255) NOT NULL,
-    type ENUM('VIDEO', 'ARTICLE', 'QUIZ', 'ASSIGNMENT') NOT NULL,
+    type ENUM('MULTIPLECHOICE', 'FILLINTHEBLANK', 'QUIZ', 'INSTRUCTION') NOT NULL,
     module_id INT NOT NULL,
     FOREIGN KEY (module_id) REFERENCES LearningModule(id)
 );
@@ -62,25 +62,25 @@ CREATE TABLE LearningActivity (
 INSERT INTO LearningActivity (name, description, type, module_id)
 VALUES
     ('Basic Addition', 'Learn how to add numbers.', 'QUIZ', 1),
-    ('Subtraction Basics', 'Learn how to subtract numbers.', 'ARTICLE', 1),
-    ('Multiplication Introduction', 'Introduction to multiplication.', 'VIDEO', 1),
-    ('Division Basics', 'Learn how to divide numbers.', 'ASSIGNMENT', 1);
+    ('Subtraction Basics', 'Learn how to subtract numbers.', 'FILLINTHEBLANK', 1),
+    ('Multiplication Introduction', 'Introduction to multiplication.', 'MULTIPLECHOICE', 1),
+    ('Division Basics', 'Learn how to divide numbers.', 'INSTRUCTION', 1);
 
 -- Learning Activities for History 101 (id=2)
 INSERT INTO LearningActivity (name, description, type, module_id)
 VALUES
     ('Ancient Civilizations', 'Overview of ancient civilizations.', 'QUIZ', 2),
-    ('Medieval History', 'Key events from the medieval period.', 'ARTICLE', 2),
-    ('Modern History', 'Important events of modern history.', 'VIDEO', 2),
-    ('World Wars', 'Detailed study of World Wars.', 'ASSIGNMENT', 2);
+    ('Medieval History', 'Key events from the medieval period.', 'FILLINTHEBLANK', 2),
+    ('Modern History', 'Important events of modern history.', 'MULTIPLECHOICE', 2),
+    ('World Wars', 'Detailed study of World Wars.', 'INSTRUCTION', 2);
 
 -- Learning Activities for Science Fundamentals (id=3)
 INSERT INTO LearningActivity (name, description, type, module_id)
 VALUES
     ('Physics Basics', 'Introduction to basic physics concepts.', 'QUIZ', 3),
-    ('Chemistry Fundamentals', 'Basic chemistry concepts.', 'ARTICLE', 3),
-    ('Biology Overview', 'Study of basic biology.', 'VIDEO', 3),
-    ('Earth Science', 'Overview of earth science.', 'ASSIGNMENT', 3),
+    ('Chemistry Fundamentals', 'Basic chemistry concepts.', 'FILLINTHEBLANK', 3),
+    ('Biology Overview', 'Study of basic biology.', 'MULTIPLECHOICE', 3),
+    ('Earth Science', 'Overview of earth science.', 'INSTRUCTION', 3),
     ('Environmental Science', 'Introduction to environmental science.', 'QUIZ', 3);
 
 -- Create a table for progress
