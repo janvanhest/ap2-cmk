@@ -16,7 +16,7 @@ namespace LingoPartnerConsole.Views
 
     public void Show()
     {
-      Console.WriteLine("Add a new user");
+      ConsoleHelper.DisplayMessage("Add a new user");
       string firstName = ConsoleHelper.GetStringInput("Enter first name:");
       string middleName = ConsoleHelper.GetStringInput("Enter middle name: (- for none)");
       string lastName = ConsoleHelper.GetStringInput("Enter last name:");
