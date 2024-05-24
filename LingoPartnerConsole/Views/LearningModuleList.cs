@@ -11,7 +11,6 @@ namespace LingoPartnerConsole.Views
     }
     public void Show()
     {
-      Console.WriteLine("List of all LearningModules:\n");
       int index = 1;
       foreach (LearningModule module in SchoolAdministration.LearningModules)
       {

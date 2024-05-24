@@ -1,4 +1,4 @@
-﻿using LingoPartnerConsole.Classes;
+﻿using LingoPartnerConsole.helpers;
 using LingoPartnerDomain.classes;
 
 namespace LingoPartnerConsole
@@ -14,7 +14,6 @@ namespace LingoPartnerConsole
 
     public void Show()
     {
-      Console.WriteLine("Add a new learning module");
       string name = ConsoleHelper.GetStringInput("Enter name:");
       string description = ConsoleHelper.GetStringInput("Enter description:");
 
@@ -23,7 +22,6 @@ namespace LingoPartnerConsole
           name: name,
           description: description
       );
-
       // Add the learning module to the administration
       SchoolAdministration.Add(newLearningModule);
       Console.WriteLine($"Learning module {name} successfully added.");

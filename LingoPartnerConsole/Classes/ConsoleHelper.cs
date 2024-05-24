@@ -2,7 +2,7 @@
 using LingoPartnerDomain.classes;
 using LingoPartnerDomain.enums;
 
-namespace LingoPartnerConsole.Classes;
+namespace LingoPartnerConsole.classes;
 
 public static class ConsoleHelper
 {

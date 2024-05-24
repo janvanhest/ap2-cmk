@@ -1,4 +1,5 @@
-﻿using LingoPartnerDomain.classes;
+﻿using LingoPartnerConsole.helpers;
+using LingoPartnerDomain.classes;
 
 namespace LingoPartnerConsole.Views
 {
@@ -6,7 +7,7 @@ namespace LingoPartnerConsole.Views
   {
     public static void ReturnToMenu(Administration schoolAdministration)
     {
-      Console.WriteLine("\nPress any key to return to menu...\n");
+      ConsoleHelper.DisplayTypingAnimation("Press any key to return to the menu...");
       Console.ReadKey();
       Menu menu = new Menu(schoolAdministration);
       menu.Show();
