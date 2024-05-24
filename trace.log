@@ -130,3 +130,153 @@ Application started at: 22-05-2024 00:31:49
 LingoPartnerConsole Information: 0 : 
 
 Application started at: 22-05-2024 00:34:19
+LingoPartnerConsole Information: 0 : 
+
+Application started at: 23-05-2024 15:38:47
+LingoPartnerConsole Information: 0 : 
+
+Application started at: 23-05-2024 15:43:51
+LingoPartnerConsole Information: 0 : 
+
+Application started at: 23-05-2024 15:47:55
+LingoPartnerConsole Information: 0 : 
+
+Application started at: 23-05-2024 15:52:31
+LingoPartnerConsole Information: 0 : 
+
+Application started at: 23-05-2024 15:56:48
+LingoPartnerConsole Information: 0 : 
+
+Application started at: 23-05-2024 15:57:13
+LingoPartnerConsole Information: 0 : 
+
+Application started at: 23-05-2024 16:30:19
+LingoPartnerConsole Information: 0 : 
+
+Application started at: 23-05-2024 16:32:30
+LingoPartnerConsole Information: 0 : 
+
+Application started at: 23-05-2024 18:03:30
+LingoPartnerConsole Information: 0 : 
+
+Application started at: 23-05-2024 18:05:44
+LingoPartnerConsole Information: 0 : 
+
+Application started at: 23-05-2024 18:09:14
+LingoPartnerConsole Information: 0 : 
+
+Application started at: 23-05-2024 18:10:21
+LingoPartnerConsole Information: 0 : 
+
+Application started at: 23-05-2024 18:15:21
+LingoPartnerConsole Information: 0 : 
+
+Application started at: 23-05-2024 19:14:21
+LingoPartnerConsole Information: 0 : 
+
+Application started at: 23-05-2024 19:17:08
+LingoPartnerConsole Information: 0 : 
+
+Application started at: 23-05-2024 19:19:03
+LingoPartnerConsole Information: 0 : 
+
+Application started at: 23-05-2024 19:22:21
+LingoPartnerConsole Information: 0 : 
+
+Application started at: 23-05-2024 21:03:42
+LingoPartnerConsole Information: 0 : 
+
+Application started at: 23-05-2024 21:05:10
+LingoPartnerConsole Information: 0 : 
+
+Application started at: 23-05-2024 21:09:09
+LingoPartnerConsole Information: 0 : 
+
+Application started at: 23-05-2024 21:11:12
+LingoPartnerConsole Information: 0 : 
+
+Application started at: 23-05-2024 21:36:39
+Trace configuration initialized.
+LingoPartnerConsole Information: 0 : 
+
+Application started at: 23-05-2024 21:50:49
+Trace configuration initialized.
+LingoPartnerConsole Information: 0 : 
+
+Application started at: 23-05-2024 22:03:23
+Trace configuration initialized.
+LingoPartnerConsole Information: 0 : 
+
+Application started at: 23-05-2024 22:03:49
+Trace configuration initialized.
+LingoPartnerConsole Information: 0 : 
+
+Application started at: 23-05-2024 22:04:58
+Trace configuration initialized.
+LingoPartnerConsole Information: 0 : 
+
+Application started at: 23-05-2024 22:48:46
+Trace configuration initialized.
+LingoPartnerConsole Information: 0 : 
+
+Application started at: 23-05-2024 22:52:48
+Trace configuration initialized.
+Trace configuration initialized.
+Trace configuration initialized.
+Trace configuration initialized.
+Trace configuration initialized.
+Trace configuration initialized.
+Trace configuration initialized.
+LingoPartnerConsole Information: 0 : 
+
+Application started at: 23-05-2024 23:39:19
+Trace configuration initialized.
+LingoPartnerConsole Information: 0 : 
+
+Application started at: 23-05-2024 23:39:30
+Trace configuration initialized.
+LingoPartnerConsole Information: 0 : 
+
+Application started at: 23-05-2024 23:42:06
+Trace configuration initialized.
+LingoPartnerConsole Information: 0 : 
+
+Application started at: 23-05-2024 23:43:27
+Trace configuration initialized.
+LingoPartnerConsole Information: 0 : 
+
+Application started at: 23-05-2024 23:52:38
+LingoPartnerConsole Error: 0 : DEVELOPMENT: Error in AddLearningActivity: Error adding learning activity
+Error message: Fatal error encountered during command execution.
+Stack trace:    at MySql.Data.MySqlClient.MySqlCommand.ExecuteReaderAsync(CommandBehavior behavior, Boolean execAsync, CancellationToken cancellationToken)
+   at MySql.Data.MySqlClient.MySqlCommand.ExecuteReaderAsync(CommandBehavior behavior, Boolean execAsync, CancellationToken cancellationToken)
+   at MySql.Data.MySqlClient.MySqlCommand.ExecuteScalarAsync(Boolean execAsync, CancellationToken cancellationToken)
+   at MySql.Data.MySqlClient.MySqlCommand.ExecuteScalar()
+   at LingoPartnerInfrastructure.Repository.LearningActivityRepository.AddLearningActivity(LearningActivity activity) in /Users/janvanhest/fontys/console_apps/ap2-cmk/LingoPartnerInfrastructure/Repository/LearningActivityRepository.cs:line 38
+Trace configuration initialized.
+Trace configuration initialized.
+LingoPartnerConsole Information: 0 : 
+
+Application started at: 23-05-2024 23:55:47
+LingoPartnerConsole Error: 0 : DEVELOPMENT: Error in AddLearningActivity: Error adding learning activity
+Error message: Unknown column 'LearningModuleId' in 'field list'
+Stack trace:    at MySql.Data.MySqlClient.MySqlStream.ReadPacketAsync(Boolean execAsync)
+   at MySql.Data.MySqlClient.NativeDriver.GetResultAsync(Int32 affectedRow, Int64 insertedId, Boolean execAsync)
+   at MySql.Data.MySqlClient.Driver.GetResultAsync(Int32 statementId, Int32 affectedRows, Int64 insertedId, Boolean execAsync)
+   at MySql.Data.MySqlClient.Driver.NextResultAsync(Int32 statementId, Boolean force, Boolean execAsync)
+   at MySql.Data.MySqlClient.MySqlDataReader.NextResultAsync(Boolean execAsync, CancellationToken cancellationToken)
+   at MySql.Data.MySqlClient.MySqlDataReader.NextResultAsync(Boolean execAsync, CancellationToken cancellationToken)
+   at MySql.Data.MySqlClient.MySqlCommand.ExecuteReaderAsync(CommandBehavior behavior, Boolean execAsync, CancellationToken cancellationToken)
+   at MySql.Data.MySqlClient.MySqlCommand.ExecuteReaderAsync(CommandBehavior behavior, Boolean execAsync, CancellationToken cancellationToken)
+   at MySql.Data.MySqlClient.MySqlCommand.ExecuteReaderAsync(CommandBehavior behavior, Boolean execAsync, CancellationToken cancellationToken)
+   at MySql.Data.MySqlClient.MySqlCommand.ExecuteScalarAsync(Boolean execAsync, CancellationToken cancellationToken)
+   at MySql.Data.MySqlClient.MySqlCommand.ExecuteScalar()
+   at LingoPartnerInfrastructure.Repository.LearningActivityRepository.AddLearningActivity(LearningActivity activity) in /Users/janvanhest/fontys/console_apps/ap2-cmk/LingoPartnerInfrastructure/Repository/LearningActivityRepository.cs:line 39
+Trace configuration initialized.
+LingoPartnerConsole Information: 0 : 
+
+Application started at: 23-05-2024 23:58:03
+Trace configuration initialized.
+LingoPartnerConsole Information: 0 : 
+
+Application started at: 24-05-2024 14:07:36
