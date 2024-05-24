@@ -1,4 +1,31 @@
 ## Changelog
+### 24 mei. 
+- Created a progress repo
+- Few fixes
+  - Typo's
+  - Naming Conventions. 
+  - Parameter handling. 
+  - Adding returntypes instead of using void. (void is not so meaningfull for the view layer)
+- Added soms console fluf with rainbow colors and type animations
+- Added to Console helper
+  - ConsoleColor[] RainbowColors and ConsoleColor[] AllColors
+  - DisplayTypingAnimation(), DisplayMessage()
+  - GetLearningActivityType(), GetIntInput()
+- Updated program.cs
+  - Updated ConfigureTrace. 
+  - Added Authenticate(), ReadPassword() 
+  - Cleanup
+- Created LearningActivityAdd for adding learning activities in console/view
+- Updated menu.cs with
+  - Adding new learning activity
+- Updated UserList.show(UserRole? role=null) to show all users or only users with a specific role and not using a string anymore but a UserRole enum.
+- Created IProgressRepository and ProgressRepository for storing and retrieving progress data.
+- Updated AddLearningActivity in Administration to support adding learning activities.
+- Updated Progress.cs with use of UserId and LearningActivityId instead of User and LearningActivity.
+- Bugfix LearningActivityRepository.
+- Updated sql script for progress. 
+- 
+
 ### 22 mei. 
 - created simple user login functionality. 
 - Created simple login functionality for user. (though no salting of password yet). 
