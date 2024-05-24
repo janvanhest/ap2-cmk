@@ -1,5 +1,9 @@
 # Changelog
 
+### 24 mei. 
+- Start of creating a branch for a simple test. 
+  - User will be tested. 
+
 ## 24 mei Versie 0.4 
 - Most important entities are added with repos so most important algorithms can be implemented. 
   - User
