@@ -23,7 +23,7 @@ namespace LingoPartnerConsole.Views
           type: type,
           learningModuleId: learningModuleId
       );
-      SchoolAdministration.AddLearningActivity(learningModuleId, newLearningActivity);
+      SchoolAdministration.Add(newLearningActivity);
     }
   }
 }
