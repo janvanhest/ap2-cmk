@@ -1,6 +1,6 @@
 using LingoPartnerDomain.classes;
 
-namespace LingoPartnerDomain
+namespace LingoPartnerDomain.interfaces
 {
   public interface ILearningActivityRepository
   {

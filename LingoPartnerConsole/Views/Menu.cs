@@ -9,7 +9,7 @@ namespace LingoPartnerConsole.Views
     public Administration SchoolAdministration;
     private List<string> MenuItems = new List<string>
     {
-      "Add a user", // 1
+      "Create a User", // 1
       "Show all users", // 2
       "Show all teachers", // 3
       "Show all students", // 4

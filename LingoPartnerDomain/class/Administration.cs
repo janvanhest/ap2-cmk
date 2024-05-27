@@ -112,12 +112,12 @@ namespace LingoPartnerDomain.classes
       this.learningActivities = learningActivityRepository.GetAllLearningActivities().ToList();
     }
 
-    public LearningActivity? AddLearningActivity(int learningModuleId, LearningActivity newLearningActivity)
+    public LearningActivity? Add(LearningActivity newLearningActivity)
     {
-      var module = learningModules.Find(m => m.Id == learningModuleId);
+      var module = learningModules.Find(m => m.Id == newLearningActivity.LearningModuleId);
       if (module != null)
       {
-        var result = learningActivityRepository.AddLearningActivity(newLearningActivity);
+        LearningActivity result = learningActivityRepository.AddLearningActivity(newLearningActivity);
         if (result == null)
         {
           LoggingHelper.LogError(new Exception("Learning activity not added."), "Learning activity not added.");

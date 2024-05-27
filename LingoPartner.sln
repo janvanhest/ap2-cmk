@@ -13,6 +13,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LingoPartnerInfrastructure"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LingoPartnerShared", "LingoPartnerShared\LingoPartnerShared.csproj", "{2D6A03EC-6DBF-49AD-ADB5-E100640B5867}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LingoPartnerTests", "LingoPartnerTests\LingoPartnerTests.csproj", "{6F371962-F8D3-4571-8B7A-1A3604323D9C}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -42,5 +44,9 @@ Global
 		{2D6A03EC-6DBF-49AD-ADB5-E100640B5867}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2D6A03EC-6DBF-49AD-ADB5-E100640B5867}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2D6A03EC-6DBF-49AD-ADB5-E100640B5867}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6F371962-F8D3-4571-8B7A-1A3604323D9C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6F371962-F8D3-4571-8B7A-1A3604323D9C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6F371962-F8D3-4571-8B7A-1A3604323D9C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6F371962-F8D3-4571-8B7A-1A3604323D9C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

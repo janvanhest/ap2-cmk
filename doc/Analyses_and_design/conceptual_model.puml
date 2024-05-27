@@ -1,9 +1,8 @@
 @startuml
-
 rectangle Leerling
 rectangle Leerkracht
 rectangle Vriend
-rectangle EducatieveInhoud as "Educatieve Inhoud"
+' rectangle EducatieveInhoud as "Educatieve Inhoud"
 ' rectangle Collectie
 ' rectangle Hoofdstukken
 rectangle Leeractiviteit
@@ -14,11 +13,11 @@ rectangle Beloning
 ' rectangle SocialeInteractie as "Vriendenlijst"
 ' rectangle LeerlingDashboard as "Leerling Dashboard"
 
-Leerkracht "1" -down-> "1..n" EducatieveInhoud : levert
+Leerkracht "1..n" -down-> "1..n" Leeractiviteit : levert
 ' EducatieveInhoud -down-> Collectie : bestaat uit
 ' Collectie -right-> Hoofdstukken : omvat
 ' Hoofdstukken -down-> Leeractiviteit : bevat
-EducatieveInhoud "1" -down-> "1..n" Leeractiviteit : bevat
+' EducatieveInhoud "1" -down-> "1..n" Leeractiviteit : bevat
 
 Leerling "1" -left-> "1..n" Leeractiviteit : "neemt deel aan\n/ voert uit"
 Leerling "1" -right-> "0..n" Vriend  : heeft
@@ -32,5 +31,4 @@ Voortgang "1" -right-> "1..n" Beloning : heeft
 ' Beloning "1..n" -up-> "1" Diploma : is
 ' Beloning "1..n" -up-> "1" Badge : is
 ' Beloning "n" -right-> "1" LeerlingDashboard : toont
-
 @enduml

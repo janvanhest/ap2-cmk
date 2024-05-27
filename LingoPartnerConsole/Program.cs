@@ -129,7 +129,7 @@ namespace LingoPartnerConsole
         if (administration.Authenticate(username, password))
         {
           // successful authentication
-          Console.WriteLine("Authentication successful.");
+          ConsoleHelper.DisplayMessage("Authentication successful", MessageType.SUCCES);
         }
         else
         {
