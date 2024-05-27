@@ -7,7 +7,10 @@
 - Added simple test for Adminstration. 
 - Added diagrams as an svg instead of an png. 
 - Added # Functioneel Ontwerp "LingoPartner" Taal Leer App
-- 
+- Added Documentation with latest info and diagrams. 
+  - Functional design. 
+  - Technical design. 
+- Added new chapter with user acceptance tests.
 
 ## 24 mei Versie 0.4 
 - Most important entities are added with repos so most important algorithms can be implemented. 
