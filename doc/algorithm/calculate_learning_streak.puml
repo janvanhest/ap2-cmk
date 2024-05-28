@@ -1,0 +1,26 @@
+@startuml
+
+title Calculate Learning Streak
+
+start
+:Initialize streak to 0;
+:Initialize consecutiveDays to 0;
+:Initialize lastDate to null;
+:Fetch progress records for user;
+while (has next record?)
+  :Get next record;
+  if (lastDate is null or record.Date == lastDate + 1 day) then (yes)
+    :Increase consecutiveDays by 1;
+    :Increase streak by 1;
+    if (consecutiveDays == 3 or consecutiveDays == 5) then (yes)
+      :Increase streak by 1;
+    endif
+  else (no)
+    :Reset consecutiveDays to 1;
+    :Increase streak by 1;
+  endif
+  :Set lastDate to record.Date;
+endwhile
+:return streak;
+
+@enduml

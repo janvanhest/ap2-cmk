@@ -1,0 +1,17 @@
+@startuml
+
+title Show Dashboard
+
+start
+:Check if user is logged in;
+if (User is logged in?) then (yes)
+  :Display user information (name, role);
+  :Show latest 3 activities;
+  :Calculate learning streak;
+  :Display learning streak;
+else (no)
+  :Show "No user is currently logged in";
+endif
+stop
+
+@enduml
