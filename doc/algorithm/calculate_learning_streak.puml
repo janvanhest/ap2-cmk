@@ -1,6 +1,6 @@
 @startuml
 
-title Calculate Learning Streak
+title Calculate Learning Streak total points
 
 start
 :Initialize streak to 0;

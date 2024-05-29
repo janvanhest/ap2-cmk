@@ -1,0 +1,29 @@
+@startuml
+
+title Fetch All Streaks from Progress Records
+
+start
+:Initialize streaks to empty list;
+:Initialize currentStreak to null;
+:Initialize lastDate to null;
+:Fetch progress records for user;
+while (has next record?)
+  :Get next record;
+  if (isNewStreak(record, lastDate)) then (yes)
+    if (currentStreak != null) then (yes)
+      :Add current streak to streaks list;
+    endif
+    :Create new streak;
+    :Set consecutiveDays to 1;
+  else (no)
+    :Increase consecutiveDays by 1;
+  endif
+  :Update current streak with record;
+  :Set lastDate to record.Date;
+endwhile
+if (currentStreak != null) then (yes)
+  :Add last streak to streaks list;
+endif
+:return streaks;
+
+@enduml
