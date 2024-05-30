@@ -1,5 +1,26 @@
 # Changelog
 
+### 30 mei. 
+- Removed API layer. 
+- Made intention with writing a DashBoardService. 
+- Added ProgressRepo
+- Injected ProgressRepo
+- Made a start with
+  - DashboardService
+  - IStreakCalculationStrategy 
+  - StreakCalculationStrategy
+  - AdvancedCalculationStrategy
+  - BasicStreakCalculationStrategy
+  - Created StreakCalculator
+- Created CalculateTotalScore for streaks. 
+- created function GetLastStreak
+- created function GetFirstStreak
+- GetProgressRecordsByUser
+- CalculateStreaks
+- Updated progress entity with date fields. 
+- Updated script.sql to reflect changes. 
+- Updated Domainlayer to reflect changes. 
+
 ### 27 mei. 
 - Added 
 
