@@ -96,28 +96,43 @@ CREATE TABLE Progress (
     FOREIGN KEY (learningActivity_id) REFERENCES LearningActivity(id)
 );
 
--- Insert Progress Records for Sample Users with dates
+-- Create a procedure to insert progress records for a user
+DELIMITER $$
 
--- User: John Doe (id=1)
-INSERT INTO Progress (progress_type, status, progressDetails, user_id, learningActivity_id, date)
-VALUES
-    ('LEARNINGACTIVITY', 'IN_PROGRESS', 'Working on basic addition.', 1, 1, '2023-05-01'),
-    ('LEARNINGACTIVITY', 'NOT_STARTED', 'Not started subtraction basics.', 1, 2, '2023-05-02'),
-    ('LEARNINGACTIVITY', 'COMPLETED', 'Completed multiplication introduction.', 1, 3, '2023-05-03');
+CREATE PROCEDURE GenerateProgressRecordsForUser(IN userId INT, IN startDate DATE, IN endDate DATE)
+BEGIN
+    DECLARE i INT DEFAULT 0;
+    DECLARE numRecords INT;
+    SET numRecords = FLOOR(RAND() * 976) + 25; -- Generate between 25 and 100 records
 
--- User: Michael Johnson (id=3)
-INSERT INTO Progress (progress_type, status, progressDetails, user_id, learningActivity_id, date)
-VALUES
-    ('LEARNINGACTIVITY', 'IN_PROGRESS', 'Studying ancient civilizations.', 3, 5, '2023-05-04'),
-    ('LEARNINGACTIVITY', 'COMPLETED', 'Finished medieval history.', 3, 6, '2023-05-05'),
-    ('LEARNINGACTIVITY', 'NOT_STARTED', 'Modern history not started.', 3, 7, '2023-05-06'),
-    ('LEARNINGACTIVITY', 'IN_PROGRESS', 'Studying world wars.', 3, 8, '2023-05-07');
+    WHILE i < numRecords DO
+        INSERT INTO Progress (progress_type, status, progressDetails, user_id, learningActivity_id, date)
+        VALUES
+        (
+            'LEARNINGACTIVITY', 
+            CASE 
+                WHEN RAND() > 0.66 THEN 'IN_PROGRESS' 
+                WHEN RAND() > 0.33 THEN 'COMPLETED' 
+                ELSE 'NOT_STARTED' 
+            END,
+            CONCAT('Generated record for user ', userId),
+            userId,
+            FLOOR(RAND() * 13) + 1,
+            DATE_ADD(startDate, INTERVAL FLOOR(RAND() * (DATEDIFF(endDate, startDate) + 1)) DAY)
+        );
+        SET i = i + 1;
+    END WHILE;
+END $$
 
--- User: Emily Williams (id=4)
-INSERT INTO Progress (progress_type, status, progressDetails, user_id, learningActivity_id, date)
-VALUES
-    ('LEARNINGACTIVITY', 'COMPLETED', 'Completed physics basics.', 4, 9, '2023-05-08'),
-    ('LEARNINGACTIVITY', 'NOT_STARTED', 'Chemistry fundamentals not started.', 4, 10, '2023-05-09'),
-    ('LEARNINGACTIVITY', 'IN_PROGRESS', 'Studying biology overview.', 4, 11, '2023-05-10'),
-    ('LEARNINGACTIVITY', 'NOT_STARTED', 'Earth science not started.', 4, 12, '2023-05-11'),
-    ('LEARNINGACTIVITY', 'IN_PROGRESS', 'Working on environmental science.', 4, 13, '2023-05-12');
+DELIMITER ;
+
+-- Generate progress records for John Doe (id=1)
+CALL GenerateProgressRecordsForUser(1, '2023-01-01', '2023-12-31');
+
+-- Generate progress records for Michael Johnson (id=3)
+CALL GenerateProgressRecordsForUser(3, '2023-01-01', '2023-12-31');
+
+-- Generate progress records for Emily Williams (id=4)
+CALL GenerateProgressRecordsForUser(4, '2023-01-01', '2023-12-31');
+
+
