@@ -4,10 +4,10 @@ namespace LingoPartnerDomain.interfaces
 {
   public interface ILearningActivityRepository
   {
-    LearningActivity? AddLearningActivity(LearningActivity activity);
-    LearningActivity? UpdateLearningActivity(LearningActivity activity);
-    void RemoveLearningActivity(int activityId);
-    LearningActivity? GetLearningActivityById(int activityId);
-    IEnumerable<LearningActivity> GetAllLearningActivities();
+    LearningActivity? Add(LearningActivity activity);
+    LearningActivity? Update(LearningActivity activity);
+    void Remove(int activityId);
+    LearningActivity? GetById(int activityId);
+    IEnumerable<LearningActivity> GetAll();
   }
 }

@@ -97,8 +97,8 @@ namespace LingoPartnerTests.Domain
       mockLearningModuleRepository.Setup(repo => repo.AddLearningModule(It.IsAny<LearningModule>())).Returns(new LearningModule(1, "Module 1", "Module 1 description"));
       mockLearningModuleRepository.Setup(repo => repo.GetAllLearningModules()).Returns(new List<LearningModule> { new LearningModule(1, "Module 1", "Module 1 description") });
 
-      mockLearningActivityRepository.Setup(repo => repo.AddLearningActivity(It.IsAny<LearningActivity>())).Returns(activity);
-      mockLearningActivityRepository.Setup(repo => repo.GetAllLearningActivities()).Returns(new List<LearningActivity> { activity });
+      mockLearningActivityRepository.Setup(repo => repo.Add(It.IsAny<LearningActivity>())).Returns(activity);
+      mockLearningActivityRepository.Setup(repo => repo.GetAll()).Returns(new List<LearningActivity> { activity });
 
       // Act
       administration.Add(activity);
