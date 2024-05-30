@@ -117,6 +117,7 @@ namespace LingoPartnerDomain.classes
       this.users = userRepository.GetUsers().ToList();
       this.learningModules = learningModuleRepository.GetAllLearningModules().ToList();
       this.learningActivities = learningActivityRepository.GetAll().ToList();
+      this.progressRepository.GetAllProgress().ToList();
     }
 
     public LearningActivity? Add(LearningActivity newLearningActivity)
