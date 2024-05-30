@@ -23,12 +23,14 @@ namespace LingoPartnerConsole
       var userRepository = new UserRepository(connectionString);
       var learningModuleRepository = new LearningModuleRepository(connectionString);
       var learningActivityRepository = new LearningActivityRepository(connectionString);
+      var progressRepository = new ProgressRepository(connectionString);
 
       // Create new administration
       Administration schoolAdministration = new Administration(
         userRepository,
         learningModuleRepository,
-        learningActivityRepository
+        learningActivityRepository,
+        progressRepository
       );
 
       InitializeProgram(schoolAdministration);
