@@ -83,7 +83,7 @@ VALUES
     ('Earth Science', 'Overview of earth science.', 'INSTRUCTION', 3),
     ('Environmental Science', 'Introduction to environmental science.', 'QUIZ', 3);
 
--- Create a table for progress
+-- Create a table for progress with the new Date property
 CREATE TABLE Progress (
     id INT AUTO_INCREMENT PRIMARY KEY,
     progress_type ENUM('LEARNINGACTIVITY', 'ASSESMENT', 'MODULE', 'PROJECT') NOT NULL,
@@ -91,32 +91,33 @@ CREATE TABLE Progress (
     progressDetails VARCHAR(255) NOT NULL,
     user_id INT NOT NULL,
     learningActivity_id INT NOT NULL,
+    date DATE NOT NULL,  -- New date property
     FOREIGN KEY (user_id) REFERENCES `User`(Id),
     FOREIGN KEY (learningActivity_id) REFERENCES LearningActivity(id)
 );
 
--- Insert Progress Records for Sample Users
+-- Insert Progress Records for Sample Users with dates
 
 -- User: John Doe (id=1)
-INSERT INTO Progress (progress_type, status, progressDetails, user_id, learningActivity_id)
+INSERT INTO Progress (progress_type, status, progressDetails, user_id, learningActivity_id, date)
 VALUES
-    ('LEARNINGACTIVITY', 'IN_PROGRESS', 'Working on basic addition.', 1, 1),
-    ('LEARNINGACTIVITY', 'NOT_STARTED', 'Not started subtraction basics.', 1, 2),
-    ('LEARNINGACTIVITY', 'COMPLETED', 'Completed multiplication introduction.', 1, 3);
+    ('LEARNINGACTIVITY', 'IN_PROGRESS', 'Working on basic addition.', 1, 1, '2023-05-01'),
+    ('LEARNINGACTIVITY', 'NOT_STARTED', 'Not started subtraction basics.', 1, 2, '2023-05-02'),
+    ('LEARNINGACTIVITY', 'COMPLETED', 'Completed multiplication introduction.', 1, 3, '2023-05-03');
 
 -- User: Michael Johnson (id=3)
-INSERT INTO Progress (progress_type, status, progressDetails, user_id, learningActivity_id)
+INSERT INTO Progress (progress_type, status, progressDetails, user_id, learningActivity_id, date)
 VALUES
-    ('LEARNINGACTIVITY', 'IN_PROGRESS', 'Studying ancient civilizations.', 3, 5),
-    ('LEARNINGACTIVITY', 'COMPLETED', 'Finished medieval history.', 3, 6),
-    ('LEARNINGACTIVITY', 'NOT_STARTED', 'Modern history not started.', 3, 7),
-    ('LEARNINGACTIVITY', 'IN_PROGRESS', 'Studying world wars.', 3, 8);
+    ('LEARNINGACTIVITY', 'IN_PROGRESS', 'Studying ancient civilizations.', 3, 5, '2023-05-04'),
+    ('LEARNINGACTIVITY', 'COMPLETED', 'Finished medieval history.', 3, 6, '2023-05-05'),
+    ('LEARNINGACTIVITY', 'NOT_STARTED', 'Modern history not started.', 3, 7, '2023-05-06'),
+    ('LEARNINGACTIVITY', 'IN_PROGRESS', 'Studying world wars.', 3, 8, '2023-05-07');
 
 -- User: Emily Williams (id=4)
-INSERT INTO Progress (progress_type, status, progressDetails, user_id, learningActivity_id)
+INSERT INTO Progress (progress_type, status, progressDetails, user_id, learningActivity_id, date)
 VALUES
-    ('LEARNINGACTIVITY', 'COMPLETED', 'Completed physics basics.', 4, 9),
-    ('LEARNINGACTIVITY', 'NOT_STARTED', 'Chemistry fundamentals not started.', 4, 10),
-    ('LEARNINGACTIVITY', 'IN_PROGRESS', 'Studying biology overview.', 4, 11),
-    ('LEARNINGACTIVITY', 'NOT_STARTED', 'Earth science not started.', 4, 12),
-    ('LEARNINGACTIVITY', 'IN_PROGRESS', 'Working on environmental science.', 4, 13);
+    ('LEARNINGACTIVITY', 'COMPLETED', 'Completed physics basics.', 4, 9, '2023-05-08'),
+    ('LEARNINGACTIVITY', 'NOT_STARTED', 'Chemistry fundamentals not started.', 4, 10, '2023-05-09'),
+    ('LEARNINGACTIVITY', 'IN_PROGRESS', 'Studying biology overview.', 4, 11, '2023-05-10'),
+    ('LEARNINGACTIVITY', 'NOT_STARTED', 'Earth science not started.', 4, 12, '2023-05-11'),
+    ('LEARNINGACTIVITY', 'IN_PROGRESS', 'Working on environmental science.', 4, 13, '2023-05-12');
