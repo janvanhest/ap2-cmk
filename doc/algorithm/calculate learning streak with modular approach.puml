@@ -1,0 +1,24 @@
+@startuml
+
+title Calculate Learning Streak with Modular Approach
+
+start
+:Initialize totalPoints to 0;
+:Initialize streaks to empty list;
+:Fetch progress records for user;
+while (has next record?)
+  :Get next record;
+  if (isNewStreak(record, lastDate)) then (yes)
+    :Create new streak;
+    :Add current streak to streaks list;
+    :Reset consecutiveDays to 0;
+  endif
+  :Increase consecutiveDays by 1;
+  :Update current streak with record;
+  :Set lastDate to record.Date;
+endwhile
+:Add last streak to streaks list;
+:Calculate total points from streaks;
+:return totalPoints;
+
+@enduml

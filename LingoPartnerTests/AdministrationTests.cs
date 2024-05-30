@@ -15,6 +15,7 @@ namespace LingoPartnerTests.Domain
     private readonly Mock<IUserRepository> mockUserRepository;
     private readonly Mock<ILearningModuleRepository> mockLearningModuleRepository;
     private readonly Mock<ILearningActivityRepository> mockLearningActivityRepository;
+    private readonly Mock<IProgressRepository> mockProgressRepository;
     private readonly Administration administration;
 
     public AdministrationTests()
@@ -22,11 +23,13 @@ namespace LingoPartnerTests.Domain
       mockUserRepository = new Mock<IUserRepository>();
       mockLearningModuleRepository = new Mock<ILearningModuleRepository>();
       mockLearningActivityRepository = new Mock<ILearningActivityRepository>();
+      mockProgressRepository = new Mock<IProgressRepository>();
 
       administration = new Administration(
           mockUserRepository.Object,
           mockLearningModuleRepository.Object,
-          mockLearningActivityRepository.Object
+          mockLearningActivityRepository.Object,
+          mockProgressRepository.Object
       );
     }
 
@@ -94,8 +97,8 @@ namespace LingoPartnerTests.Domain
       mockLearningModuleRepository.Setup(repo => repo.AddLearningModule(It.IsAny<LearningModule>())).Returns(new LearningModule(1, "Module 1", "Module 1 description"));
       mockLearningModuleRepository.Setup(repo => repo.GetAllLearningModules()).Returns(new List<LearningModule> { new LearningModule(1, "Module 1", "Module 1 description") });
 
-      mockLearningActivityRepository.Setup(repo => repo.AddLearningActivity(It.IsAny<LearningActivity>())).Returns(activity);
-      mockLearningActivityRepository.Setup(repo => repo.GetAllLearningActivities()).Returns(new List<LearningActivity> { activity });
+      mockLearningActivityRepository.Setup(repo => repo.Add(It.IsAny<LearningActivity>())).Returns(activity);
+      mockLearningActivityRepository.Setup(repo => repo.GetAll()).Returns(new List<LearningActivity> { activity });
 
       // Act
       administration.Add(activity);

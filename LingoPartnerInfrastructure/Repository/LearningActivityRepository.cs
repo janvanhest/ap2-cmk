@@ -14,7 +14,7 @@ namespace LingoPartnerInfrastructure.Repository
       _connectionString = connectionString;
     }
 
-    public LearningActivity? AddLearningActivity(LearningActivity activity)
+    public LearningActivity? Add(LearningActivity activity)
     {
       using (var connection = new MySqlConnection(_connectionString))
       {
@@ -59,7 +59,7 @@ namespace LingoPartnerInfrastructure.Repository
       return null;
     }
 
-    public IEnumerable<LearningActivity> GetAllLearningActivities()
+    public IEnumerable<LearningActivity> GetAll()
     {
       List<LearningActivity> activities = [];
       using (var connection = new MySqlConnection(_connectionString))
@@ -88,19 +88,19 @@ namespace LingoPartnerInfrastructure.Repository
       return activities;
     }
 
-    public LearningActivity? GetLearningActivityById(int activityId)
+    public LearningActivity? GetById(int activityId)
     {
       // TODO: Implement this method to get a learning activity from the database
       throw new NotImplementedException();
     }
 
-    public void RemoveLearningActivity(int activityId)
+    public void Remove(int activityId)
     {
       // TODO: Implement this method to remove a learning activity from the database
       throw new NotImplementedException();
     }
 
-    public LearningActivity? UpdateLearningActivity(LearningActivity activity)
+    public LearningActivity? Update(LearningActivity activity)
     {
       // TODO: Implement this method to update a learning activity in the database
       throw new NotImplementedException();

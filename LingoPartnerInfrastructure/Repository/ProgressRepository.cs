@@ -47,7 +47,8 @@ namespace LingoPartnerInfrastructure.Repository
                     progress.Status,
                     progress.Details,
                     progress.UserId,
-                    progress.LearningActivityId
+                    progress.LearningActivityId,
+                    progress.Date
                 );
               }
             }
@@ -60,6 +61,35 @@ namespace LingoPartnerInfrastructure.Repository
         }
       }
       return null;
+    }
+
+    public IEnumerable<Progress> GetAllProgress()
+    {
+      using (var connection = new MySqlConnection(_connectionString))
+      {
+        connection.Open();
+        string query = @"SELECT * FROM Progress";
+        using (var command = new MySqlCommand(query, connection))
+        {
+          using (var reader = command.ExecuteReader())
+          {
+            List<Progress> progressList = new List<Progress>();
+            while (reader.Read())
+            {
+              progressList.Add(new Progress(
+                  reader.GetInt32("Id"),
+                  Enum.Parse<ProgressType>(reader.GetString("Type")),
+                  Enum.Parse<ProgressStatus>(reader.GetString("Status")),
+                  reader.GetString("Details"),
+                  reader.GetInt32("UserId"),
+                  reader.GetInt32("LearningActivityId"),
+                  reader.GetDateTime("Date")
+              ));
+            }
+            return progressList;
+          }
+        }
+      }
     }
 
     public IEnumerable<Progress> GetProgressByUserId(int userId)
@@ -82,7 +112,8 @@ namespace LingoPartnerInfrastructure.Repository
                   Enum.Parse<ProgressStatus>(reader.GetString("Status")),
                   reader.GetString("Details"),
                   reader.GetInt32("UserId"),
-                  reader.GetInt32("LearningActivityId")
+                  reader.GetInt32("LearningActivityId"),
+                  reader.GetDateTime("Date")
               ));
             }
             return progressList;

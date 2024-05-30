@@ -1,0 +1,15 @@
+@startuml
+
+title Fetch Last Streak
+
+start
+:Fetch all streaks;
+if (streaks is not empty) then (yes)
+  :Get last streak from streaks;
+  :Return last streak;
+else (no)
+  :Return null;
+endif
+stop
+
+@enduml

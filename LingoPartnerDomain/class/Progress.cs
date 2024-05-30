@@ -11,8 +11,10 @@ public class Progress
   public string Details { get; private set; }  // Private setter
   public int UserId { get; private set; }  // Private setter
   public int LearningActivityId { get; private set; }  // Private setter
+  public DateTime Date { get; private set; }  // New date property with private setter
 
-  public Progress(int id, ProgressType type, ProgressStatus status, string details, int userId, int learningActivityId)
+  // Constructor with ID
+  public Progress(int id, ProgressType type, ProgressStatus status, string details, int userId, int learningActivityId, DateTime date)
   {
     Id = id;
     Type = type;
@@ -20,20 +22,23 @@ public class Progress
     Details = details;
     UserId = userId;
     LearningActivityId = learningActivityId;
+    Date = date;  // Initialize date
   }
 
-  public Progress(ProgressType type, ProgressStatus status, string details, int userId, int learningActivityId)
+  // Constructor without ID
+  public Progress(ProgressType type, ProgressStatus status, string details, int userId, int learningActivityId, DateTime date)
   {
     Type = type;
     Status = status;
     Details = details;
     UserId = userId;
     LearningActivityId = learningActivityId;
+    Date = date;  // Initialize date
   }
 
   public string ShowDetails()
   {
-    return $"Progress ID: {Id}, Type: {Type}, Status: {Status}, Details: {Details}, User ID: {UserId}, Learning Activity ID: {LearningActivityId}";
+    return $"Progress ID: {Id}, Type: {Type}, Status: {Status}, Details: {Details}, User ID: {UserId}, Learning Activity ID: {LearningActivityId}, Date: {Date}";
   }
 
   public void UpdateProgress(ProgressStatus newStatus, string newDetails)

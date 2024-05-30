@@ -23,17 +23,27 @@ namespace LingoPartnerConsole
       var userRepository = new UserRepository(connectionString);
       var learningModuleRepository = new LearningModuleRepository(connectionString);
       var learningActivityRepository = new LearningActivityRepository(connectionString);
+      var progressRepository = new ProgressRepository(connectionString);
+      // var DashBoardService = new DashBoardService(
+      //   userRepository,
+      //   learningModuleRepository,
+      //   learningActivityRepository,
+      //   progressRepository
+      //   );
 
       // Create new administration
       Administration schoolAdministration = new Administration(
         userRepository,
         learningModuleRepository,
-        learningActivityRepository
+        learningActivityRepository,
+        progressRepository
       );
 
       InitializeProgram(schoolAdministration);
 
-      Menu menu = new Menu(schoolAdministration);
+      Menu menu = new Menu(
+        schoolAdministration
+        );
       menu.Show();
     }
 
