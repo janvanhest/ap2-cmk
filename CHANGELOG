@@ -1,6 +1,8 @@
 # Changelog
 
 ### 30 mei. 
+
+### 30 mei. 
 - Removed API layer. 
 - Made intention with writing a DashBoardService. 
 - Added ProgressRepo
