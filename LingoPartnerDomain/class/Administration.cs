@@ -200,7 +200,13 @@ namespace LingoPartnerDomain.classes
           }
           else
           {
-            streaks.Add(new LearningStreak(streakStart.Value, streakEnd.Value));
+            streaks.Add(new LearningStreak(
+              progressRecords[i].UserId,
+              streakStart.Value,
+              streakEnd.Value,
+              (streakEnd.Value - streakStart.Value).Days + 1,
+              progressRecords.Count
+              ));
             streakStart = progressRecords[i].Date;
             streakEnd = progressRecords[i].Date;
           }
@@ -208,7 +214,13 @@ namespace LingoPartnerDomain.classes
       }
       if (streakStart != null && streakEnd != null)
       {
-        streaks.Add(new LearningStreak(streakStart.Value, streakEnd.Value));
+        streaks.Add(new LearningStreak(
+          progressRecords[progressRecords.Count - 1].UserId,
+          streakStart.Value,
+          streakEnd.Value,
+          (streakEnd.Value - streakStart.Value).Days + 1,
+          progressRecords.Count
+          ));
       }
 
       return streaks;

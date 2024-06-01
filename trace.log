@@ -301,3 +301,7 @@ Trace configuration initialized.
 LingoPartnerConsole Information: 0 : 
 
 Application started at: 25-05-2024 17:33:31
+Trace configuration initialized.
+LingoPartnerConsole Error: 0 : Unable to connect to any of the specified MySQL hosts.
+Trace configuration initialized.
+LingoPartnerConsole Error: 0 : Unable to connect to any of the specified MySQL hosts.
