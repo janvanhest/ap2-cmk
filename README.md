@@ -17,18 +17,18 @@ Je zult wel een .env bestand moeten aanmaken.
 Ik heb een voorbeeld bestand gemaakt .env.example, welke je kan gebruiken.
 
 ```bash
-cp .env.example .env
+$ cp .env.example .env
 ```
 
 De mariadb server kan je starten met het volgende commando:
 
 ```bash
-docker-compose up
+$ docker-compose up
 ```
 
 De log kan je bekijken met het volgende commando:
 ```bash
-docker-compose logs -f
+$ docker-compose logs -f
 ```
 
 Bij het starten van dit docker compose bestand wordt er een mariadb server gestart.
