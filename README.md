@@ -3,6 +3,10 @@ Opdracht voor semester 2 Fontys HBO ICT opleiding
 
 ## Pre-requisites
 
+Voor de liefhebber een kleine video introductie zodat je makkelijk kan zien hoe je de applicatie aan de praat kan krijgen. 
+
+[![Installation instructions](https://i.ytimg.com/vi/TpJ_nHRIF3E/maxresdefault.jpg)](https://youtu.be/TpJ_nHRIF3E "Installation instructions")
+
 Docker dient geinstalleerd te zijn.
 Voor installatie instructies zie: [Docker installatie](https://docs.docker.com/desktop/)
 
