@@ -3,7 +3,8 @@ Opdracht voor semester 2 Fontys HBO ICT opleiding
 
 ## Pre-requisites
 
-Docker dient geinstalleerd te zijn. 
+Docker dient geinstalleerd te zijn.
+Voor installatie instructies zie: [Docker installatie](https://docs.docker.com/desktop/)
 
 Ik heb een docker-compose.yml bestand gemaakt om de database te starten.
 Deze kan je starten met het volgende commando:
@@ -20,6 +21,8 @@ Bij het starten van dit docker compose bestand wordt er een mariadb server gesta
 Er wordt automatisch een sql script uitgevoerd om de database te vullen met tabellen en data die nodig is voor de applicatie.
 Het script vind je in de map sql/script.sql
 Het docker compose bestand staat in de root folder. 
+
+> Noot: Wanneer men hier geen gebruik van wilt maken zal men zelf een mariadb/mysql server moeten opzetten en het script zelf inladen. 
 
 Je kan gebruiken maken van het bestand .env.example om een .env bestand aan te maken. 
 
