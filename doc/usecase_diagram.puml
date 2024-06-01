@@ -8,7 +8,7 @@ actor Leerkracht
 rectangle "LingoPartner App" {
   usecase "Gebruiker Aanmaken" as UC1
   usecase "Profiel Aanpassen" as UC2
-  usecase "Collectie aanmaken" as UC3
+  usecase "Leermodule aanmaken" as UC3
   usecase "Leeractiviteit Aanmaken" as UC4
   usecase "Voortgang bekijken" as UC5
   usecase "Leeractiviteit Uitvoeren" as UC6
