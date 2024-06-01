@@ -23,6 +23,9 @@ CREATE TABLE `User` (
 -- Insert some sample users
 INSERT INTO `User` (`FirstName`, `MiddleName`, `LastName`, `DateOfBirth`, `Email`, `Password`, `Username`, `Role`)
 VALUES 
+('admin', '', 'admin', '1990-01-01', 'admin@example.com', 'start1234!', 'admin', 'ADMIN'),
+('user', '', 'user', '1990-01-01', 'user@example.com', 'start1234!', 'user', 'STUDENT'),
+('teacher', '', 'teacher', '1990-01-01', 'studen@example.com', 'start1234!', 'teacher', 'TEACHER'),
 ('John', '', 'Doe', '1990-01-01', 'john.doe@example.com', 'password123', 'johndoe', 'STUDENT'),
 ('Jane', 'A.', 'Smith', '1985-02-02', 'jane.smith@example.com', 'password123', 'janesmith', 'ADMIN'),
 ('Michael', 'B.', 'Johnson', '1979-03-03', 'michael.johnson@example.com', 'password123', 'michaeljohnson', 'STUDENT'),
