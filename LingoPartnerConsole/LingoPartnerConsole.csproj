@@ -6,10 +6,6 @@
     <ProjectReference Include="..\LingoPartnerShared\LingoPartnerShared.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Class/" />
-  </ItemGroup>
-
   <PropertyGroup>
     <OutputType>Exe</OutputType>
     <TargetFramework>net8.0</TargetFramework>
