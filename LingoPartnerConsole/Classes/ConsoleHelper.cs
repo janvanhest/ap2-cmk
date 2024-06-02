@@ -1,8 +1,8 @@
 ﻿using System.Net.Mail;
-using LingoPartnerDomain.classes;
+using LingoPartnerDomain.Classes;
 using LingoPartnerDomain.enums;
 
-namespace LingoPartnerConsole.helpers
+namespace LingoPartnerConsole.Helpers
 {
 
   public static class ConsoleHelper

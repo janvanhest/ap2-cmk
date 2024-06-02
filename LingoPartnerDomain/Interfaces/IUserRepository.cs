@@ -1,5 +1,5 @@
-﻿using LingoPartnerDomain.classes;
-namespace LingoPartnerDomain.interfaces
+﻿using LingoPartnerDomain.Classes;
+namespace LingoPartnerDomain.Interfaces
 {
   public interface IUserRepository
   {

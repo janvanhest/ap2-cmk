@@ -1,7 +1,7 @@
 ﻿using System;
-using LingoPartnerDomain.classes;
+using LingoPartnerDomain.Classes;
 
-namespace LingoPartnerDomain.interfaces
+namespace LingoPartnerDomain.Interfaces
 {
   public interface IProgressRepository
   {

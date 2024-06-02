@@ -1,9 +1,9 @@
 ﻿// See https://aka.ms/new-console-template for more information
 using System.Diagnostics;
 using dotenv.net;
-using LingoPartnerConsole.helpers;
+using LingoPartnerConsole.Helpers;
 using LingoPartnerConsole.Views;
-using LingoPartnerDomain.classes;
+using LingoPartnerDomain.Classes;
 using LingoPartnerDomain.enums;
 using LingoPartnerInfrastructure.Helpers;
 using LingoPartnerInfrastructure.Repository;
@@ -24,6 +24,7 @@ namespace LingoPartnerConsole
       var learningModuleRepository = new LearningModuleRepository(connectionString);
       var learningActivityRepository = new LearningActivityRepository(connectionString);
       var progressRepository = new ProgressRepository(connectionString);
+
       // var DashBoardService = new DashBoardService(
       //   userRepository,
       //   learningModuleRepository,

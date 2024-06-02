@@ -2,9 +2,9 @@
 using System.Linq;
 using System.Net.Mail;
 using System.Collections.Generic;
-using LingoPartnerDomain.classes;
+using LingoPartnerDomain.Classes;
 using LingoPartnerDomain.enums;
-using LingoPartnerDomain.interfaces;
+using LingoPartnerDomain.Interfaces;
 using Moq;
 using Xunit;
 

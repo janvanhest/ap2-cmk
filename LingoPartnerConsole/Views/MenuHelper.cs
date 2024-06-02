@@ -1,5 +1,5 @@
-﻿using LingoPartnerConsole.helpers;
-using LingoPartnerDomain.classes;
+﻿using LingoPartnerConsole.Helpers;
+using LingoPartnerDomain.Classes;
 
 namespace LingoPartnerConsole.Views
 {

@@ -1,6 +1,6 @@
-﻿using LingoPartnerDomain.classes;
+﻿using LingoPartnerDomain.Classes;
 using LingoPartnerDomain.enums;
-using LingoPartnerDomain.interfaces;
+using LingoPartnerDomain.Interfaces;
 using LingoPartnerShared.Helpers;
 using MySql.Data.MySqlClient;
 
