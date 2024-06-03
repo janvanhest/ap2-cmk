@@ -14,6 +14,7 @@ namespace LingoPartnerTests.Domain
     private readonly Mock<ILearningActivityRepository> mockLearningActivityRepository;
     private readonly Mock<IProgressRepository> mockProgressRepository;
     private readonly Mock<IAuthenticationService> mockAuthenticationService;
+    private readonly Mock<ILearningStreakService> mockLearningStreakService;
     private readonly Administration administration;
 
     public AdministrationTests()
@@ -23,13 +24,15 @@ namespace LingoPartnerTests.Domain
       mockLearningActivityRepository = new Mock<ILearningActivityRepository>();
       mockProgressRepository = new Mock<IProgressRepository>();
       mockAuthenticationService = new Mock<IAuthenticationService>();
+      mockLearningStreakService = new Mock<ILearningStreakService>();
 
       administration = new Administration(
           mockUserRepository.Object,
           mockLearningModuleRepository.Object,
           mockLearningActivityRepository.Object,
           mockProgressRepository.Object,
-          mockAuthenticationService.Object
+          mockAuthenticationService.Object,
+          mockLearningStreakService.Object
           );
     }
 

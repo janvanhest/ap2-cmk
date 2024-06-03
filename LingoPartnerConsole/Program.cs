@@ -23,13 +23,15 @@ namespace LingoPartnerConsole
       // Does  a few basic routines like setting up the trace and checking if the database is available
       SetupProgram(connectionString);
 
-
       UserRepository userRepository = new(connectionString);
       LearningModuleRepository learningModuleRepository = new(connectionString);
       LearningActivityRepository learningActivityRepository = new(connectionString);
       ProgressRepository progressRepository = new(connectionString);
+
+      LearningStreakService learningStreakService = new(progressRepository);
       AuthenticationService authenticationService = new(userRepository);
       Authenticate(authenticationService);
+
 
       // Create new administration
       Administration schoolAdministration = new Administration(
@@ -37,7 +39,8 @@ namespace LingoPartnerConsole
         learningModuleRepository,
         learningActivityRepository,
         progressRepository,
-        authenticationService
+        authenticationService,
+        learningStreakService
       );
 
       // Initialize the program, does some basic routines like authentication, set the user and displaying a welcome message

@@ -5,8 +5,8 @@ namespace LingoPartnerDomain.Classes
 {
   public class Administration
   {
-    private readonly IDashboardService dashboardService;
     private readonly IAuthenticationService authenticationService;
+    private readonly ILearningStreakService learningStreakService;
 
     private readonly IUserRepository userRepository;
     private readonly ILearningModuleRepository learningModuleRepository;
@@ -28,7 +28,8 @@ namespace LingoPartnerDomain.Classes
       ILearningModuleRepository learningModuleRepository,
       ILearningActivityRepository learningActivityRepository,
       IProgressRepository progressRepository,
-      IAuthenticationService authenticationService
+      IAuthenticationService authenticationService,
+      ILearningStreakService learningStreakService
       )
     {
       // Inject the repositories
@@ -37,6 +38,7 @@ namespace LingoPartnerDomain.Classes
       this.learningActivityRepository = learningActivityRepository ?? throw new ArgumentNullException(nameof(learningActivityRepository));
       this.progressRepository = progressRepository ?? throw new ArgumentNullException(nameof(progressRepository));
       this.authenticationService = authenticationService ?? throw new ArgumentNullException(nameof(authenticationService));
+      this.learningStreakService = learningStreakService ?? throw new ArgumentNullException(nameof(learningStreakService));
       users = userRepository.GetUsers().ToList();
       learningModules = learningModuleRepository.GetAllLearningModules().ToList();
       learningActivities = learningActivityRepository.GetAll().ToList();
@@ -137,88 +139,20 @@ namespace LingoPartnerDomain.Classes
         return null;
       }
     }
-    public int CalculateTotalScore(User user)
-    {
-      int userId = user.Id ?? throw new ArgumentNullException(nameof(user.Id));
-      List<Progress> progressRecords = progressRepository.GetProgressByUserId(userId).ToList();
-      var streaks = CalculateStreaks(progressRecords);
-
-      // Choose the strategy
-      IStreakCalculationStrategy strategy = new AdvancedStreakCalculationStrategy();
-      StreakCalculator calculator = new StreakCalculator(strategy);
-
-      return calculator.CalculateScore(streaks);
-    }
-
-    public LearningStreak? GetLastStreak(User user)
-    {
-      List<Progress> progressRecords = GetProgressRecordsByUser(user);
-      List<LearningStreak> streaks = CalculateStreaks(progressRecords);
-      return streaks.OrderByDescending(streak => streak.EndDate).FirstOrDefault();
-    }
-
-    public LearningStreak? GetFirstStreak(User user)
-    {
-      List<Progress> progressRecords = GetProgressRecordsByUser(user);
-      var streaks = CalculateStreaks(progressRecords);
-      return streaks.OrderBy(streak => streak.StartDate).FirstOrDefault();
-    }
-
     public List<Progress> GetProgressRecordsByUser(User user)
     {
       int userId = user.Id ?? throw new ArgumentNullException(nameof(user.Id));
       return progressRepository.GetProgressByUserId(userId).ToList();
     }
-    private List<LearningStreak> CalculateStreaks(List<Progress> progressRecords)
+
+    public int GetCurrentLearningStreak(User user)
     {
-      var streaks = new List<LearningStreak>();
-      if (progressRecords == null || progressRecords.Count == 0)
-        return streaks;
+      return learningStreakService.GetCurrentLearningStreak(user);
+    }
 
-      progressRecords.Sort((x, y) => x.Date.CompareTo(y.Date));
-
-      DateTime? streakStart = null;
-      DateTime? streakEnd = null;
-
-      for (int i = 0; i < progressRecords.Count; i++)
-      {
-        if (streakStart == null)
-        {
-          streakStart = progressRecords[i].Date;
-          streakEnd = progressRecords[i].Date;
-        }
-        else
-        {
-          if ((progressRecords[i].Date - streakEnd.Value).Days == 1)
-          {
-            streakEnd = progressRecords[i].Date;
-          }
-          else
-          {
-            streaks.Add(new LearningStreak(
-              progressRecords[i].UserId,
-              streakStart.Value,
-              streakEnd.Value,
-              (streakEnd.Value - streakStart.Value).Days + 1,
-              progressRecords.Count
-              ));
-            streakStart = progressRecords[i].Date;
-            streakEnd = progressRecords[i].Date;
-          }
-        }
-      }
-      if (streakStart != null && streakEnd != null)
-      {
-        streaks.Add(new LearningStreak(
-          progressRecords[progressRecords.Count - 1].UserId,
-          streakStart.Value,
-          streakEnd.Value,
-          (streakEnd.Value - streakStart.Value).Days + 1,
-          progressRecords.Count
-          ));
-      }
-
-      return streaks;
+    public int GetTotalScore(User user)
+    {
+      return learningStreakService.GetTotalScore(user);
     }
   }
 }
