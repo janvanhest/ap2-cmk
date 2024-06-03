@@ -90,7 +90,7 @@ namespace LingoPartnerConsole.Views
           NotImplemented(menuIndex);
           break;
         default:
-          NotImplemented(menuIndex);
+          // NotImplemented(menuIndex);
           MenuHelper.ReturnToMenu(SchoolAdministration);
           break;
       }
