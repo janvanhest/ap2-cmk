@@ -5,7 +5,8 @@ namespace LingoPartnerDomain.Classes
 {
   public class Administration
   {
-    private readonly IDashboardService _dashboardService;
+    private readonly IDashboardService dashboardService;
+    private readonly IAuthenticationService authenticationService;
 
     private readonly IUserRepository userRepository;
     private readonly ILearningModuleRepository learningModuleRepository;
@@ -19,13 +20,15 @@ namespace LingoPartnerDomain.Classes
     private List<LearningActivity> learningActivities;
     public IReadOnlyList<LearningActivity> LearningActivities => learningActivities;
 
-    public User? CurrentUser { get; private set; }
+    public User CurrentUser => authenticationService.GetCurrentUser();
+
 
     public Administration(
       IUserRepository userRepository,
       ILearningModuleRepository learningModuleRepository,
       ILearningActivityRepository learningActivityRepository,
-      IProgressRepository progressRepository
+      IProgressRepository progressRepository,
+      IAuthenticationService authenticationService
       )
     {
       // Inject the repositories
@@ -33,9 +36,10 @@ namespace LingoPartnerDomain.Classes
       this.learningModuleRepository = learningModuleRepository ?? throw new ArgumentNullException(nameof(learningModuleRepository));
       this.learningActivityRepository = learningActivityRepository ?? throw new ArgumentNullException(nameof(learningActivityRepository));
       this.progressRepository = progressRepository ?? throw new ArgumentNullException(nameof(progressRepository));
-      this.users = userRepository.GetUsers().ToList();
-      this.learningModules = learningModuleRepository.GetAllLearningModules().ToList();
-      this.learningActivities = learningActivityRepository.GetAll().ToList();
+      this.authenticationService = authenticationService ?? throw new ArgumentNullException(nameof(authenticationService));
+      users = userRepository.GetUsers().ToList();
+      learningModules = learningModuleRepository.GetAllLearningModules().ToList();
+      learningActivities = learningActivityRepository.GetAll().ToList();
       // Get the data from the repositories
       // RetrieveAllData();
     }
@@ -102,16 +106,6 @@ namespace LingoPartnerDomain.Classes
         // exception gooien vertraagt het programma door het opbouwen van stacktrace. 
         Console.WriteLine("Learning module not found.");
       }
-    }
-    public bool Authenticate(string username, string password)
-    {
-      User? user = userRepository.GetUserByUsername(username);
-      if (user != null && user.Password == password)
-      {
-        CurrentUser = user;
-        return true;
-      }
-      return false;
     }
     public void RetrieveAllData()
     {

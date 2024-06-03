@@ -5,8 +5,10 @@ using LingoPartnerConsole.Helpers;
 using LingoPartnerConsole.Views;
 using LingoPartnerDomain.Classes;
 using LingoPartnerDomain.enums;
+using LingoPartnerDomain.Interfaces;
 using LingoPartnerInfrastructure.Helpers;
 using LingoPartnerInfrastructure.Repository;
+using LingoPartnerInfrastructure.Services;
 
 namespace LingoPartnerConsole
 {
@@ -16,31 +18,33 @@ namespace LingoPartnerConsole
     {
       DotEnv.Load();
 
+      // create connection string
       string connectionString = InfrastructureHelper.CreateConnectionString();
-
+      // Does  a few basic routines like setting up the trace and checking if the database is available
       SetupProgram(connectionString);
 
-      var userRepository = new UserRepository(connectionString);
-      var learningModuleRepository = new LearningModuleRepository(connectionString);
-      var learningActivityRepository = new LearningActivityRepository(connectionString);
-      var progressRepository = new ProgressRepository(connectionString);
 
-      // var DashBoardService = new DashBoardService(
-      //   userRepository,
-      //   learningModuleRepository,
-      //   learningActivityRepository,
-      //   progressRepository
-      //   );
+      UserRepository userRepository = new(connectionString);
+      LearningModuleRepository learningModuleRepository = new(connectionString);
+      LearningActivityRepository learningActivityRepository = new(connectionString);
+      ProgressRepository progressRepository = new(connectionString);
+      AuthenticationService authenticationService = new(userRepository);
+      Authenticate(authenticationService);
 
       // Create new administration
       Administration schoolAdministration = new Administration(
         userRepository,
         learningModuleRepository,
         learningActivityRepository,
-        progressRepository
+        progressRepository,
+        authenticationService
       );
 
+      // Initialize the program, does some basic routines like authentication, set the user and displaying a welcome message
       InitializeProgram(schoolAdministration);
+
+      // Hooray! Let's now that the user is authenticated, let's show the menu
+
 
       Menu menu = new Menu(
         schoolAdministration
@@ -78,8 +82,6 @@ namespace LingoPartnerConsole
 
 
       ConsoleHelper.DisplayTypingAnimation("\nWelcome to LingoPartner!\n", true);
-
-      Authenticate(schoolAdministration);
 
       string welcomeMessage = "Welcome Guest!";
       if (schoolAdministration.CurrentUser != null)
@@ -130,14 +132,14 @@ namespace LingoPartnerConsole
       Console.ReadKey();
     }
 
-    private static void Authenticate(Administration administration)
+    private static void Authenticate(IAuthenticationService authenticationService)
     {
-      while (administration.CurrentUser == null)
+      while (authenticationService.GetCurrentUser() == null)
       {
         string username = ConsoleHelper.GetStringInput("Enter username: ");
-        string? password = ReadPassword();
+        string password = ReadPassword();
 
-        if (administration.Authenticate(username, password))
+        if (authenticationService.Authenticate(username, password))
         {
           // successful authentication
           ConsoleHelper.DisplayMessage("Authentication successful", MessageType.SUCCES);
