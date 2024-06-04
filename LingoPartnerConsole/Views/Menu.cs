@@ -1,12 +1,14 @@
 ﻿using LingoPartnerConsole.Helpers;
 using LingoPartnerDomain.Classes;
 using LingoPartnerDomain.enums;
+using LingoPartnerDomain.Interfaces.Services;
 
 namespace LingoPartnerConsole.Views
 {
   internal class Menu
   {
-    public Administration SchoolAdministration;
+    public Administration schoolAdministration;
+    public ILearningStreakService learningStreakService;
     private List<string> MenuItems = new List<string>
     {
       "Create a User", // 1
@@ -22,11 +24,13 @@ namespace LingoPartnerConsole.Views
       "Show all LearningActivities for a Teacher", // 11
       "Show all LearningActivities for a Student", // 12
       "Show all LearningActivities for a LearningModule and a User", // 13
+      "Show my dashboard baby" // 14
     };
 
-    public Menu(Administration schoolAdministration)
+    public Menu(Administration schoolAdministration, ILearningStreakService learningStreakService)
     {
-      SchoolAdministration = schoolAdministration;
+      this.schoolAdministration = schoolAdministration ?? throw new ArgumentNullException(nameof(schoolAdministration));
+      this.learningStreakService = learningStreakService ?? throw new ArgumentNullException(nameof(learningStreakService));
     }
     public void Show()
     {
@@ -42,18 +46,18 @@ namespace LingoPartnerConsole.Views
       // check if the choice is an integer
       int menuIndex = ValidateMenuIndex(choice);
       Console.Clear();
-      UserList userList = new UserList(SchoolAdministration);
-      LearningModuleAdd learningModuleAdd = new LearningModuleAdd(SchoolAdministration);
-      LearningModuleList learningModuleList = new LearningModuleList(SchoolAdministration);
-      LearningActivityList learningActivityList = new LearningActivityList(SchoolAdministration);
-      LearningActivityAdd learningActivityAdd = new LearningActivityAdd(SchoolAdministration);
+      UserList userList = new UserList(schoolAdministration);
+      LearningModuleAdd learningModuleAdd = new LearningModuleAdd(schoolAdministration);
+      LearningModuleList learningModuleList = new LearningModuleList(schoolAdministration);
+      LearningActivityList learningActivityList = new LearningActivityList(schoolAdministration);
+      LearningActivityAdd learningActivityAdd = new LearningActivityAdd(schoolAdministration);
       switch (choice)
       {
         case "0":
           GoodBey();
           break;
         case "1":
-          UserAdd userAdd = new UserAdd(SchoolAdministration);
+          UserAdd userAdd = new UserAdd(schoolAdministration);
           userAdd.Show();
           break;
         case "2":
@@ -89,12 +93,18 @@ namespace LingoPartnerConsole.Views
         case "9":
           NotImplemented(menuIndex);
           break;
+        case "14":
+          ConsoleDashboardView consoleDashboardView = new(schoolAdministration);
+          consoleDashboardView.ShowDashboard();
+          ConsoleHelper.DisplayMessage("Here comes the Streak", MessageType.INFORMATION);
+          Console.WriteLine(learningStreakService.GetCurrentLearningStreak());
+          break;
         default:
-          // NotImplemented(menuIndex);
-          MenuHelper.ReturnToMenu(SchoolAdministration);
+          NotImplemented(menuIndex);
+          MenuHelper.ReturnToMenu(schoolAdministration, learningStreakService);
           break;
       }
-      MenuHelper.ReturnToMenu(SchoolAdministration);
+      MenuHelper.ReturnToMenu(schoolAdministration, learningStreakService);
     }
     private void GoodBey()
     {
