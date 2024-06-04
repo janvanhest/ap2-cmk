@@ -4,16 +4,16 @@ namespace LingoPartnerConsole.View
 {
   public class ConsoleLearningStreakView
   {
-    private readonly Administration adminstration;
+    private readonly Administration administration;
 
     public ConsoleLearningStreakView(Administration administration)
     {
-      adminstration = administration;
+      this.administration = administration;
     }
 
-    public void ShowLearningStreak(string username)
+    public void ShowLearningStreak()
     {
-      var user = adminstration.CurrentUser;
+      var user = administration.CurrentUser;
       if (user == null)
       {
         Console.WriteLine("User not authenticated.");
@@ -23,8 +23,15 @@ namespace LingoPartnerConsole.View
       Console.WriteLine($"User: {user.Username}");
       Console.WriteLine($"Role: {user.Role}");
 
-      Console.WriteLine($"Current Learning Streak: {adminstration.GetCurrentLearningStreak(user)} days");
-      Console.WriteLine($"Total Score: {adminstration.GetTotalScore(user)} points");
+      Console.WriteLine($"Current Learning Streak: {administration.GetCurrentLearningStreak()} days");
+      Console.WriteLine($"Total Score: {administration.GetTotalScore()} points");
+
+      var streaks = administration.GetStreaks().ToList<LearningStreak>();
+      Console.WriteLine("All Streaks:");
+      foreach (var streak in streaks)
+      {
+        Console.WriteLine($"Streak Length: {streak.GetLength()} days");
+      }
     }
   }
 }
