@@ -1,11 +1,13 @@
 ﻿// See https://aka.ms/new-console-template for more information
+using Microsoft.Extensions.DependencyInjection;
 using System.Diagnostics;
 using dotenv.net;
 using LingoPartnerConsole.Helpers;
 using LingoPartnerConsole.Views;
 using LingoPartnerDomain.Classes;
 using LingoPartnerDomain.enums;
-using LingoPartnerDomain.Interfaces;
+using LingoPartnerDomain.Interfaces.Services;
+using LingoPartnerDomain.Interfaces.Repositories;
 using LingoPartnerInfrastructure.Helpers;
 using LingoPartnerInfrastructure.Repository;
 using LingoPartnerInfrastructure.Services;
@@ -16,45 +18,49 @@ namespace LingoPartnerConsole
   {
     static void Main()
     {
+      // Create a new DotEnv object to load the .env file
       DotEnv.Load();
 
-      // create connection string
+      // Create a connection string from the environment variables
       string connectionString = InfrastructureHelper.CreateConnectionString();
+
       // Does  a few basic routines like setting up the trace and checking if the database is available
       SetupProgram(connectionString);
 
-      UserRepository userRepository = new(connectionString);
-      LearningModuleRepository learningModuleRepository = new(connectionString);
-      LearningActivityRepository learningActivityRepository = new(connectionString);
-      ProgressRepository progressRepository = new(connectionString);
+      // Create a new ServiceCollection and configure the services
+      var serviceCollection = new ServiceCollection();
+      ConfigureServices(serviceCollection, connectionString);
+      var serviceProvider = serviceCollection.BuildServiceProvider();
 
-      LearningStreakService learningStreakService = new(progressRepository);
-      AuthenticationService authenticationService = new(userRepository);
-      Authenticate(authenticationService);
-
-
-      // Create new administration
-      Administration schoolAdministration = new Administration(
-        userRepository,
-        learningModuleRepository,
-        learningActivityRepository,
-        progressRepository,
-        authenticationService,
-        learningStreakService
-      );
+      // Authenticate the user
+      var authenticationService = serviceProvider.GetService<IAuthenticationService>() ?? throw new InvalidOperationException("fail to get authentication service running");
+      AuthenticationHelper.Authenticate(authenticationService);
 
       // Initialize the program, does some basic routines like authentication, set the user and displaying a welcome message
+      var schoolAdministration = serviceProvider.GetService<Administration>() ?? throw new InvalidOperationException("fail to get administration service running");
       InitializeProgram(schoolAdministration);
 
       // Hooray! Let's now that the user is authenticated, let's show the menu
-
-
       Menu menu = new Menu(
-        schoolAdministration
+        schoolAdministration,
+        serviceProvider.GetService<ILearningStreakService>()
         );
       menu.Show();
     }
 
+    private static void ConfigureServices(IServiceCollection services, string connectionString)
+    {
+      services.AddScoped<IUserRepository>(provider => new UserRepository(connectionString));
+      services.AddScoped<ILearningModuleRepository>(provider => new LearningModuleRepository(connectionString));
+      services.AddScoped<ILearningActivityRepository>(provider => new LearningActivityRepository(connectionString));
+      services.AddScoped<IProgressRepository>(provider => new ProgressRepository(connectionString));
+      services.AddScoped<ILearningStreakService, LearningStreakService>();
+      services.AddScoped<ILearningModuleService, LearningModuleService>();
+
+      services.AddSingleton<IAuthenticationService, AuthenticationService>();
+
+      services.AddScoped<Administration>();
+    }
     private static void SetupProgram(string connectionString)
     {
       ConfigureTrace();
@@ -74,13 +80,12 @@ namespace LingoPartnerConsole
       }
 
     }
-
     private static void InitializeProgram(Administration schoolAdministration)
     {
       Console.Clear();
 
       DateTime dateTime = DateTime.Now;
-      String traceMessage = $"\n\nApplication started at: {dateTime}";
+      string traceMessage = $"\n\nApplication started at: {dateTime}";
       Trace.TraceInformation(traceMessage);
 
 
@@ -95,7 +100,6 @@ namespace LingoPartnerConsole
       Console.WriteLine("Press a key to continue...\n");
       Console.ReadKey();
     }
-
     public static void ConfigureTrace(
       string logFilePath = "trace.log",
       bool addConsoleListener = true
@@ -103,81 +107,31 @@ namespace LingoPartnerConsole
     {
       try
       {
-        // Create a text file trace listener
         TextWriterTraceListener fileListener = new TextWriterTraceListener(logFilePath);
         Trace.Listeners.Add(fileListener);
 
-        // Optionally, add a console trace listener
         if (addConsoleListener)
         {
           ConsoleTraceListener consoleListener = new ConsoleTraceListener();
           Trace.Listeners.Add(consoleListener);
         }
-
         // Set the trace level
         Trace.AutoFlush = true;
-
+        // Woohoo! We're done!
         Trace.WriteLine("Trace configuration initialized.");
       }
       catch (Exception ex)
       {
         Console.WriteLine("Error configuring trace: " + ex.Message);
-        // Optionally log the exception or handle it as needed
       }
     }
     private static void SetupDevelopmentMode()
     {
-      // TODO: Which things need only to be started in development mode? 
+      // FIXME: Which things need only to be started in development mode? 
       Console.WriteLine();
       ConsoleHelper.DisplayMessage("Development mode is on", MessageType.SUCCES);
       Console.WriteLine("\nPress a key to continue\n");
-      // pres a key to continue
       Console.ReadKey();
-    }
-
-    private static void Authenticate(IAuthenticationService authenticationService)
-    {
-      while (authenticationService.GetCurrentUser() == null)
-      {
-        string username = ConsoleHelper.GetStringInput("Enter username: ");
-        string password = ReadPassword();
-
-        if (authenticationService.Authenticate(username, password))
-        {
-          // successful authentication
-          ConsoleHelper.DisplayMessage("Authentication successful", MessageType.SUCCES);
-        }
-        else
-        {
-          Console.WriteLine("Authentication failed. Please try again.");
-        }
-      }
-    }
-
-    private static string ReadPassword()
-    {
-      Console.Write("Enter password:\n");
-      string password = string.Empty;
-      ConsoleKey key;
-      do
-      {
-        var keyInfo = Console.ReadKey(intercept: true);
-        key = keyInfo.Key;
-
-        if (key == ConsoleKey.Backspace && password.Length > 0)
-        {
-          Console.Write("\b \b");
-          password = password[0..^1];
-        }
-        else if (!char.IsControl(keyInfo.KeyChar))
-        {
-          Console.Write("*");
-          password += keyInfo.KeyChar;
-        }
-      } while (key != ConsoleKey.Enter);
-
-      Console.WriteLine();
-      return password;
     }
   }
 }
