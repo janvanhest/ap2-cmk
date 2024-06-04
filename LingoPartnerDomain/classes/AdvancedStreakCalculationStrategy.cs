@@ -1,21 +1,20 @@
-﻿using LingoPartnerDomain.Classes;
-using LingoPartnerDomain.Interfaces;
+﻿using LingoPartnerDomain.Interfaces.Services.Strategy;
 
 namespace LingoPartnerDomain.Classes
 {
-  public class AdvancedStreakCalculationStrategy : IStreakCalculationStrategy
+  public class AdvancedStreakCalculationStrategy : ILearningStreakCalculationStrategy
   {
     public int CalculateScore(List<LearningStreak> streaks)
     {
       int totalScore = 0;
       foreach (var streak in streaks)
       {
-        int daysInStreak = streak.Length;
+        int daysInStreak = streak.GetLength();
         totalScore += daysInStreak;
 
-        DateTime currentDate = streak.StartDate;
+        DateTime currentDate = streak.getFirstDay();
         int daysInWeek = 0;
-        while (currentDate <= streak.EndDate)
+        while (currentDate <= streak.getLastDay())
         {
           if (currentDate.DayOfWeek != DayOfWeek.Saturday && currentDate.DayOfWeek != DayOfWeek.Sunday)
           {
@@ -25,7 +24,6 @@ namespace LingoPartnerDomain.Classes
               totalScore += 2; // Bonus for the third consecutive day
             }
           }
-
           if (currentDate.DayOfWeek == DayOfWeek.Sunday)
           {
             if (daysInWeek >= 5)
@@ -34,10 +32,8 @@ namespace LingoPartnerDomain.Classes
             }
             daysInWeek = 0;
           }
-
           currentDate = currentDate.AddDays(1);
         }
-
         // Check for incomplete week at the end of the streak
         if (daysInWeek >= 5)
         {

@@ -1,10 +1,17 @@
 ﻿using LingoPartnerDomain.Classes;
+using LingoPartnerDomain.Interfaces.Services.Strategy;
 
-namespace LingoPartnerDomain.Services
+namespace LingoPartnerDomain.Interfaces.Services
 {
   public interface ILearningStreakService
   {
-    int GetCurrentLearningStreak(User user);
-    int GetTotalScore(User user);
+    void Initialize(User user);
+    int GetCurrentLearningStreak();
+    int GetTotalScore(int userId, ILearningStreakCalculationStrategy calculator);
+    IReadOnlyCollection<LearningStreak> GetStreaks();
+    IEnumerable<DateTime> GetUniqueActivityDates(int userId);
+    List<LearningStreak> GetLearningStreaks(int userId);
+    List<LearningStreak> GetAdvancedLearningStreaks(int userId);
+
   }
 }

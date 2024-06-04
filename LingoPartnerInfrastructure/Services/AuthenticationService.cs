@@ -1,5 +1,6 @@
 ﻿using LingoPartnerDomain.Classes;
-using LingoPartnerDomain.Interfaces;
+using LingoPartnerDomain.Interfaces.Repositories;
+using LingoPartnerDomain.Interfaces.Services;
 
 namespace LingoPartnerInfrastructure.Services
 {

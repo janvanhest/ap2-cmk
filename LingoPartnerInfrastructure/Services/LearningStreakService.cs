@@ -1,30 +1,52 @@
 ﻿using LingoPartnerDomain.Classes;
-using LingoPartnerDomain.Interfaces;
-using LingoPartnerDomain.Services;
+using LingoPartnerDomain.Interfaces.Repositories;
+using LingoPartnerDomain.Interfaces.Services;
+using LingoPartnerDomain.Interfaces.Services.Strategy;
 
 namespace LingoPartnerInfrastructure.Services
 {
   public class LearningStreakService : ILearningStreakService
   {
-    private readonly IProgressRepository _progressRepository;
+    private readonly IProgressRepository progressRepository;
 
     public LearningStreakService(IProgressRepository progressRepository)
     {
-      _progressRepository = progressRepository;
+      this.progressRepository = progressRepository;
     }
 
-    public int GetCurrentLearningStreak(User user)
+    public List<LearningStreak> GetAdvancedLearningStreaks(int userId)
     {
-      // Placeholder for getting current learning streak
-      // Logic to calculate the current learning streak from progress data
-      return 0; // Replace with actual calculation
+      throw new NotImplementedException();
     }
 
-    public int GetTotalScore(User user)
+    public int GetCurrentLearningStreak()
     {
-      // Placeholder for getting total score
-      // Logic to calculate the total score from progress data
-      return 0; // Replace with actual calculation
+      throw new NotImplementedException();
+    }
+
+    public List<LearningStreak> GetLearningStreaks(int userId)
+    {
+      throw new NotImplementedException();
+    }
+
+    public IReadOnlyCollection<LearningStreak> GetStreaks()
+    {
+      throw new NotImplementedException();
+    }
+
+    public int GetTotalScore(int userId, ILearningStreakCalculationStrategy calculator)
+    {
+      throw new NotImplementedException();
+    }
+
+    public IEnumerable<DateTime> GetUniqueActivityDates(int userId)
+    {
+      throw new NotImplementedException();
+    }
+
+    public void Initialize(User user)
+    {
+      throw new NotImplementedException();
     }
   }
 }

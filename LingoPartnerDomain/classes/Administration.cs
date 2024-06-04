@@ -1,12 +1,14 @@
-﻿using LingoPartnerDomain.Interfaces;
-using LingoPartnerDomain.Services;
+﻿using LingoPartnerDomain.Interfaces.Services;
+using LingoPartnerDomain.Interfaces.Repositories;
 using LingoPartnerShared.Helpers;
+using System.Collections.ObjectModel;
 namespace LingoPartnerDomain.Classes
 {
   public class Administration
   {
     private readonly IAuthenticationService authenticationService;
     private readonly ILearningStreakService learningStreakService;
+    private readonly ILearningModuleService learningModuleService;
 
     private readonly IUserRepository userRepository;
     private readonly ILearningModuleRepository learningModuleRepository;
@@ -16,11 +18,10 @@ namespace LingoPartnerDomain.Classes
     private List<User> users;
     public IReadOnlyList<User> Users => users;
     private List<LearningModule> learningModules;
-    public IReadOnlyList<LearningModule> LearningModules => learningModules;
+    public IReadOnlyList<LearningModule> LearningModules => learningModuleService.GetAllLearningModules().ToList<LearningModule>();
     private List<LearningActivity> learningActivities;
     public IReadOnlyList<LearningActivity> LearningActivities => learningActivities;
 
-    public User CurrentUser => authenticationService.GetCurrentUser();
 
 
     public Administration(
@@ -29,7 +30,8 @@ namespace LingoPartnerDomain.Classes
       ILearningActivityRepository learningActivityRepository,
       IProgressRepository progressRepository,
       IAuthenticationService authenticationService,
-      ILearningStreakService learningStreakService
+      ILearningStreakService learningStreakService,
+      ILearningModuleService learningModuleService
       )
     {
       // Inject the repositories
@@ -39,6 +41,7 @@ namespace LingoPartnerDomain.Classes
       this.progressRepository = progressRepository ?? throw new ArgumentNullException(nameof(progressRepository));
       this.authenticationService = authenticationService ?? throw new ArgumentNullException(nameof(authenticationService));
       this.learningStreakService = learningStreakService ?? throw new ArgumentNullException(nameof(learningStreakService));
+      this.learningModuleService = learningModuleService ?? throw new ArgumentNullException(nameof(learningModuleService));
       users = userRepository.GetUsers().ToList();
       learningModules = learningModuleRepository.GetAllLearningModules().ToList();
       learningActivities = learningActivityRepository.GetAll().ToList();
@@ -65,7 +68,6 @@ namespace LingoPartnerDomain.Classes
         LoggingHelper.LogError(new Exception("Learning module not added."), "Learning module not added.");
         return;
       }
-      this.learningModules = learningModuleRepository.GetAllLearningModules().ToList();
     }
     public User? UpdateUserProfile(User updatedUser, string? newPassword)
     {
@@ -91,32 +93,14 @@ namespace LingoPartnerDomain.Classes
         return null;
       }
     }
-    public void RemoveLearningModule(int moduleId)
-    {
-      var module = learningModules.Find(m => m.Id == moduleId);
-      if (module != null)
-      {
-        learningModules.Remove(module);
-        // TODO: Remove learning module from the database throug a repository
-        Console.WriteLine($"Learning module '{module.Name}' removed.");
-      }
-      else
-      {
-        // FIXME: Put the console output in view layer
-        // retourneer iets waarom iets niet is gelukt. 
-        // Console writeline weghalen. 
-        // exception gooien vertraagt het programma door het opbouwen van stacktrace. 
-        Console.WriteLine("Learning module not found.");
-      }
-    }
     public void RetrieveAllData()
     {
       this.users = userRepository.GetUsers().ToList();
+      // TODO: is this still needed? Because of the use of learningModuleService the data is directly returned from the service and the database
       this.learningModules = learningModuleRepository.GetAllLearningModules().ToList();
       this.learningActivities = learningActivityRepository.GetAll().ToList();
       this.progressRepository.GetAllProgress().ToList();
     }
-
     public LearningActivity? Add(LearningActivity newLearningActivity)
     {
       var module = learningModules.Find(m => m.Id == newLearningActivity.LearningModuleId);
@@ -139,20 +123,45 @@ namespace LingoPartnerDomain.Classes
         return null;
       }
     }
-    public List<Progress> GetProgressRecordsByUser(User user)
+    public ReadOnlyCollection<Progress> GetProgressRecordsByUser(User user)
     {
       int userId = user.Id ?? throw new ArgumentNullException(nameof(user.Id));
-      return progressRepository.GetProgressByUserId(userId).ToList();
+      return progressRepository.GetProgressByUserId(userId)
+                               .ToList<Progress>()
+                               .AsReadOnly();
+    }
+    public ReadOnlyCollection<LearningStreak> GetStreaks() => learningStreakService.GetStreaks().ToList<LearningStreak>().AsReadOnly();
+    public int GetCurrentLearningStreak()
+    {
+      return learningStreakService.GetCurrentLearningStreak();
     }
 
-    public int GetCurrentLearningStreak(User user)
+    public int GetTotalScore()
     {
-      return learningStreakService.GetCurrentLearningStreak(user);
+      return learningStreakService.GetTotalScore();
+    }
+    public IEnumerable<LearningModule> GetAllLearningModules()
+    {
+      return learningModuleService.GetAllLearningModules();
+    }
+    public LearningModule GetLearningModuleById(int id)
+    {
+      return learningModuleService.GetLearningModuleById(id);
+    }
+    public void AddLearningModule(LearningModule learningModule)
+    {
+      learningModuleService.AddLearningModule(learningModule);
+    }
+    public void UpdateLearningModule(LearningModule learningModule)
+    {
+      learningModuleService.UpdateLearningModule(learningModule);
+    }
+    public void DeleteLearningModule(int id)
+    {
+      learningModuleService.DeleteLearningModule(id);
     }
 
-    public int GetTotalScore(User user)
-    {
-      return learningStreakService.GetTotalScore(user);
-    }
+
+    public User CurrentUser => authenticationService.GetCurrentUser();
   }
 }

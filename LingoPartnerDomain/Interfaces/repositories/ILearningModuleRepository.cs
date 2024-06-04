@@ -1,17 +1,16 @@
 ﻿using LingoPartnerDomain.Classes;
-using System.Collections.Generic;
 
-namespace LingoPartnerDomain.Interfaces
+namespace LingoPartnerDomain.Interfaces.Repositories
 {
   public interface ILearningModuleRepository
   {
     LearningModule? AddLearningModule(LearningModule module);
     IEnumerable<LearningModule> GetAllLearningModules();
     // TODO: Implement GetLearningModuleById
-    // LearningModule? GetLearningModuleById(int id);
+    LearningModule? GetLearningModuleById(int id);
     // TODO: Implement UpdateLearningModule
-    // void UpdateLearningModule(LearningModule module);
+    LearningModule? UpdateLearningModule(LearningModule module);
     // TODO: Implement DeleteLearningModule
-    // void DeleteLearningModule(int id);
+    Boolean DeleteLearningModule(int id);
   }
 }

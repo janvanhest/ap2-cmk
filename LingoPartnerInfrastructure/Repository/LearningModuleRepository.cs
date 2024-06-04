@@ -1,6 +1,8 @@
 ﻿using System.Diagnostics;
 using LingoPartnerDomain.Classes;
 using LingoPartnerDomain.Interfaces;
+using LingoPartnerDomain.Interfaces.Repositories;
+using LingoPartnerInfrastructure.Helpers;
 using LingoPartnerShared.Helpers;
 using MySql.Data.MySqlClient;
 
@@ -8,14 +10,15 @@ namespace LingoPartnerInfrastructure.Repository
 {
   public class LearningModuleRepository : ILearningModuleRepository
   {
-    private readonly string? _connectionString;
+    LearningModule? learningModule = null;
+    private readonly string? connectionString;
     public LearningModuleRepository(string? connectionString = null)
     {
-      _connectionString = connectionString;
+      this.connectionString = connectionString ?? InfrastructureHelper.CreateConnectionString();
     }
     public LearningModule? AddLearningModule(LearningModule module)
     {
-      using (var connection = new MySqlConnection(_connectionString))
+      using (var connection = new MySqlConnection(connectionString))
       {
         connection.Open();
         using (var transaction = connection.BeginTransaction())
@@ -36,11 +39,12 @@ namespace LingoPartnerInfrastructure.Repository
               if (result != null)
               {
                 transaction.Commit();
-                return new LearningModule(
+                learningModule = new LearningModule(
                     Convert.ToInt32(result),
                     module.Name,
                     module.Description
                 );
+                return learningModule;
               }
             }
           }
@@ -51,7 +55,7 @@ namespace LingoPartnerInfrastructure.Repository
           }
         }
       }
-      return null;
+      return learningModule;
     }
 
     public IEnumerable<LearningModule> GetAllLearningModules()
@@ -59,7 +63,7 @@ namespace LingoPartnerInfrastructure.Repository
       List<LearningModule> learningModules = new List<LearningModule>();
       try
       {
-        using (var connection = new MySqlConnection(_connectionString))
+        using (var connection = new MySqlConnection(connectionString))
         {
           connection.Open();
           string query = "SELECT * FROM LearningModule";
@@ -88,6 +92,123 @@ namespace LingoPartnerInfrastructure.Repository
         throw;
       }
       return learningModules;
+    }
+
+    public LearningModule? GetLearningModuleById(int id)
+    {
+      LearningModule? learningModule = null;
+      try
+      {
+        using (var connection = new MySqlConnection(connectionString))
+        {
+          connection.Open();
+          string query = "SELECT * FROM LearningModule WHERE Id = @Id";
+          using (var command = new MySqlCommand(query, connection))
+          {
+            command.Parameters.AddWithValue("@Id", id);
+            using (var reader = command.ExecuteReader())
+            {
+              if (reader.Read())
+              {
+                learningModule = new LearningModule(
+                    reader.GetInt32("Id"),
+                    reader.GetString("Name"),
+                    reader.GetString("Description")
+                );
+              }
+            }
+          }
+        }
+      }
+      catch (Exception ex)
+      {
+        // Log the exception (replace with your actual logging mechanism)
+        Console.WriteLine($"An error occurred: {ex.Message}");
+        Trace.TraceError($"An error occurred: {ex.Message}");
+        throw;
+      }
+      return learningModule;
+    }
+
+    public LearningModule? UpdateLearningModule(LearningModule updatedModule)
+    {
+      LearningModule? updatedLearningModule = null;
+      using (var connection = new MySqlConnection(connectionString))
+      {
+        connection.Open();
+        using (var transaction = connection.BeginTransaction())
+        {
+          try
+          {
+            string query = @"
+              UPDATE LearningModule
+              SET Name = @Name, Description = @Description
+              WHERE Id = @Id;
+              SELECT * FROM LearningModule WHERE Id = @Id;";
+
+            using (var command = new MySqlCommand(query, connection, transaction))
+            {
+              command.Parameters.AddWithValue("@Id", updatedModule.Id);
+              command.Parameters.AddWithValue("@Name", updatedModule.Name);
+              command.Parameters.AddWithValue("@Description", updatedModule.Description);
+
+              using (var reader = command.ExecuteReader())
+              {
+                if (reader.Read())
+                {
+                  updatedLearningModule = new LearningModule(
+                      reader.GetInt32("Id"),
+                      reader.GetString("Name"),
+                      reader.GetString("Description")
+                  );
+                }
+              }
+            }
+          }
+          catch (MySqlException ex)
+          {
+            LoggingHelper.LogError(ex, "Error updating learning module");
+            throw;
+          }
+        }
+      }
+      return updatedLearningModule;
+    }
+
+    public bool DeleteLearningModule(int id)
+    {
+      bool updateSuccess = false;
+      using (var connection = new MySqlConnection(connectionString))
+      {
+        connection.Open();
+        using (var transaction = connection.BeginTransaction())
+        {
+          try
+          {
+            string query = @"
+              DELETE FROM LearningModule
+              WHERE Id = @Id;";
+
+            using (var command = new MySqlCommand(query, connection, transaction))
+            {
+              command.Parameters.AddWithValue("@Id", id);
+
+              var result = command.ExecuteNonQuery();
+              if (result > 0)
+              {
+                transaction.Commit();
+                updateSuccess = true;
+              }
+            }
+          }
+          catch (MySqlException ex)
+          {
+            LoggingHelper.LogError(ex, "Error deleting learning module");
+            throw;
+          }
+        }
+      }
+      return updateSuccess;
     }
   }
 }

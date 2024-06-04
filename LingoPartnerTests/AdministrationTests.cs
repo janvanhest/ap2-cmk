@@ -1,9 +1,9 @@
 ﻿using System.Net.Mail;
 using LingoPartnerDomain.Classes;
 using LingoPartnerDomain.enums;
-using LingoPartnerDomain.Interfaces;
+using LingoPartnerDomain.Interfaces.Repositories;
+using LingoPartnerDomain.Interfaces.Services;
 using Moq;
-using LingoPartnerDomain.Services;
 
 namespace LingoPartnerTests.Domain
 {
@@ -15,6 +15,7 @@ namespace LingoPartnerTests.Domain
     private readonly Mock<IProgressRepository> mockProgressRepository;
     private readonly Mock<IAuthenticationService> mockAuthenticationService;
     private readonly Mock<ILearningStreakService> mockLearningStreakService;
+    private readonly Mock<ILearningModuleService> mockLearningModuleService;
     private readonly Administration administration;
 
     public AdministrationTests()
@@ -25,6 +26,7 @@ namespace LingoPartnerTests.Domain
       mockProgressRepository = new Mock<IProgressRepository>();
       mockAuthenticationService = new Mock<IAuthenticationService>();
       mockLearningStreakService = new Mock<ILearningStreakService>();
+      mockLearningModuleService = new Mock<ILearningModuleService>();
 
       administration = new Administration(
           mockUserRepository.Object,
@@ -32,7 +34,8 @@ namespace LingoPartnerTests.Domain
           mockLearningActivityRepository.Object,
           mockProgressRepository.Object,
           mockAuthenticationService.Object,
-          mockLearningStreakService.Object
+          mockLearningStreakService.Object,
+          mockLearningModuleService.Object
           );
     }
 

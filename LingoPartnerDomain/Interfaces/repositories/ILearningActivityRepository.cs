@@ -1,6 +1,6 @@
 using LingoPartnerDomain.Classes;
 
-namespace LingoPartnerDomain.Interfaces
+namespace LingoPartnerDomain.Interfaces.Repositories
 {
   public interface ILearningActivityRepository
   {

@@ -2,19 +2,23 @@
 {
   public class LearningStreak
   {
-    public int UserId { get; }
-    public DateTime StartDate { get; }
-    public DateTime EndDate { get; }
-    public int Length { get; }
-    public int Points { get; }
-
-    public LearningStreak(int userId, DateTime startDate, DateTime endDate, int length, int points)
+    public LearningStreak()
     {
-      UserId = userId;
-      StartDate = startDate;
-      EndDate = endDate;
-      Length = length;
-      Points = points;
+
+    }
+
+    internal int GetLength()
+    {
+    }
+
+    internal DateTime getFirstDay()
+    {
+      throw new NotImplementedException();
+    }
+
+    internal DateTime getLastDay()
+    {
+      throw new NotImplementedException();
     }
   }
 }

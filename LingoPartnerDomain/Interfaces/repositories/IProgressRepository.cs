@@ -1,7 +1,7 @@
 ﻿using System;
 using LingoPartnerDomain.Classes;
 
-namespace LingoPartnerDomain.Interfaces
+namespace LingoPartnerDomain.Interfaces.Repositories
 {
   public interface IProgressRepository
   {
@@ -12,5 +12,6 @@ namespace LingoPartnerDomain.Interfaces
     IEnumerable<Progress> GetAllProgress();
     IEnumerable<Progress> GetProgressByUserId(int userId);
 
+    IEnumerable<DateTime> GetUniqueDatesByUserId(int userId);
   }
 }

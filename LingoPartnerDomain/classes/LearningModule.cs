@@ -44,7 +44,7 @@
       return LearningActivities.Remove(activity);
     }
 
-    public List<LearningActivity> ShowLearningActivities()
+    public IReadOnlyCollection<LearningActivity> ShowLearningActivities()
     {
       return new List<LearningActivity>(learningActivities);
     }

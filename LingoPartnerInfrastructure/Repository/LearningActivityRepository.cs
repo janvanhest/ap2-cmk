@@ -1,8 +1,8 @@
-﻿using LingoPartnerDomain.Interfaces;
-using LingoPartnerDomain.Classes;
+﻿using LingoPartnerDomain.Classes;
 using LingoPartnerDomain.enums;
 using LingoPartnerShared.Helpers;
 using MySql.Data.MySqlClient;
+using LingoPartnerDomain.Interfaces.Repositories;
 
 namespace LingoPartnerInfrastructure.Repository
 {

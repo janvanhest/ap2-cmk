@@ -1,6 +1,6 @@
 ﻿using LingoPartnerDomain.Classes;
 using LingoPartnerDomain.enums;
-using LingoPartnerDomain.Interfaces;
+using LingoPartnerDomain.Interfaces.Repositories;
 using LingoPartnerShared.Helpers;
 using MySql.Data.MySqlClient;
 
@@ -120,6 +120,28 @@ namespace LingoPartnerInfrastructure.Repository
           }
         }
       }
+    }
+
+    public IEnumerable<DateTime> GetUniqueDatesByUserId(int userId)
+    {
+      List<DateTime> uniqueDates = [];
+      using (var connection = new MySqlConnection(_connectionString))
+      {
+        connection.Open();
+        string query = @"SELECT DISTINCT Date FROM Progress WHERE UserId = @UserId";
+        using (var command = new MySqlCommand(query, connection))
+        {
+          command.Parameters.AddWithValue("@UserId", userId);
+          using (var reader = command.ExecuteReader())
+          {
+            while (reader.Read())
+            {
+              uniqueDates.Add(reader.GetDateTime("Date"));
+            }
+          }
+        }
+      }
+      return uniqueDates;
     }
 
     public Progress? UpdateProgress(Progress updateProgress)
