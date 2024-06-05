@@ -7,7 +7,7 @@ namespace LingoPartnerConsole.Helpers
   {
     public static void Authenticate(IAuthenticationService authenticationService)
     {
-      while (authenticationService.GetCurrentUser() == null)
+      while (authenticationService.CurrentUser == null)
       {
         string username = ConsoleHelper.GetStringInput("Enter username: ");
         string password = ReadPassword();

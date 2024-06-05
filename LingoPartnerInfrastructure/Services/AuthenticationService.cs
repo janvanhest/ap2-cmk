@@ -25,9 +25,6 @@ namespace LingoPartnerInfrastructure.Services
       return false;
     }
 
-    public User GetCurrentUser()
-    {
-      return this.currentUser;
-    }
+    public User? CurrentUser => currentUser;
   }
 }
