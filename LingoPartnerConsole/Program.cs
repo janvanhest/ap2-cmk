@@ -50,15 +50,16 @@ namespace LingoPartnerConsole
 
     private static void ConfigureServices(IServiceCollection services, string connectionString)
     {
+      // Add Repositories to the services
       services.AddScoped<IUserRepository>(provider => new UserRepository(connectionString));
       services.AddScoped<ILearningModuleRepository>(provider => new LearningModuleRepository(connectionString));
       services.AddScoped<ILearningActivityRepository>(provider => new LearningActivityRepository(connectionString));
       services.AddScoped<IProgressRepository>(provider => new ProgressRepository(connectionString));
+      // Add Services to the services
       services.AddScoped<ILearningStreakService, LearningStreakService>();
       services.AddScoped<ILearningModuleService, LearningModuleService>();
-
       services.AddSingleton<IAuthenticationService, AuthenticationService>();
-
+      // TODO As not all of domain layer is implemented as a service, we are still going to need the Administration class
       services.AddScoped<Administration>();
     }
     private static void SetupProgram(string connectionString)
