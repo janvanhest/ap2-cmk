@@ -86,12 +86,12 @@ VALUES
     ('Earth Science', 'Overview of earth science.', 'INSTRUCTION', 3),
     ('Environmental Science', 'Introduction to environmental science.', 'QUIZ', 3);
 
--- Create a table for progress with the new Date property
+-- Create a table for progress with the new Date property and Type column
 CREATE TABLE Progress (
     id INT AUTO_INCREMENT PRIMARY KEY,
-    progress_type ENUM('LEARNINGACTIVITY', 'ASSESMENT', 'MODULE', 'PROJECT') NOT NULL,
+    progress_type ENUM('LEARNING_ACTIVITY', 'ASSESSMENT', 'MODULE', 'PROJECT') NOT NULL,
     status ENUM('NOT_STARTED', 'IN_PROGRESS', 'COMPLETED') NOT NULL,
-    progressDetails VARCHAR(255) NOT NULL,
+    details VARCHAR(255) NOT NULL,  -- Renamed progressDetails to details
     user_id INT NOT NULL,
     learningActivity_id INT NOT NULL,
     date DATE NOT NULL,  -- New date property
@@ -106,13 +106,18 @@ CREATE PROCEDURE GenerateProgressRecordsForUser(IN userId INT, IN startDate DATE
 BEGIN
     DECLARE i INT DEFAULT 0;
     DECLARE numRecords INT;
-    SET numRecords = FLOOR(RAND() * 976) + 25; -- Generate between 25 and 100 records
+    SET numRecords = FLOOR(RAND() * 76) + 75; -- Generate between 75 and 150 records
 
     WHILE i < numRecords DO
-        INSERT INTO Progress (progress_type, status, progressDetails, user_id, learningActivity_id, date)
+        INSERT INTO Progress (progress_type, status, details, user_id, learningActivity_id, date)
         VALUES
         (
-            'LEARNINGACTIVITY', 
+            CASE 
+                WHEN RAND() < 0.25 THEN 'LEARNING_ACTIVITY'
+                WHEN RAND() < 0.5 THEN 'ASSESSMENT'
+                WHEN RAND() < 0.75 THEN 'MODULE'
+                ELSE 'PROJECT'
+            END,
             CASE 
                 WHEN RAND() > 0.66 THEN 'IN_PROGRESS' 
                 WHEN RAND() > 0.33 THEN 'COMPLETED' 
@@ -129,13 +134,14 @@ END $$
 
 DELIMITER ;
 
--- Generate progress records for John Doe (id=1)
+-- Generate progress records for users 1 to 10
 CALL GenerateProgressRecordsForUser(1, '2023-01-01', '2023-12-31');
-
--- Generate progress records for Michael Johnson (id=3)
+CALL GenerateProgressRecordsForUser(2, '2023-01-01', '2023-12-31');
 CALL GenerateProgressRecordsForUser(3, '2023-01-01', '2023-12-31');
-
--- Generate progress records for Emily Williams (id=4)
 CALL GenerateProgressRecordsForUser(4, '2023-01-01', '2023-12-31');
-
-
+CALL GenerateProgressRecordsForUser(5, '2023-01-01', '2023-12-31');
+CALL GenerateProgressRecordsForUser(6, '2023-01-01', '2023-12-31');
+CALL GenerateProgressRecordsForUser(7, '2023-01-01', '2023-12-31');
+CALL GenerateProgressRecordsForUser(8, '2023-01-01', '2023-12-31');
+CALL GenerateProgressRecordsForUser(9, '2023-01-01', '2023-12-31');
+CALL GenerateProgressRecordsForUser(10, '2023-01-01', '2023-12-31');
