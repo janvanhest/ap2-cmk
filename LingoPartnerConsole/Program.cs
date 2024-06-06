@@ -11,6 +11,8 @@ using LingoPartnerDomain.Interfaces.Repositories;
 using LingoPartnerInfrastructure.Helpers;
 using LingoPartnerInfrastructure.Repository;
 using LingoPartnerInfrastructure.Services;
+using LingoPartnerDomain.Interfaces.Strategies;
+using LingoPartnerDomain.Strategies;
 
 namespace LingoPartnerConsole
 {
@@ -30,14 +32,14 @@ namespace LingoPartnerConsole
       // Create a new ServiceCollection and configure the services
       var serviceCollection = new ServiceCollection();
       ConfigureServices(serviceCollection, connectionString);
-      var serviceProvider = serviceCollection.BuildServiceProvider();
+      ServiceProvider serviceProvider = serviceCollection.BuildServiceProvider();
 
       // Authenticate the user
-      var authenticationService = serviceProvider.GetService<IAuthenticationService>() ?? throw new InvalidOperationException("fail to get authentication service running");
+      IAuthenticationService authenticationService = serviceProvider.GetService<IAuthenticationService>() ?? throw new InvalidOperationException("fail to get authentication service running");
       AuthenticationHelper.Authenticate(authenticationService);
 
       // Initialize the program, does some basic routines like authentication, set the user and displaying a welcome message
-      var schoolAdministration = serviceProvider.GetService<Administration>() ?? throw new InvalidOperationException("fail to get administration service running");
+      Administration schoolAdministration = serviceProvider.GetService<Administration>() ?? throw new InvalidOperationException("fail to get administration service running");
       InitializeProgram(schoolAdministration);
 
       // Create a new Menu object and show the menu
@@ -59,6 +61,8 @@ namespace LingoPartnerConsole
       services.AddScoped<ILearningStreakService, LearningStreakService>();
       services.AddScoped<ILearningModuleService, LearningModuleService>();
       services.AddSingleton<IAuthenticationService, AuthenticationService>();
+      // Add strategies to the services
+      services.AddScoped<ILearningStreakStrategy, ConsecutiveDaysStrategy>();
       // TODO As not all of domain layer is implemented as a service, we are still going to need the Administration class
       services.AddScoped<Administration>();
     }
