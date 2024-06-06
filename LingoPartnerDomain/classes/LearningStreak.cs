@@ -1,9 +1,12 @@
 ﻿using System.Collections.ObjectModel;
+using System.Collections.Generic;
+using LingoPartnerDomain.Interfaces.Strategies;
 
 namespace LingoPartnerDomain.Classes
 {
   public class LearningStreak
   {
+    private readonly ILearningStreakScoringStrategy _scoringStrategy;
     private List<DateTime> _dates = [];
     // private DateTime? _startDate;
     // private DateTime? _endDate;
@@ -12,13 +15,17 @@ namespace LingoPartnerDomain.Classes
     // public DateTime? EndDate => _endDate;
     // public int Length => _startDate.HasValue && _endDate.HasValue ? (_endDate.Value - _startDate.Value).Days + 1 : 0;
     public int Length => _dates.Count;
-    public int Score => Length; // Example scoring: 1 points per day
     public DateTime? StartDate => _dates.Count != 0 ? _dates.Min() : null;
     public DateTime? EndDate => _dates.Count != 0 ? _dates.Max() : null;
-    public LearningStreak() { }
-    public LearningStreak(List<DateTime> activityDates)
+    public int Score => _scoringStrategy.CalculateScore(this);
+
+    public LearningStreak(ILearningStreakScoringStrategy scoringStrategy)
     {
-      if (activityDates != null && activityDates.Any())
+      _scoringStrategy = scoringStrategy;
+    }
+    public LearningStreak(List<DateTime> activityDates, ILearningStreakScoringStrategy scoringStrategy) : this(scoringStrategy)
+    {
+      if (activityDates != null && activityDates.Count != 0)
       {
         _dates = activityDates.Distinct().ToList();
         // UpdateDateRange();
