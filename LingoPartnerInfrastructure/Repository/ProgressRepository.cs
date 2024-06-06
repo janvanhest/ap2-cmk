@@ -97,7 +97,7 @@ namespace LingoPartnerInfrastructure.Repository
       using (var connection = new MySqlConnection(_connectionString))
       {
         connection.Open();
-        string query = @"SELECT * FROM Progress WHERE UserId = @UserId";
+        string query = @"SELECT * FROM Progress WHERE user_id = @UserId";
         using (var command = new MySqlCommand(query, connection))
         {
           command.Parameters.AddWithValue("@UserId", userId);
@@ -107,13 +107,13 @@ namespace LingoPartnerInfrastructure.Repository
             while (reader.Read())
             {
               progressList.Add(new Progress(
-                  reader.GetInt32("Id"),
-                  Enum.Parse<ProgressType>(reader.GetString("Type")),
-                  Enum.Parse<ProgressStatus>(reader.GetString("Status")),
-                  reader.GetString("Details"),
-                  reader.GetInt32("UserId"),
-                  reader.GetInt32("LearningActivityId"),
-                  reader.GetDateTime("Date")
+                  reader.GetInt32("id"),
+                  Enum.Parse<ProgressType>(reader.GetString("progress_type")),
+                  Enum.Parse<ProgressStatus>(reader.GetString("status")),
+                  reader.GetString("details"),
+                  reader.GetInt32("user_id"),
+                  reader.GetInt32("learningActivity_id"),
+                  reader.GetDateTime("date")
               ));
             }
             return progressList;

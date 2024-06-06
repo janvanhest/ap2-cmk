@@ -9,7 +9,7 @@ namespace LingoPartnerConsole.Views
   {
     public Administration schoolAdministration;
     public ILearningStreakService learningStreakService;
-    private List<string> MenuItems = new List<string>
+    private IReadOnlyList<string> MenuItems = new List<string>
     {
       "Create a User", // 1
       "Show all users", // 2
@@ -36,7 +36,7 @@ namespace LingoPartnerConsole.Views
     {
       Console.Clear();
 
-      ShowMenuOptions(MenuItems);
+      ShowMenuOptions([.. MenuItems]);
 
       Console.WriteLine("Please enter your choice:\n");
       Console.WriteLine($"Enter your choice (0-{MenuItems.Count}):");
@@ -97,7 +97,7 @@ namespace LingoPartnerConsole.Views
           ConsoleDashboardView consoleDashboardView = new(schoolAdministration);
           consoleDashboardView.ShowDashboard();
           ConsoleHelper.DisplayMessage("Here comes the Streak", MessageType.INFORMATION);
-          Console.WriteLine(learningStreakService.GetCurrentLearningStreak());
+          Console.WriteLine(learningStreakService.CalculateTotalScore());
           break;
         default:
           NotImplemented(menuIndex);

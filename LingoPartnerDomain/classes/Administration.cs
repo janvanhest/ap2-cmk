@@ -22,8 +22,6 @@ namespace LingoPartnerDomain.Classes
     private List<LearningActivity> learningActivities;
     public IReadOnlyList<LearningActivity> LearningActivities => learningActivities;
 
-
-
     public Administration(
       IUserRepository userRepository,
       ILearningModuleRepository learningModuleRepository,
@@ -130,21 +128,15 @@ namespace LingoPartnerDomain.Classes
                                .ToList<Progress>()
                                .AsReadOnly();
     }
-    public ReadOnlyCollection<LearningStreak> GetStreaks() => learningStreakService.GetStreaks().ToList<LearningStreak>().AsReadOnly();
-    public int GetCurrentLearningStreak()
+    public LearningStreak? GetCurrentLearningStreak()
     {
-      return learningStreakService.GetCurrentLearningStreak();
-    }
-
-    public int GetTotalScore()
-    {
-      return learningStreakService.GetTotalScore();
+      return learningStreakService.GetCurrentStreak();
     }
     public IEnumerable<LearningModule> GetAllLearningModules()
     {
       return learningModuleService.GetAllLearningModules();
     }
-    public LearningModule GetLearningModuleById(int id)
+    public LearningModule? GetLearningModuleById(int id)
     {
       return learningModuleService.GetLearningModuleById(id);
     }
@@ -161,7 +153,7 @@ namespace LingoPartnerDomain.Classes
       learningModuleService.DeleteLearningModule(id);
     }
 
-
-    public User CurrentUser => authenticationService.GetCurrentUser();
+    // FIXME: Later on this should be removed and use the serviceprovider for injecting the authentication service when needed. 
+    public User? CurrentUser => authenticationService.CurrentUser;
   }
 }
