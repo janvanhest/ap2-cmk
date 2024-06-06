@@ -1,5 +1,4 @@
-﻿using System;
-namespace LingoPartnerDomain.Classes
+﻿namespace LingoPartnerDomain.Classes
 {
   public class Reward
   {

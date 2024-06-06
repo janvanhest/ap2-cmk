@@ -8,5 +8,4 @@ public enum ProgressStatus
   IN_PROGRESS,
   [Description("Completed")]
   COMPLETED
-
 }

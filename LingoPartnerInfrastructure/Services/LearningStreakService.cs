@@ -1,7 +1,6 @@
-﻿using LingoPartnerDomain.Classes;
+using LingoPartnerDomain.Classes;
 using LingoPartnerDomain.Interfaces.Repositories;
 using LingoPartnerDomain.Interfaces.Services;
-using Org.BouncyCastle.Asn1.Misc;
 
 namespace LingoPartnerInfrastructure.Services
 {
@@ -10,7 +9,6 @@ namespace LingoPartnerInfrastructure.Services
     private readonly IProgressRepository progressRepository;
     private readonly IAuthenticationService authenticationService;
     private User user;
-
     public LearningStreakService(
       IProgressRepository progressRepository,
       IAuthenticationService authenticationService
@@ -24,6 +22,14 @@ namespace LingoPartnerInfrastructure.Services
     {
       int userId = user.Id ?? throw new ArgumentNullException(nameof(user));
       return progressRepository.GetProgressByUserId(userId).ToList();
+    }
+    private List<DateTime> ConvertProgressToUniqueDates(List<Progress> progressItems)
+    {
+      return progressItems
+          .GroupBy(p => p.Date.Date)
+          .Select(g => g.Key)
+          .OrderBy(date => date)
+          .ToList();
     }
     public List<LearningStreak> GetLearningStreaks()
     {
@@ -60,10 +66,8 @@ namespace LingoPartnerInfrastructure.Services
           }
         }
       }
-
       return streaks;
     }
-
     public int CalculateTotalScore()
     {
       return GetLearningStreaks().Sum(streak => streak.Score);

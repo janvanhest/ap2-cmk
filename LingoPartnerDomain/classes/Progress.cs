@@ -13,7 +13,14 @@ namespace LingoPartnerDomain.Classes
     public DateTime Date { get; private set; }  // New date property with private setter
 
     // Constructor with ID
-    public Progress(int id, ProgressType type, ProgressStatus status, string details, int userId, int learningActivityId, DateTime date)
+    public Progress(
+        int id,
+        ProgressType type,
+        ProgressStatus status,
+        string details,
+        int userId,
+        int learningActivityId,
+        DateTime date)
     {
       Id = id;
       Type = type;
@@ -25,7 +32,13 @@ namespace LingoPartnerDomain.Classes
     }
 
     // Constructor without ID
-    public Progress(ProgressType type, ProgressStatus status, string details, int userId, int learningActivityId, DateTime date)
+    public Progress(
+        ProgressType type,
+        ProgressStatus status,
+        string details,
+        int userId,
+        int learningActivityId,
+        DateTime date)
     {
       Type = type;
       Status = status;
@@ -35,7 +48,7 @@ namespace LingoPartnerDomain.Classes
       Date = date;  // Initialize date
     }
 
-    public string ShowDetails()
+    public string GetProgressDescription()
     {
       return $"Progress ID: {Id}, Type: {Type}, Status: {Status}, Details: {Details}, User ID: {UserId}, Learning Activity ID: {LearningActivityId}, Date: {Date}";
     }

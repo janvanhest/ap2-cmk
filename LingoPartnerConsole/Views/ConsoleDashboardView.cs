@@ -14,7 +14,7 @@ namespace LingoPartnerConsole.Views
 
     public void ShowDashboard()
     {
-      User user = administration.CurrentUser;
+      User? user = administration.CurrentUser;
       if (user == null)
       {
         Console.WriteLine("User not found.");

@@ -40,7 +40,7 @@ namespace LingoPartnerConsole
       var schoolAdministration = serviceProvider.GetService<Administration>() ?? throw new InvalidOperationException("fail to get administration service running");
       InitializeProgram(schoolAdministration);
 
-      // Hooray! Let's now that the user is authenticated, let's show the menu
+      // Create a new Menu object and show the menu
       Menu menu = new Menu(
         schoolAdministration,
         serviceProvider.GetService<ILearningStreakService>()
