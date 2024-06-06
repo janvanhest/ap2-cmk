@@ -21,10 +21,10 @@ namespace LingoPartnerInfrastructure.Repository
     }
     public User? AddUser(User user)
     {
-      using (var connection = new MySqlConnection(_connectionString))
+      using (MySqlConnection connection = new(_connectionString))
       {
         connection.Open();
-        using (var transaction = connection.BeginTransaction())
+        using (MySqlTransaction transaction = connection.BeginTransaction())
         {
           try
           {
@@ -33,7 +33,7 @@ namespace LingoPartnerInfrastructure.Repository
               VALUES (@FirstName, @MiddleName, @LastName, @DateOfBirth, @Email, @Password, @Username, @Role);
               SELECT LAST_INSERT_ID();";
 
-            using (var command = new MySqlCommand(query, connection, transaction))
+            using (MySqlCommand command = new(query, connection, transaction))
             {
               command.Parameters.AddWithValue("@FirstName", user.FirstName);
               command.Parameters.AddWithValue("@MiddleName", user.MiddleName);
@@ -44,7 +44,7 @@ namespace LingoPartnerInfrastructure.Repository
               command.Parameters.AddWithValue("@Username", user.Username);
               command.Parameters.AddWithValue("@Role", user.Role.ToString());
 
-              var result = command.ExecuteScalar();
+              object result = command.ExecuteScalar();
               if (result != null)
               {
                 transaction.Commit();
@@ -75,14 +75,14 @@ namespace LingoPartnerInfrastructure.Repository
 
     public User? GetUserByUsername(string username)
     {
-      using (var connection = new MySqlConnection(_connectionString))
+      using (MySqlConnection connection = new(_connectionString))
       {
         connection.Open();
         string query = "SELECT * FROM User WHERE Username = @Username";
-        using (var cmd = new MySqlCommand(query, connection))
+        using (MySqlCommand cmd = new(query, connection))
         {
           cmd.Parameters.AddWithValue("@Username", username);
-          using (var reader = cmd.ExecuteReader())
+          using (MySqlDataReader reader = cmd.ExecuteReader())
           {
             if (reader.Read())
             {
@@ -106,14 +106,14 @@ namespace LingoPartnerInfrastructure.Repository
 
     public IEnumerable<User> GetUsers()
     {
-      var users = new List<User>();
-      using (var connection = new MySqlConnection(_connectionString))
+      List<User> users = [];
+      using (MySqlConnection connection = new(_connectionString))
       {
         connection.Open();
         string query = "SELECT * FROM User";
-        using (var cmd = new MySqlCommand(query, connection))
+        using (MySqlCommand cmd = new(query, connection))
         {
-          using (var reader = cmd.ExecuteReader())
+          using (MySqlDataReader reader = cmd.ExecuteReader())
           {
             while (reader.Read())
             {
@@ -137,10 +137,10 @@ namespace LingoPartnerInfrastructure.Repository
 
     public User? UpdateUser(User user)
     {
-      using (var connection = new MySqlConnection(_connectionString))
+      using (MySqlConnection connection = new(_connectionString))
       {
         connection.Open();
-        using (var transaction = connection.BeginTransaction())
+        using (MySqlTransaction transaction = connection.BeginTransaction())
         {
           try
           {
@@ -149,7 +149,7 @@ namespace LingoPartnerInfrastructure.Repository
               SET FirstName = @FirstName, MiddleName = @MiddleName, LastName = @LastName, DateOfBirth = @DateOfBirth, Email = @Email, Password = @Password, Username = @Username, Role = @Role
               WHERE Id = @Id;";
 
-            using (var command = new MySqlCommand(query, connection, transaction))
+            using (MySqlCommand command = new(query, connection, transaction))
             {
               command.Parameters.AddWithValue("@Id", user.Id);
               command.Parameters.AddWithValue("@FirstName", user.FirstName);
@@ -161,7 +161,7 @@ namespace LingoPartnerInfrastructure.Repository
               command.Parameters.AddWithValue("@Username", user.Username);
               command.Parameters.AddWithValue("@Role", user.Role.ToString());
 
-              var result = command.ExecuteNonQuery();
+              int result = command.ExecuteNonQuery();
               if (result > 0)
               {
                 transaction.Commit();

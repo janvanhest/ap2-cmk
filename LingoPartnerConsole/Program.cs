@@ -30,7 +30,7 @@ namespace LingoPartnerConsole
       SetupProgram(connectionString);
 
       // Create a new ServiceCollection and configure the services
-      var serviceCollection = new ServiceCollection();
+      ServiceCollection serviceCollection = new ServiceCollection();
       ConfigureServices(serviceCollection, connectionString);
       ServiceProvider serviceProvider = serviceCollection.BuildServiceProvider();
 

@@ -19,8 +19,8 @@ namespace LingoPartnerDomain.Strategies
       // Loop through the unique dates starting from the second date
       for (int i = 1; i < uniqueDates.Count; i++)
       {
-        var date = uniqueDates[i];
-        var previousDate = uniqueDates[i - 1];
+        DateTime date = uniqueDates[i];
+        DateTime previousDate = uniqueDates[i - 1];
         // Check if the current date is the next day after the previous date
         if ((date - previousDate).Days == 1)
         {

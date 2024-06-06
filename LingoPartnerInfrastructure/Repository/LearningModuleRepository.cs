@@ -18,10 +18,10 @@ namespace LingoPartnerInfrastructure.Repository
     }
     public LearningModule? AddLearningModule(LearningModule module)
     {
-      using (var connection = new MySqlConnection(connectionString))
+      using (MySqlConnection connection = new(connectionString))
       {
         connection.Open();
-        using (var transaction = connection.BeginTransaction())
+        using (MySqlTransaction transaction = connection.BeginTransaction())
         {
           try
           {
@@ -30,12 +30,12 @@ namespace LingoPartnerInfrastructure.Repository
               VALUES (@Name, @Description);
               SELECT LAST_INSERT_ID();";
 
-            using (var command = new MySqlCommand(query, connection, transaction))
+            using (MySqlCommand command = new MySqlCommand(query, connection, transaction))
             {
               command.Parameters.AddWithValue("@Name", module.Name);
               command.Parameters.AddWithValue("@Description", module.Description);
 
-              var result = command.ExecuteScalar();
+              object result = command.ExecuteScalar();
               if (result != null)
               {
                 transaction.Commit();
@@ -63,17 +63,17 @@ namespace LingoPartnerInfrastructure.Repository
       List<LearningModule> learningModules = new List<LearningModule>();
       try
       {
-        using (var connection = new MySqlConnection(connectionString))
+        using (MySqlConnection connection = new(connectionString))
         {
           connection.Open();
           string query = "SELECT * FROM LearningModule";
-          using (var command = new MySqlCommand(query, connection))
+          using (MySqlCommand command = new(query, connection))
           {
-            using (var reader = command.ExecuteReader())
+            using (MySqlDataReader reader = command.ExecuteReader())
             {
               while (reader.Read())
               {
-                LearningModule newLearningModule = new LearningModule(
+                LearningModule newLearningModule = new(
                     reader.GetInt32("Id"),
                     reader.GetString("Name"),
                     reader.GetString("Description")
@@ -99,14 +99,14 @@ namespace LingoPartnerInfrastructure.Repository
       LearningModule? learningModule = null;
       try
       {
-        using (var connection = new MySqlConnection(connectionString))
+        using (MySqlConnection connection = new(connectionString))
         {
           connection.Open();
           string query = "SELECT * FROM LearningModule WHERE Id = @Id";
-          using (var command = new MySqlCommand(query, connection))
+          using (MySqlCommand command = new(query, connection))
           {
             command.Parameters.AddWithValue("@Id", id);
-            using (var reader = command.ExecuteReader())
+            using (MySqlDataReader reader = command.ExecuteReader())
             {
               if (reader.Read())
               {
@@ -122,9 +122,7 @@ namespace LingoPartnerInfrastructure.Repository
       }
       catch (Exception ex)
       {
-        // Log the exception (replace with your actual logging mechanism)
-        Console.WriteLine($"An error occurred: {ex.Message}");
-        Trace.TraceError($"An error occurred: {ex.Message}");
+        LoggingHelper.LogError(ex, "Error getting learning module by id");
         throw;
       }
       return learningModule;
@@ -133,10 +131,10 @@ namespace LingoPartnerInfrastructure.Repository
     public LearningModule? UpdateLearningModule(LearningModule updatedModule)
     {
       LearningModule? updatedLearningModule = null;
-      using (var connection = new MySqlConnection(connectionString))
+      using (MySqlConnection connection = new(connectionString))
       {
         connection.Open();
-        using (var transaction = connection.BeginTransaction())
+        using (MySqlTransaction transaction = connection.BeginTransaction())
         {
           try
           {
@@ -146,13 +144,13 @@ namespace LingoPartnerInfrastructure.Repository
               WHERE Id = @Id;
               SELECT * FROM LearningModule WHERE Id = @Id;";
 
-            using (var command = new MySqlCommand(query, connection, transaction))
+            using (MySqlCommand command = new(query, connection, transaction))
             {
               command.Parameters.AddWithValue("@Id", updatedModule.Id);
               command.Parameters.AddWithValue("@Name", updatedModule.Name);
               command.Parameters.AddWithValue("@Description", updatedModule.Description);
 
-              using (var reader = command.ExecuteReader())
+              using (MySqlDataReader reader = command.ExecuteReader())
               {
                 if (reader.Read())
                 {
@@ -178,10 +176,10 @@ namespace LingoPartnerInfrastructure.Repository
     public bool DeleteLearningModule(int id)
     {
       bool updateSuccess = false;
-      using (var connection = new MySqlConnection(connectionString))
+      using (MySqlConnection connection = new(connectionString))
       {
         connection.Open();
-        using (var transaction = connection.BeginTransaction())
+        using (MySqlTransaction transaction = connection.BeginTransaction())
         {
           try
           {
@@ -189,11 +187,11 @@ namespace LingoPartnerInfrastructure.Repository
               DELETE FROM LearningModule
               WHERE Id = @Id;";
 
-            using (var command = new MySqlCommand(query, connection, transaction))
+            using (MySqlCommand command = new(query, connection, transaction))
             {
               command.Parameters.AddWithValue("@Id", id);
 
-              var result = command.ExecuteNonQuery();
+              int result = command.ExecuteNonQuery();
               if (result > 0)
               {
                 transaction.Commit();

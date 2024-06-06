@@ -63,7 +63,7 @@ namespace LingoPartnerTests.Domain
       administration.Add(user);
 
       // Assert
-      var addedUser = administration.Users.FirstOrDefault(u => u.Id == user.Id);
+      User? addedUser = administration.Users.FirstOrDefault(u => u.Id == user.Id);
       Assert.NotNull(addedUser);
       Assert.Equal(user.Id, addedUser.Id);
       Assert.Equal(firstName, addedUser.FirstName);
@@ -85,7 +85,7 @@ namespace LingoPartnerTests.Domain
       administration.Add(module);
 
       // Assert
-      var addedModule = administration.LearningModules.FirstOrDefault(m => m.Id == module.Id);
+      LearningModule? addedModule = administration.LearningModules.FirstOrDefault(m => m.Id == module.Id);
       Assert.NotNull(addedModule);
       Assert.Equal(module.Id, addedModule.Id);
       Assert.Equal(name, addedModule.Name);
@@ -110,7 +110,7 @@ namespace LingoPartnerTests.Domain
       administration.Add(activity);
       administration.RetrieveAllData();
       // Assert
-      var addedActivity = administration.LearningActivities.FirstOrDefault(a => a.Id == activity.Id);
+      LearningActivity? addedActivity = administration.LearningActivities.FirstOrDefault(a => a.Id == activity.Id);
       Assert.NotNull(addedActivity);
       Assert.Equal(activity.Id, addedActivity.Id);
       Assert.Equal(name, addedActivity.Name);

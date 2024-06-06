@@ -48,7 +48,7 @@ namespace LingoPartnerDomain.Classes
     }
     public void Add(User user)
     {
-      var result = userRepository.AddUser(user);
+      User? result = userRepository.AddUser(user);
       if (result == null)
       {
         LoggingHelper.LogError(new Exception("User not added."), "User not added.");
@@ -59,7 +59,7 @@ namespace LingoPartnerDomain.Classes
     }
     public void Add(LearningModule module)
     {
-      var result = learningModuleRepository.AddLearningModule(module);
+      LearningModule? result = learningModuleRepository.AddLearningModule(module);
       // Check if Result is has written to the database
       if (result == null)
       {
@@ -69,7 +69,7 @@ namespace LingoPartnerDomain.Classes
     }
     public User? UpdateUserProfile(User updatedUser, string? newPassword)
     {
-      var user = users.Find(u => u.Id == updatedUser.Id);
+      User? user = users.Find(u => u.Id == updatedUser.Id);
       if (user != null)
       {
         // Ensure that the new password is not empty
@@ -101,7 +101,7 @@ namespace LingoPartnerDomain.Classes
     }
     public LearningActivity? Add(LearningActivity newLearningActivity)
     {
-      var module = learningModules.Find(m => m.Id == newLearningActivity.LearningModuleId);
+      LearningModule? module = learningModules.Find(m => m.Id == newLearningActivity.LearningModuleId);
       if (module != null)
       {
         // FIXME: Why would a adding a learning activity return null?

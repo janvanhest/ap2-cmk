@@ -16,10 +16,10 @@ namespace LingoPartnerInfrastructure.Repository
 
     public LearningActivity? Add(LearningActivity activity)
     {
-      using (var connection = new MySqlConnection(_connectionString))
+      using (MySqlConnection connection = new(_connectionString))
       {
         connection.Open();
-        using (var transaction = connection.BeginTransaction())
+        using (MySqlTransaction transaction = connection.BeginTransaction())
         {
           try
           {
@@ -28,14 +28,14 @@ namespace LingoPartnerInfrastructure.Repository
               VALUES (@Name, @Description, @Type, @LearningModuleId);
               SELECT LAST_INSERT_ID();";
 
-            using (var command = new MySqlCommand(query, connection, transaction))
+            using (MySqlCommand command = new(query, connection, transaction))
             {
               command.Parameters.AddWithValue("@Name", activity.Name);
               command.Parameters.AddWithValue("@Description", activity.Description);
               command.Parameters.AddWithValue("@Type", activity.Type.ToString());
               command.Parameters.AddWithValue("@LearningModuleId", activity.LearningModuleId);
 
-              var result = command.ExecuteScalar();
+              object result = command.ExecuteScalar();
               if (result != null)
               {
                 transaction.Commit();
@@ -62,14 +62,14 @@ namespace LingoPartnerInfrastructure.Repository
     public IEnumerable<LearningActivity> GetAll()
     {
       List<LearningActivity> activities = [];
-      using (var connection = new MySqlConnection(_connectionString))
+      using (MySqlConnection connection = new(_connectionString))
       {
         // TEST: 
         connection.Open();
         string query = "SELECT * FROM LearningActivity";
-        using (var cmd = new MySqlCommand(query, connection))
+        using (MySqlCommand cmd = new MySqlCommand(query, connection))
         {
-          using (var reader = cmd.ExecuteReader())
+          using (MySqlDataReader reader = cmd.ExecuteReader())
           {
             while (reader.Read())
             {

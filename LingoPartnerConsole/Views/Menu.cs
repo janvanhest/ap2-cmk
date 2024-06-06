@@ -41,7 +41,7 @@ namespace LingoPartnerConsole.Views
       Console.WriteLine("Please enter your choice:\n");
       Console.WriteLine($"Enter your choice (0-{MenuItems.Count}):");
 
-      var choice = Console.ReadLine();
+      string? choice = Console.ReadLine();
 
       // check if the choice is an integer
       int menuIndex = ValidateMenuIndex(choice);
