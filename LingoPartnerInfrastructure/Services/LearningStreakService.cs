@@ -1,4 +1,4 @@
-using LingoPartnerDomain.Classes;
+﻿using LingoPartnerDomain.Classes;
 using LingoPartnerDomain.Interfaces.Repositories;
 using LingoPartnerDomain.Interfaces.Services;
 
@@ -10,13 +10,13 @@ namespace LingoPartnerInfrastructure.Services
     private readonly IAuthenticationService authenticationService;
     private User user;
     public LearningStreakService(
-      IProgressRepository progressRepository,
-      IAuthenticationService authenticationService
+        IProgressRepository progressRepository,
+        IAuthenticationService authenticationService
     )
     {
-      this.progressRepository = progressRepository;
-      this.authenticationService = authenticationService;
-      this.user = authenticationService.CurrentUser ?? throw new ArgumentNullException(nameof(authenticationService));
+      this.progressRepository = progressRepository ?? throw new ArgumentNullException(nameof(progressRepository));
+      this.authenticationService = authenticationService ?? throw new ArgumentNullException(nameof(authenticationService));
+      this.user = this.authenticationService.CurrentUser ?? throw new ArgumentNullException(nameof(user));
     }
     private List<Progress> GetProgressItems()
     {
@@ -33,35 +33,37 @@ namespace LingoPartnerInfrastructure.Services
     }
     public List<LearningStreak> GetLearningStreaks()
     {
+      List<DateTime> uniqueDates = ConvertProgressToUniqueDates(GetProgressItems());
       List<LearningStreak> streaks = new List<LearningStreak>();
-      var progressItems = GetProgressItems();
-      if (!progressItems.Any()) return streaks;
+
+      if (!uniqueDates.Any()) return streaks;
 
       LearningStreak? currentStreak = null;
 
-      for (int i = 0; i < progressItems.Count; i++)
+      for (int i = 0; i < uniqueDates.Count; i++)
       {
-        var progress = progressItems[i];
+        var date = uniqueDates[i];
 
         if (currentStreak == null)
         {
           currentStreak = new LearningStreak();
-          currentStreak.AddActivityDate(progress.Date);
+          currentStreak.AddActivityDate(date);
           streaks.Add(currentStreak);
         }
         else
         {
-          var previousProgress = progressItems[i - 1];
-          bool isNextDay = (progress.Date - previousProgress.Date).Days == 1;
-          bool isWeekendSkip = previousProgress.Date.DayOfWeek == DayOfWeek.Friday && progress.Date.DayOfWeek == DayOfWeek.Sunday;
+          var previousDate = uniqueDates[i - 1];
+          bool isNextDay = (date - previousDate).Days == 1;
+          bool isWeekendSkip = previousDate.DayOfWeek == DayOfWeek.Friday && date.DayOfWeek == DayOfWeek.Sunday;
 
           if (isNextDay || isWeekendSkip)
           {
-            currentStreak.AddActivityDate(progress.Date);
+            currentStreak.AddActivityDate(date);
           }
           else
           {
-            currentStreak.AddActivityDate(progress.Date);
+            currentStreak = new LearningStreak();
+            currentStreak.AddActivityDate(date);
             streaks.Add(currentStreak);
           }
         }
