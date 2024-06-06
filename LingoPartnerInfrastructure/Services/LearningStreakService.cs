@@ -11,6 +11,7 @@ namespace LingoPartnerInfrastructure.Services
     private readonly IAuthenticationService authenticationService;
     private readonly ILearningStreakStrategy learningStreakStrategy;
     private User user;
+
     public LearningStreakService(
         IProgressRepository progressRepository,
         IAuthenticationService authenticationService,
@@ -23,11 +24,13 @@ namespace LingoPartnerInfrastructure.Services
       this.user = this.authenticationService.CurrentUser ?? throw new ArgumentNullException(nameof(user));
 
     }
+
     private List<Progress> GetProgressItems()
     {
       int userId = user.Id ?? throw new ArgumentNullException(nameof(user));
       return progressRepository.GetProgressByUserId(userId).ToList();
     }
+
     private List<DateTime> ConvertProgressToUniqueDates(List<Progress> progressItems)
     {
       return progressItems
@@ -36,9 +39,11 @@ namespace LingoPartnerInfrastructure.Services
           .OrderBy(date => date)
           .ToList();
     }
+
     public List<LearningStreak> GetLearningStreaks() =>
       learningStreakStrategy.GetLearningStreaks(
         ConvertProgressToUniqueDates(GetProgressItems()));
+
     public int CalculateTotalScore()
     {
       return GetLearningStreaks().Sum(streak => streak.Score);
