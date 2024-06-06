@@ -11,20 +11,16 @@ namespace LingoPartnerDomain.Strategies
       uniqueDates.Sort();
       // Create a list to store the learning streaks
       List<LearningStreak> streaks = new List<LearningStreak>();
-
       // If there are no unique dates, return an empty list
       if (!uniqueDates.Any()) return streaks;
-
       // Initialize a current streak
       LearningStreak currentStreak = new LearningStreak();
       currentStreak.AddActivityDate(uniqueDates[0]);
-
       // Loop through the unique dates starting from the second date
       for (int i = 1; i < uniqueDates.Count; i++)
       {
         var date = uniqueDates[i];
         var previousDate = uniqueDates[i - 1];
-
         // Check if the current date is the next day after the previous date
         if ((date - previousDate).Days == 1)
         {
