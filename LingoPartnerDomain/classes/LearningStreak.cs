@@ -30,7 +30,7 @@ namespace LingoPartnerDomain.Classes
     /// <summary>
     /// Gets the score based on the length of the streak.
     /// </summary>
-    public int Score => Length * 10; // Example scoring: 10 points per day
+    public int Score => Length; // Example scoring: 1 points per day
 
     /// <summary>
     /// Initializes a new instance of the <see cref="LearningStreak"/> class.
@@ -70,6 +70,14 @@ namespace LingoPartnerDomain.Classes
     {
       _startDate = _dates.Any() ? (DateTime?)_dates.Min() : null;
       _endDate = _dates.Any() ? (DateTime?)_dates.Max() : null;
+    }
+    /// <summary>
+    /// Determines if the learning streak meets the criteria.
+    /// </summary>
+    /// <returns>True if the learning streak meets the criteria; otherwise, false.</returns>
+    public bool MeetCriteria()
+    {
+      return Length >= 2;
     }
   }
 }
