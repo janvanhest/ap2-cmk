@@ -4,6 +4,6 @@ namespace LingoPartnerDomain.Interfaces.Strategies
 {
   public interface ILearningStreakStrategy
   {
-    List<LearningStreak> GetLearningStreaks(List<DateTime> uniqueDates);
+    List<LearningStreak> GetLearningStreaks(List<DateTime> uniqueDates, ILearningStreakScoringStrategy scoringStrategy);
   }
 }

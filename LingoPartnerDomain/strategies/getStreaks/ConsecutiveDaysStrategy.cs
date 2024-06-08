@@ -5,7 +5,7 @@ namespace LingoPartnerDomain.Strategies
 {
   public class ConsecutiveDaysStrategy : ILearningStreakStrategy
   {
-    public List<LearningStreak> GetLearningStreaks(List<DateTime> uniqueDates)
+    public List<LearningStreak> GetLearningStreaks(List<DateTime> uniqueDates, ILearningStreakScoringStrategy scoringStrategy)
     {
       // Ensure the dates are sorted
       uniqueDates.Sort();
@@ -14,7 +14,7 @@ namespace LingoPartnerDomain.Strategies
       // If there are no unique dates, return an empty list
       if (!uniqueDates.Any()) return streaks;
       // Initialize a current streak
-      LearningStreak currentStreak = new LearningStreak();
+      LearningStreak currentStreak = new LearningStreak(scoringStrategy);
       currentStreak.AddActivityDate(uniqueDates[0]);
       // Loop through the unique dates starting from the second date
       for (int i = 1; i < uniqueDates.Count; i++)
@@ -35,7 +35,7 @@ namespace LingoPartnerDomain.Strategies
             streaks.Add(currentStreak);
           }
           // Start a new streak
-          currentStreak = new LearningStreak();
+          currentStreak = new LearningStreak(scoringStrategy);
           currentStreak.AddActivityDate(date);
         }
       }

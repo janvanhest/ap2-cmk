@@ -5,7 +5,7 @@ namespace LingoPartnerDomain.Strategies
 {
   public class WeekendSkipStrategy : ILearningStreakStrategy
   {
-    public List<LearningStreak> GetLearningStreaks(List<DateTime> uniqueDates)
+    public List<LearningStreak> GetLearningStreaks(List<DateTime> uniqueDates, ILearningStreakScoringStrategy scoringStrategy)
     {
       List<LearningStreak> streaks = new List<LearningStreak>();
 
@@ -20,7 +20,7 @@ namespace LingoPartnerDomain.Strategies
         if (currentStreak == null)
         {
           // Create a new streak if there is no current streak
-          currentStreak = new LearningStreak();
+          currentStreak = new LearningStreak(scoringStrategy);
           currentStreak.AddActivityDate(date);
           streaks.Add(currentStreak);
         }
@@ -36,7 +36,7 @@ namespace LingoPartnerDomain.Strategies
           }
           else
           {
-            currentStreak = new LearningStreak();
+            currentStreak = new LearningStreak(scoringStrategy);
             currentStreak.AddActivityDate(date);
             streaks.Add(currentStreak);
           }

@@ -13,6 +13,7 @@ using LingoPartnerInfrastructure.Repository;
 using LingoPartnerInfrastructure.Services;
 using LingoPartnerDomain.Interfaces.Strategies;
 using LingoPartnerDomain.Strategies;
+using LingoPartnerDomain.Strategies.Scoring;
 
 namespace LingoPartnerConsole
 {
@@ -63,6 +64,9 @@ namespace LingoPartnerConsole
       services.AddSingleton<IAuthenticationService, AuthenticationService>();
       // Add strategies to the services
       services.AddScoped<ILearningStreakStrategy, ConsecutiveDaysStrategy>();
+      services.AddScoped<ILearningStreakStrategy, WeekendSkipStrategy>();
+      services.AddScoped<ILearningStreakScoringStrategy, SimpleScoringStrategy>();
+      services.AddScoped<ILearningStreakScoringStrategy, BonusScoringStrategy>();
       // TODO As not all of domain layer is implemented as a service, we are still going to need the Administration class
       services.AddScoped<Administration>();
     }

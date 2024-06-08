@@ -2,6 +2,8 @@
 using LingoPartnerDomain.Classes;
 using LingoPartnerDomain.enums;
 using LingoPartnerDomain.Interfaces.Services;
+using LingoPartnerDomain.Strategies;
+using LingoPartnerDomain.Strategies.Scoring;
 
 namespace LingoPartnerConsole.Views
 {
@@ -97,7 +99,11 @@ namespace LingoPartnerConsole.Views
           ConsoleDashboardView consoleDashboardView = new(schoolAdministration);
           consoleDashboardView.ShowDashboard();
           ConsoleHelper.DisplayMessage("Here comes the Streak", MessageType.INFORMATION);
-          Console.WriteLine(learningStreakService.CalculateTotalScore());
+          // simplescoringstrategy
+          int simpleScore = learningStreakService.CalculateTotalScore(new SimpleScoringStrategy());
+          int BonusScoringStrategy = learningStreakService.CalculateTotalScore(new BonusScoringStrategy());
+          Console.WriteLine($"Simple Score: {simpleScore}");
+          Console.WriteLine($"Bonus Score: {BonusScoringStrategy}");
           break;
         default:
           NotImplemented(menuIndex);
