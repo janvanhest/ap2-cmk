@@ -59,7 +59,7 @@ namespace LingoPartnerInfrastructure.Services
 
     public int CalculateTotalScore(ILearningStreakScoringStrategy? scoringStrategy)
     {
-      ILearningStreakScoringStrategy currentscoringStrategy = scoringStrategy ?? this.scoringStrategy;
+      ILearningStreakScoringStrategy currentscoringStrategy = scoringStrategy ?? this.scoringStrategy; // 
       return GetLearningStreaks() != null ? GetLearningStreaks().Sum(streak => currentscoringStrategy.CalculateScore(streak)) : 0;
     }
     public LearningStreak? GetCurrentStreak() => GetLearningStreaks().LastOrDefault();

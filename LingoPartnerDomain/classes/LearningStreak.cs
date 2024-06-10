@@ -8,11 +8,9 @@ namespace LingoPartnerDomain.Classes
   {
     private readonly ILearningStreakScoringStrategy _scoringStrategy;
     private List<DateTime> _dates = [];
-    // private DateTime? _startDate;
-    // private DateTime? _endDate;
-    public ReadOnlyCollection<DateTime> ActivityDates => _dates.AsReadOnly();
-    // public DateTime? StartDate => _startDate;
-    // public DateTime? EndDate => _endDate;
+    private DateTime? _startDate;
+    private DateTime? _endDate;
+    private ReadOnlyCollection<DateTime> ActivityDates => _dates.AsReadOnly();
     // public int Length => _startDate.HasValue && _endDate.HasValue ? (_endDate.Value - _startDate.Value).Days + 1 : 0;
     public int Length => _dates.Count;
     public DateTime? StartDate => _dates.Count != 0 ? _dates.Min() : null;
@@ -28,7 +26,7 @@ namespace LingoPartnerDomain.Classes
       if (activityDates != null && activityDates.Count != 0)
       {
         _dates = activityDates.Distinct().ToList();
-        // UpdateDateRange();
+        UpdateDateRange();
       }
     }
     public bool AddActivityDate(DateTime date)
@@ -36,16 +34,16 @@ namespace LingoPartnerDomain.Classes
       if (!_dates.Contains(date))
       {
         _dates.Add(date);
-        // UpdateDateRange();
+        UpdateDateRange();
         return true;
       }
       return false;
     }
-    // private void UpdateDateRange()
-    // {
-    //   _startDate = _dates.Count != 0 ? _dates.Min() : null;
-    //   _endDate = _dates.Count != 0 ? _dates.Max() : null;
-    // }
+    private void UpdateDateRange()
+    {
+      _startDate = _dates.Count != 0 ? _dates.Min() : null;
+      _endDate = _dates.Count != 0 ? _dates.Max() : null;
+    }
     public bool MeetCriteria()
     {
       return Length >= 2;
