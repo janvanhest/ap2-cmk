@@ -1,0 +1,219 @@
+@startuml
+
+' enum FriendRequestStatus {
+'     ACCEPTED
+'     DECLINED
+'     PENDING
+'     CANCELLED
+'     BLOCKED
+' }
+
+' enum LearningActivityType {
+'     MULTIPLECHOICE
+'     FILLINTHEBLANK
+'     TRUEFALSE
+'     INSTRUCTION
+'     QUIZ
+' }
+
+' enum ProgressStatus {
+'     COMPLETED
+'     INPROGRESS
+'     NOTSTARTED
+' }
+
+' enum ProgressType {
+'     LEARNINGACTIVITY
+'     ASSESMENT
+'     MODULE
+'     PROJECT
+' }
+
+' enum RewardType {
+'     DIPLOMA
+'     BADGE
+' }
+
+' enum UserRole {
+'     TEACHER
+'     STUDENT
+'     ADMIN
+' }
+
+interface IAuthenticationService {
+    + bool Authenticate(username: String, password: String)
+    + User CurrentUser
+}
+
+interface ILearningModuleService {
+    + IEnumerable<LearningModule> GetAllLearningModules()
+    + LearningModule GetLearningModuleById(id: Int)
+    + LearningModule AddLearningModule(learningModule: LearningModule)
+    + LearningModule UpdateLearningModule(learningModule: LearningModule)
+    + bool DeleteLearningModule(id: Int)
+}
+
+interface ILearningStreakService {
+    + List<LearningStreak> GetLearningStreaks()
+    + int CalculateTotalScore(scoringStrategy: ILearningStreakScoringStrategy)
+    + LearningStreak GetCurrentStreak()
+}
+
+interface IUserRepository {
+    + User AddUser(user: User)
+    + IEnumerable<User> GetUsers()
+    + User UpdateUser(user: User)
+    + User GetUserByUsername(username: String)
+}
+
+interface IProgressRepository {
+    + Progress AddProgress(progress: Progress)
+    + Progress UpdateProgress(progress: Progress)
+    + IEnumerable<Progress> GetAllProgress()
+    + IEnumerable<Progress> GetProgressByUserId(userId: Int)
+    + IEnumerable<DateTime> GetUniqueDatesByUserId(userId: Int)
+}
+
+interface ILearningModuleRepository {
+    + LearningModule AddLearningModule(module: LearningModule)
+    + IEnumerable<LearningModule> GetAllLearningModules()
+    + LearningModule GetLearningModuleById(id: Int)
+    + LearningModule UpdateLearningModule(module: LearningModule)
+    + Boolean DeleteLearningModule(id: Int)
+}
+
+interface ILearningActivityRepository {
+    + LearningActivity Add(activity: LearningActivity)
+    + LearningActivity Update(activity: LearningActivity)
+    + void Remove(activityId: Int)
+    + LearningActivity GetById(activityId: Int)
+    + IEnumerable<LearningActivity> GetAll()
+}
+
+class Administration {
+    - authenticationService: IAuthenticationService
+    - learningStreakService: ILearningStreakService
+    - learningModuleService: ILearningModuleService
+    - userRepository: IUserRepository
+    - learningModuleRepository: ILearningModuleRepository
+    - learningActivityRepository: ILearningActivityRepository
+    - progressRepository: IProgressRepository
+    - users: List<User>
+    - learningModules: List<LearningModule>
+    - learningActivities: List<LearningActivity>
+    + Administration(userRepository: IUserRepository, learningModuleRepository: ILearningModuleRepository, learningActivityRepository: ILearningActivityRepository, progressRepository: IProgressRepository, authenticationService: IAuthenticationService, learningStreakService: ILearningStreakService, learningModuleService: ILearningModuleService)
+    + Users: IReadOnlyList<User>
+    + LearningModules: IReadOnlyList<LearningModule>
+    + LearningActivities: IReadOnlyList<LearningActivity>
+    + AddUser(user: User)
+    + UpdateUserProfile(user: User)
+    + AddLearningModule(module: LearningModule)
+    + RemoveLearningModule(module: LearningModule)
+    + GetProgressRecordsByUser(user: User): ReadOnlyCollection<Progress>
+    + GetCurrentLearningStreak(): LearningStreak?
+    + GetAllLearningModules(): IEnumerable<LearningModule>
+    + GetLearningModuleById(id: int): LearningModule?
+    + AddLearningModule(learningModule: LearningModule)
+    + UpdateLearningModule(learningModule: LearningModule)
+    + DeleteLearningModule(id: int)
+    + CurrentUser: User?
+}
+
+class FriendRequest {
+    - id: Int
+    - sender: User
+    - recipient: User
+    - status: FriendRequestStatus
+    + FriendRequest(id: Int, sender: User, recipient: User)
+    + UpdateStatus(status: FriendRequestStatus)
+}
+
+class LearningActivity {
+    - id: Int
+    - name: String
+    - description: String
+    - type: LearningActivityType
+    - learningModuleId: Int
+    + LearningActivity(name: String, description: String, type: LearningActivityType, learningModuleId: Int)
+    + LearningActivity(id: Int, name: String, description: String, type: LearningActivityType, learningModuleId: Int)
+    + UpdateActivity(newActivity: LearningActivity)
+}
+
+class LearningModule {
+    - id: int
+    - name: String
+    - description: String
+    + LearningModule(name: String, description: String)
+    + AddLearningActivity(activity: LearningActivity)
+    + RemoveLearningActivity(activity: LearningActivity)
+    + ShowLearningActivities(): List<LearningActivity>
+    + UpdateModule(name: String, description: String)
+}
+
+class Progress {
+    - id: Int
+    - type: ProgressType
+    - status: ProgressStatus
+    - progressDetails: String
+    + Progress(type: ProgressType, status: ProgressStatus, progressDetails: String)
+    + ShowDetails(): String
+    + UpdateProgress(details: String)
+}
+
+class Reward {
+    - id: Int
+    - name: String
+    - type: RewardType
+    - description: String
+    - date: Date
+    + Reward(name: String, type: RewardType, description: String, date: Date)
+    + ShowDetails(): String
+}
+
+class User {
+    - id: Int
+    - firstName: String
+    - middleName: String
+    - lastName: String
+    - dateOfBirth: Date
+    - email: String
+    - password: String
+    - role: UserRole
+    + User(firstName: String, middleName: String, lastName: String, dateOfBirth: Date, email: String, password: String, role: UserRole)
+    + UpdateProfile(firstName: String, middleName: String, lastName: String, email: String, password: String)
+    + SetRole(role: UserRole)
+}
+
+class LearningStreak {
+    - _scoringStrategy: ILearningStreakScoringStrategy
+    - _dates: List<DateTime>
+    - _startDate: DateTime?
+    - _endDate: DateTime?
+    + LearningStreak(scoringStrategy: ILearningStreakScoringStrategy)
+    + LearningStreak(activityDates: List<DateTime>, scoringStrategy: ILearningStreakScoringStrategy)
+    + AddActivityDate(date: DateTime): bool
+    + UpdateDateRange()
+    + MeetCriteria(): bool
+}
+
+Administration "1" -down-> "n" User
+Administration "1" -left-> "n" LearningModule
+
+User -right-> "n" Reward
+User -down-> "n" Progress
+
+User "1" -down-> "n" FriendRequest : sent
+User "1" <-down- "n" FriendRequest : received
+
+Progress "1" -left-> "1" LearningActivity
+
+LearningModule "1" -down-> "n" LearningActivity
+
+Administration -up- IAuthenticationService : uses
+Administration -up- ILearningStreakService : uses
+Administration -up- ILearningModuleService : uses
+Administration -up- IUserRepository : uses
+Administration -up- ILearningModuleRepository : uses
+Administration -up- ILearningActivityRepository : uses
+Administration -up- IProgressRepository : uses
+@enduml
