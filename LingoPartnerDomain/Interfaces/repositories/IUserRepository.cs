@@ -3,9 +3,9 @@ namespace LingoPartnerDomain.Interfaces.Repositories
 {
   public interface IUserRepository
   {
-    User? AddUser(User user);
-    IEnumerable<User> GetUsers();
-    User? UpdateUser(User user);
-    User? GetUserByUsername(string username);
+    User? Add(User user, string password);
+    IEnumerable<User> GetAll();
+    User? Update(User user, string? password);
+    User? GetBy(string username);
   }
 }

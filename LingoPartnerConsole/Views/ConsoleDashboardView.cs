@@ -1,20 +1,21 @@
 ﻿using LingoPartnerConsole.Helpers;
 using LingoPartnerDomain.Classes;
+using LingoPartnerDomain.Interfaces.Services;
+using LingoPartnerInfrastructure.Services;
 
 namespace LingoPartnerConsole.Views
 {
   public class ConsoleDashboardView
   {
-    private readonly Administration administration;
-
-    public ConsoleDashboardView(Administration administration)
+    private IAuthenticationService authenticationService;
+    public ConsoleDashboardView(IAuthenticationService authenticationService)
     {
-      this.administration = administration;
+      this.authenticationService = authenticationService ?? throw new ArgumentNullException(nameof(authenticationService));
     }
 
     public void ShowDashboard()
     {
-      User? user = administration.CurrentUser;
+      User? user = authenticationService.CurrentUser;
       if (user == null)
       {
         Console.WriteLine("User not found.");

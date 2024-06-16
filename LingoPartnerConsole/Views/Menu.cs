@@ -1,38 +1,57 @@
 ﻿using LingoPartnerConsole.Helpers;
 using LingoPartnerDomain.Classes;
 using LingoPartnerDomain.enums;
+using LingoPartnerDomain.Interfaces.Repositories;
 using LingoPartnerDomain.Interfaces.Services;
-using LingoPartnerDomain.Strategies;
 using LingoPartnerDomain.Strategies.Scoring;
 
 namespace LingoPartnerConsole.Views
 {
   internal class Menu
   {
-    public Administration schoolAdministration;
-    public ILearningStreakService learningStreakService;
-    private IReadOnlyList<string> MenuItems = new List<string>
-    {
+    private ILearningStreakService learningStreakService;
+    private ILearningModuleService learningModuleService;
+    private IAuthenticationService authenticationService;
+    private IUserService userService;
+    private ILearningActivityService learningActivityService;
+
+    private IReadOnlyList<string> MenuItems =
+    [
       "Create a User", // 1
       "Show all users", // 2
       "Show all teachers", // 3
       "Show all students", // 4
-      "Add a LearningModule", // 5
-      "Show all LearningModules", // 6
-      "Show all LearningActivities", // 7
-      "Add a LearningActivity", // 8
-      "Show all LearningActivities for a LearningModule", // 9
-      "Show all LearningActivities for a User", // 10
-      "Show all LearningActivities for a Teacher", // 11
-      "Show all LearningActivities for a Student", // 12
-      "Show all LearningActivities for a LearningModule and a User", // 13
-      "Show my dashboard baby" // 14
-    };
+      "Update a user", // 5
+      "Add a LearningModule", // 6
+      "Show all LearningModules", // 7
+      "Show all LearningActivities", // 8
+      "Add a LearningActivity", // 9
+      "Show all LearningActivities for a LearningModule", // 10
+      "Show all LearningActivities for a User", // 11
+      "Show all LearningActivities for a Teacher", // 12
+      "Show all LearningActivities for a Student", // 13
+      "Show all LearningActivities for a LearningModule and a User", // 14
+      "Show my dashboard baby" // 15
+    ];
 
-    public Menu(Administration schoolAdministration, ILearningStreakService learningStreakService)
+    public Menu(
+      ILearningStreakService learningStreakService,
+      ILearningModuleService learningModuleService,
+      IAuthenticationService authenticationService,
+      IUserService userService,
+      ILearningActivityService learningActivityService
+      )
     {
-      this.schoolAdministration = schoolAdministration ?? throw new ArgumentNullException(nameof(schoolAdministration));
-      this.learningStreakService = learningStreakService ?? throw new ArgumentNullException(nameof(learningStreakService));
+      this.learningStreakService = learningStreakService ??
+        throw new ArgumentNullException(nameof(learningStreakService));
+      this.learningModuleService = learningModuleService ??
+        throw new ArgumentNullException(nameof(learningModuleService));
+      this.authenticationService = authenticationService ??
+        throw new ArgumentNullException(nameof(authenticationService));
+      this.userService = userService ??
+        throw new ArgumentNullException(nameof(userService));
+      this.learningActivityService = learningActivityService ??
+        throw new ArgumentNullException(nameof(learningActivityService));
     }
     public void Show()
     {
@@ -48,18 +67,19 @@ namespace LingoPartnerConsole.Views
       // check if the choice is an integer
       int menuIndex = ValidateMenuIndex(choice);
       Console.Clear();
-      UserList userList = new UserList(schoolAdministration);
-      LearningModuleAdd learningModuleAdd = new LearningModuleAdd(schoolAdministration);
-      LearningModuleList learningModuleList = new LearningModuleList(schoolAdministration);
-      LearningActivityList learningActivityList = new LearningActivityList(schoolAdministration);
-      LearningActivityAdd learningActivityAdd = new LearningActivityAdd(schoolAdministration);
+      UserList userList = new(userService);
+      LearningModuleAdd learningModuleAdd = new(learningModuleService);
+      LearningModuleList learningModuleList = new(learningModuleService);
+      LearningActivityList learningActivityList = new(learningActivityService);
+      LearningActivityAdd learningActivityAdd = new(learningActivityService);
+      UserUpdate userUpdate = new(userService);
+      UserAdd userAdd = new(userService);
       switch (choice)
       {
         case "0":
-          GoodBey();
+          GoodBye();
           break;
         case "1":
-          UserAdd userAdd = new UserAdd(schoolAdministration);
           userAdd.Show();
           break;
         case "2":
@@ -75,28 +95,33 @@ namespace LingoPartnerConsole.Views
           userList.Show(UserRole.STUDENT);
           break;
         case "5":
+          ConsoleHelper.DisplayMessage("Update a user:");
+          userList.Show();
+          userUpdate.Show();
+          break;
+        case "6":
           ConsoleHelper.DisplayMessage("Add a new learning module");
           learningModuleAdd.Show();
           break;
-        case "6":
+        case "7":
           ConsoleHelper.DisplayMessage("List of all LearningModules:");
           learningModuleList.Show();
           break;
-        case "7":
+        case "8":
           ConsoleHelper.DisplayMessage("List of all LearningActivities:");
           learningActivityList.Show();
           break;
-        case "8":
+        case "9":
           ConsoleHelper.DisplayMessage("Add a new LearningActivity:");
           learningModuleList.Show();
           int learningModuleId = ConsoleHelper.GetIntInput("Enter the LearningModule ID:");
           learningActivityAdd.Show(learningModuleId);
           break;
-        case "9":
+        case "10":
           NotImplemented(menuIndex);
           break;
-        case "14":
-          ConsoleDashboardView consoleDashboardView = new(schoolAdministration);
+        case "15":
+          ConsoleDashboardView consoleDashboardView = new(authenticationService);
           consoleDashboardView.ShowDashboard();
           ConsoleHelper.DisplayMessage("Here comes the Streak", MessageType.INFORMATION);
           // simplescoringstrategy
@@ -107,12 +132,25 @@ namespace LingoPartnerConsole.Views
           break;
         default:
           NotImplemented(menuIndex);
-          MenuHelper.ReturnToMenu(schoolAdministration, learningStreakService);
+          MenuHelper.ReturnToMenu(
+              learningStreakService,
+              learningModuleService,
+              authenticationService,
+              userService,
+              learningActivityService
+              );
+
           break;
       }
-      MenuHelper.ReturnToMenu(schoolAdministration, learningStreakService);
+      MenuHelper.ReturnToMenu(
+                    learningStreakService,
+                    learningModuleService,
+                    authenticationService,
+                    userService,
+                    learningActivityService
+                    );
     }
-    private void GoodBey()
+    private void GoodBye()
     {
       ConsoleHelper.DisplayMessage("Goodbye!", MessageType.INFORMATION);
       Console.WriteLine("Press any key to exit...");

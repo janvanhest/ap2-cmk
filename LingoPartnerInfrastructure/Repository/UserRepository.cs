@@ -4,7 +4,6 @@ using LingoPartnerDomain.Interfaces.Repositories;
 using LingoPartnerInfrastructure.Helpers;
 using LingoPartnerShared.Helpers;
 using MySql.Data.MySqlClient;
-using System.Diagnostics;
 using System.Net.Mail;
 
 namespace LingoPartnerInfrastructure.Repository
@@ -19,7 +18,7 @@ namespace LingoPartnerInfrastructure.Repository
         connectionString :
         InfrastructureHelper.CreateConnectionString();
     }
-    public User? AddUser(User user)
+    public User? Add(User user, string password)
     {
       using (MySqlConnection connection = new(_connectionString))
       {
@@ -40,7 +39,7 @@ namespace LingoPartnerInfrastructure.Repository
               command.Parameters.AddWithValue("@LastName", user.LastName);
               command.Parameters.AddWithValue("@DateOfBirth", user.DateOfBirth);
               command.Parameters.AddWithValue("@Email", user.Email.ToString());
-              command.Parameters.AddWithValue("@Password", user.Password); // Consider using hashed password
+              command.Parameters.AddWithValue("@Password", password); // Consider using hashed password
               command.Parameters.AddWithValue("@Username", user.Username);
               command.Parameters.AddWithValue("@Role", user.Role.ToString());
 
@@ -55,7 +54,7 @@ namespace LingoPartnerInfrastructure.Repository
                     user.LastName,
                     user.DateOfBirth,
                     user.Email,
-                    user.Password,
+                    password,
                     user.Username,
                     user.Role
                 );
@@ -64,8 +63,7 @@ namespace LingoPartnerInfrastructure.Repository
           }
           catch (MySqlException ex)
           {
-            transaction.Rollback();
-            Trace.TraceError($"Database error: {ex.Message}");
+            LoggingHelper.LogError(ex, $"Database error while adding user: {user.Username}\nerror is: {ex.Message}");
             throw;
           }
         }
@@ -73,7 +71,7 @@ namespace LingoPartnerInfrastructure.Repository
       return null;
     }
 
-    public User? GetUserByUsername(string username)
+    public User? GetBy(string username)
     {
       using (MySqlConnection connection = new(_connectionString))
       {
@@ -104,7 +102,7 @@ namespace LingoPartnerInfrastructure.Repository
       return null;
     }
 
-    public IEnumerable<User> GetUsers()
+    public IEnumerable<User> GetAll()
     {
       List<User> users = [];
       using (MySqlConnection connection = new(_connectionString))
@@ -135,7 +133,7 @@ namespace LingoPartnerInfrastructure.Repository
       return users;
     }
 
-    public User? UpdateUser(User user)
+    public User? Update(User user, string? password)
     {
       using (MySqlConnection connection = new(_connectionString))
       {
@@ -157,7 +155,7 @@ namespace LingoPartnerInfrastructure.Repository
               command.Parameters.AddWithValue("@LastName", user.LastName);
               command.Parameters.AddWithValue("@DateOfBirth", user.DateOfBirth);
               command.Parameters.AddWithValue("@Email", user.Email.ToString());
-              command.Parameters.AddWithValue("@Password", user.Password); // Consider using hashed password
+              if (password != null) { command.Parameters.AddWithValue("@Password", password); };
               command.Parameters.AddWithValue("@Username", user.Username);
               command.Parameters.AddWithValue("@Role", user.Role.ToString());
 

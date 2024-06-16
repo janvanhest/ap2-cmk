@@ -7,8 +7,11 @@ namespace LingoPartnerDomain.Strategies
   {
     public List<LearningStreak> GetLearningStreaks(List<DateTime> uniqueDates, ILearningStreakScoringStrategy scoringStrategy)
     {
+      // Ensure the dates are sorted
+      uniqueDates.Sort();
+      // Create a list to store the learning streaks
       List<LearningStreak> streaks = new List<LearningStreak>();
-
+      // If there are no unique dates, return an empty list
       if (!uniqueDates.Any()) return streaks;
 
       LearningStreak? currentStreak = null;

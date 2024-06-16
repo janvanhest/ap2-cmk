@@ -14,6 +14,7 @@ using LingoPartnerInfrastructure.Services;
 using LingoPartnerDomain.Interfaces.Strategies;
 using LingoPartnerDomain.Strategies;
 using LingoPartnerDomain.Strategies.Scoring;
+using LingoPartnerDomain.Services;
 
 namespace LingoPartnerConsole
 {
@@ -31,7 +32,7 @@ namespace LingoPartnerConsole
       SetupProgram(connectionString);
 
       // Create a new ServiceCollection and configure the services
-      ServiceCollection serviceCollection = new ServiceCollection();
+      ServiceCollection serviceCollection = new();
       ConfigureServices(serviceCollection, connectionString);
       ServiceProvider serviceProvider = serviceCollection.BuildServiceProvider();
 
@@ -40,13 +41,26 @@ namespace LingoPartnerConsole
       AuthenticationHelper.Authenticate(authenticationService);
 
       // Initialize the program, does some basic routines like authentication, set the user and displaying a welcome message
-      Administration schoolAdministration = serviceProvider.GetService<Administration>() ?? throw new InvalidOperationException("fail to get administration service running");
-      InitializeProgram(schoolAdministration);
+      InitializeProgram(authenticationService);
 
       // Create a new Menu object and show the menu
-      Menu menu = new Menu(
-        schoolAdministration,
-        serviceProvider.GetService<ILearningStreakService>()
+      ILearningStreakService learningStreakService =
+        serviceProvider.GetService<ILearningStreakService>() ?? throw new InvalidOperationException("fail to get learning streak service running");
+      ILearningModuleService learningModuleService =
+        serviceProvider.GetService<ILearningModuleService>() ?? throw new InvalidOperationException("fail to get learning module service running");
+      IUserService userService =
+        serviceProvider.GetService<IUserService>() ?? throw new InvalidOperationException("fail to get user service running");
+      ILearningActivityService learningActivityService =
+        serviceProvider.GetService<ILearningActivityService>() ?? throw new InvalidOperationException("fail to get learning activity service running");
+      IProgressService progressService = // FIXME: This is not used in the Menu class
+        serviceProvider.GetService<IProgressService>() ?? throw new InvalidOperationException("fail to get progress service running");
+
+      Menu menu = new(
+        learningStreakService,
+        learningModuleService,
+        authenticationService,
+        userService,
+        learningActivityService
         );
       menu.Show();
     }
@@ -62,13 +76,14 @@ namespace LingoPartnerConsole
       services.AddScoped<ILearningStreakService, LearningStreakService>();
       services.AddScoped<ILearningModuleService, LearningModuleService>();
       services.AddSingleton<IAuthenticationService, AuthenticationService>();
+      services.AddScoped<IUserService, UserService>();
+      services.AddScoped<ILearningActivityService, LearningActivityService>();
+      services.AddScoped<IProgressService, ProgressService>();
       // Add strategies to the services
       services.AddScoped<ILearningStreakStrategy, ConsecutiveDaysStrategy>();
       services.AddScoped<ILearningStreakStrategy, WeekendSkipStrategy>();
       services.AddScoped<ILearningStreakScoringStrategy, SimpleScoringStrategy>();
       services.AddScoped<ILearningStreakScoringStrategy, BonusScoringStrategy>();
-      // TODO As not all of domain layer is implemented as a service, we are still going to need the Administration class
-      services.AddScoped<Administration>();
     }
     private static void SetupProgram(string connectionString)
     {
@@ -89,8 +104,9 @@ namespace LingoPartnerConsole
       }
 
     }
-    private static void InitializeProgram(Administration schoolAdministration)
+    private static void InitializeProgram(IAuthenticationService authenticationService)
     {
+      User? user = authenticationService.CurrentUser;
       Console.Clear();
 
       DateTime dateTime = DateTime.Now;
@@ -101,9 +117,9 @@ namespace LingoPartnerConsole
       ConsoleHelper.DisplayTypingAnimation("\nWelcome to LingoPartner!\n", true);
 
       string welcomeMessage = "Welcome Guest!";
-      if (schoolAdministration.CurrentUser != null)
+      if (user != null)
       {
-        welcomeMessage = $"\nHave a nice schoolday! Or something like that, {schoolAdministration.CurrentUser.getFullName()}!\n";
+        welcomeMessage = $"\nHave a nice schoolday! Or something like that, {user.getFullName()}!\n";
       }
       Console.WriteLine(welcomeMessage);
       Console.WriteLine("Press a key to continue...\n");

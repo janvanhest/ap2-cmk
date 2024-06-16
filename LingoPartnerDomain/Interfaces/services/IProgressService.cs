@@ -1,15 +1,13 @@
-﻿using System;
-using LingoPartnerDomain.Classes;
+﻿using LingoPartnerDomain.Classes;
 
-namespace LingoPartnerDomain.Interfaces.Repositories
+namespace LingoPartnerDomain.Interfaces.Services
 {
-  public interface IProgressRepository
+  public interface IProgressService
   {
     Progress? AddProgress(Progress progress);
-    Progress? UpdateProgress(Progress updateProgress);
+    Progress? UpdateProgress(Progress progress);
     IEnumerable<Progress> GetAllProgress();
     IEnumerable<Progress> GetProgressByUserId(int userId);
-
     IEnumerable<DateTime> GetUniqueDatesByUserId(int userId);
   }
 }

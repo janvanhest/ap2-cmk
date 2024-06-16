@@ -16,7 +16,7 @@ namespace LingoPartnerInfrastructure.Services
 
     public bool Authenticate(string username, string password)
     {
-      User? user = this.userRepository.GetUserByUsername(username);
+      User? user = this.userRepository.GetBy(username);
       if (user != null && user.VerifyPassword(password))
       {
         this.currentUser = user;

@@ -11,39 +11,29 @@ namespace LingoPartnerDomain.Classes
     public string LastName { get; private set; } = string.Empty;
     public DateTime DateOfBirth { get; private set; }
     public MailAddress Email { get; private set; } // Ensured as non-nullable
-    public string Password { get; private set; } // FIXME: Consider security practices for password storage
+    private string password;
     public string Username { get; private set; }
     public UserRole Role { get; private set; }
+    public List<LearningStreak> LearningStreaks { get; private set; }
+    public List<Reward> Rewards { get; private set; }
+    public List<Progress> ProgressRecords { get; private set; }
+    public List<FriendRequest> SentFriendRequests { get; private set; }
+    public List<FriendRequest> ReceivedFriendRequests { get; private set; }
 
-    // Main constructor for initialization with validation
-    private void Initialize(string firstName, string middleName, string lastName, DateTime dateOfBirth, MailAddress email, string password, string username, UserRole role)
+    public User(string firstName, string middleName, string lastName, DateTime dateOfBirth, MailAddress email,
+                string password, string username, UserRole role)
+      : this(null, firstName, middleName, lastName, dateOfBirth, email, password, username, role) { }
+    public User(int? id, string firstName, string middleName, string lastName, DateTime dateOfBirth, MailAddress email, string password, string username, UserRole role)
     {
+      Id = id;
       FirstName = firstName ?? throw new ArgumentNullException(nameof(firstName), "First name cannot be null.");
       MiddleName = middleName ?? string.Empty; // MiddleName can be empty, allowed to be null
       LastName = lastName ?? throw new ArgumentNullException(nameof(lastName), "Last name cannot be null.");
       DateOfBirth = dateOfBirth; // Assuming validation of date is handled elsewhere if needed
       Email = email ?? throw new ArgumentNullException(nameof(email), "Email address cannot be null.");
-      Password = password ?? throw new ArgumentNullException(nameof(password), "Password cannot be null.");
+      this.password = password ?? throw new ArgumentNullException(nameof(password), "Password cannot be null.");
       Username = username ?? throw new ArgumentNullException(nameof(username), "Username cannot be null.");
       Role = role;
-    }
-
-    // Constructor without ID (for new users)
-#pragma warning disable CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider adding the 'required' modifier or declaring as nullable.
-    public User(string firstName, string middleName, string lastName, DateTime dateOfBirth, MailAddress email, string password, string username, UserRole role)
-#pragma warning restore CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider adding the 'required' modifier or declaring as nullable.
-    {
-      // FIXME: Maybe the Initizalize method should be called here instead of repeating the logic
-      Initialize(firstName, middleName, lastName, dateOfBirth, email, password, username, role);
-    }
-
-    // Constructor with ID (typically used for retrieving existing users)
-#pragma warning disable CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider adding the 'required' modifier or declaring as nullable.
-    public User(int id, string firstName, string middleName, string lastName, DateTime dateOfBirth, MailAddress email, string password, string username, UserRole role)
-#pragma warning restore CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider adding the 'required' modifier or declaring as nullable.
-    {
-      Id = id;
-      Initialize(firstName, middleName, lastName, dateOfBirth, email, password, username, role);
     }
 
     // Update only first, middle, and last names
@@ -89,7 +79,7 @@ namespace LingoPartnerDomain.Classes
 
     private void SetPassword(string newPassword)
     {
-      Password = newPassword; // Consider security practices for password storage
+      this.password = newPassword; // Consider security practices for password storage
     }
 
     public void SetRole(UserRole newRole)
@@ -100,7 +90,7 @@ namespace LingoPartnerDomain.Classes
     public bool VerifyPassword(string attemptedPassword)
     {
       // Implement password verification
-      return attemptedPassword == Password; // Simplified for example, consider password hashing
+      return attemptedPassword == password; // Simplified for example, consider password hashing
     }
 
     public string getFullName()
@@ -112,6 +102,30 @@ namespace LingoPartnerDomain.Classes
       }
       fullName += $" {LastName}";
       return fullName;
+    }
+    public void AddLearningStreak(LearningStreak learningStreak)
+    {
+      LearningStreaks.Add(learningStreak);
+    }
+
+    public void AddReward(Reward reward)
+    {
+      Rewards.Add(reward);
+    }
+
+    public void AddProgressRecord(Progress progress)
+    {
+      ProgressRecords.Add(progress);
+    }
+
+    public void AddSentFriendRequest(FriendRequest friendRequest)
+    {
+      SentFriendRequests.Add(friendRequest);
+    }
+
+    public void AddReceivedFriendRequest(FriendRequest friendRequest)
+    {
+      ReceivedFriendRequests.Add(friendRequest);
     }
   }
 }

@@ -2,16 +2,18 @@
 using LingoPartnerDomain.enums;
 using LingoPartnerDomain.Classes;
 using LingoPartnerConsole.Helpers;
+using LingoPartnerDomain.Interfaces.Repositories;
+using LingoPartnerDomain.Interfaces.Services;
 
 namespace LingoPartnerConsole.Views
 {
   public class UserAdd
   {
-    private Administration SchoolAdministration;
+    private IUserService userService;
 
-    public UserAdd(Administration administration)
+    public UserAdd(IUserService userService)
     {
-      SchoolAdministration = administration;
+      this.userService = userService;
     }
 
     public void Show()
@@ -27,7 +29,8 @@ namespace LingoPartnerConsole.Views
       UserRole role = ConsoleHelper.GetUserRole("Enter role (Admin, Teacher, Student):");
 
       // Create the user object
-      User newUser = new User(
+      User newUser = new(
+          id: null,
           firstName: firstName,
           middleName: middleName == "-" ? string.Empty : middleName,
           lastName: lastName,
@@ -39,7 +42,7 @@ namespace LingoPartnerConsole.Views
       );
 
       // Add the user to the administration
-      SchoolAdministration.Add(newUser);
+      userService.RegisterUser(newUser, password);
       Console.WriteLine($"User {firstName} {lastName} successfully added as {role}.");
     }
   }

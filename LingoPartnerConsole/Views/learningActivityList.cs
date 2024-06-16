@@ -1,18 +1,21 @@
 ﻿using LingoPartnerDomain.Classes;
+using LingoPartnerDomain.Interfaces.Repositories;
+using LingoPartnerDomain.Interfaces.Services;
 
 namespace LingoPartnerConsole.Views
 {
   public class LearningActivityList
   {
-    private Administration SchoolAdministration;
-    public LearningActivityList(Administration schoolAdministration)
+    private ILearningActivityService learningActivityService;
+    public LearningActivityList(ILearningActivityService learningActivityService)
     {
-      SchoolAdministration = schoolAdministration;
+      this.learningActivityService = learningActivityService;
     }
     public void Show()
     {
+      IReadOnlyList<LearningActivity> learningActivities = learningActivityService.GetAllActivities().ToList<LearningActivity>().AsReadOnly();
       int index = 1;
-      foreach (LearningActivity activity in SchoolAdministration.LearningActivities)
+      foreach (LearningActivity activity in learningActivities)
       {
         Console.WriteLine($"{index++}. {activity.Name} ({activity.Description})");
       }

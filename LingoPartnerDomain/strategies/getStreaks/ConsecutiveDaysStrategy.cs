@@ -15,7 +15,7 @@ namespace LingoPartnerDomain.Strategies
       if (!uniqueDates.Any()) return streaks;
       // Initialize a current streak
       LearningStreak currentStreak = new LearningStreak(scoringStrategy);
-      currentStreak.AddActivityDate(uniqueDates[0]);
+      currentStreak.AddActivityDate(uniqueDates[0]); // Add the first date
       // Loop through the unique dates starting from the second date
       for (int i = 1; i < uniqueDates.Count; i++)
       {

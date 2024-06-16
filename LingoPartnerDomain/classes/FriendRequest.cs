@@ -4,22 +4,33 @@ namespace LingoPartnerDomain.Classes
 {
   public class FriendRequest
   {
-    public int Id { get; private set; }
-    public User Sender { get; private set; }
-    public User Recipient { get; private set; }
+    private readonly int? id;
+    public int SenderId { get; private set; }
+    public int RecipientId { get; private set; }
     public FriendRequestStatus Status { get; private set; }
 
-    public FriendRequest(int id, User sender, User recipient)
+    public FriendRequest(int senderId, int recipientId)
+        : this(null, senderId, recipientId) { }
+    public FriendRequest(int? id, int senderId, int recipientId)
     {
-      Id = id;
-      Sender = sender;
-      Recipient = recipient;
-      Status = FriendRequestStatus.PENDING;  // Default status
+      ValidateIds(senderId, recipientId);
+      this.id = id;
+      this.SenderId = senderId;
+      this.RecipientId = recipientId;
+      this.Status = FriendRequestStatus.PENDING;
     }
 
     public void UpdateStatus(FriendRequestStatus newStatus)
     {
-      Status = newStatus;
+      this.Status = newStatus;
+    }
+
+    private void ValidateIds(int senderId, int recipientId)
+    {
+      if (senderId <= 0 || recipientId <= 0 || senderId == recipientId)
+      {
+        throw new ArgumentException("Invalid sender or recipient ID.");
+      }
     }
   }
 }

@@ -10,17 +10,20 @@ namespace LingoPartnerDomain.Classes
     public int LearningModuleId { get; private set; }
 
     // Constructor to initialize a new LearningActivity
-    public LearningActivity(string name, string description, LearningActivityType type, int learningModuleId)
+    public LearningActivity(
+        string name,
+        string description,
+        LearningActivityType type,
+        int learningModuleId) : this(
+            null,
+            name,
+            description,
+            type,
+            learningModuleId)
+    { }
+    public LearningActivity(int? id, string name, string description, LearningActivityType type, int learningModuleId)
     {
-      Name = name ?? throw new ArgumentNullException(nameof(name));
-      Description = description ?? throw new ArgumentNullException(nameof(description));
-      Type = type;
-      LearningModuleId = learningModuleId;
-    }
-
-    public LearningActivity(int id, string name, string description, LearningActivityType type, int learningModuleId)
-    {
-      Id = id == 0 ? throw new ArgumentNullException(nameof(id)) : id;
+      Id = id;
       Name = name ?? throw new ArgumentNullException(nameof(name));
       Description = description ?? throw new ArgumentNullException(nameof(description));
       Type = type;
