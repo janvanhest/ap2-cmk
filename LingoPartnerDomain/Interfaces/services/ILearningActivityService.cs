@@ -9,5 +9,7 @@ namespace LingoPartnerDomain.Interfaces.Services
     void DeleteActivity(int activityId);
     LearningActivity? GetActivityById(int activityId);
     IEnumerable<LearningActivity> GetAllActivities();
+    IEnumerable<LearningActivity> GetActivitiesByIds(IEnumerable<int> activityIds);
+    IEnumerable<LearningActivity> GetLearningActivitiesByModuleId(int moduleId);
   }
 }

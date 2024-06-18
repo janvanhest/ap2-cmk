@@ -7,5 +7,6 @@ namespace LingoPartnerDomain.Interfaces.Repositories
     IEnumerable<User> GetAll();
     User? Update(User user, string? password);
     User? GetBy(string username);
+    User? GetById(int id);
   }
 }

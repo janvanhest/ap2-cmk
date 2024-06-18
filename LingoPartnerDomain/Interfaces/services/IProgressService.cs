@@ -9,5 +9,6 @@ namespace LingoPartnerDomain.Interfaces.Services
     IEnumerable<Progress> GetAllProgress();
     IEnumerable<Progress> GetProgressByUserId(int userId);
     IEnumerable<DateTime> GetUniqueDatesByUserId(int userId);
+    public double GetModuleCompletionPercentage(int moduleId);
   }
 }

@@ -10,5 +10,6 @@ namespace LingoPartnerDomain.Interfaces.Services
     LearningModule? AddLearningModule(LearningModule learningModule);
     LearningModule? UpdateLearningModule(LearningModule learningModule);
     bool DeleteLearningModule(int id);
+    IReadOnlyCollection<LearningModule> GetByUserId(int userId);
   }
 }
