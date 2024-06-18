@@ -239,5 +239,40 @@ namespace LingoPartnerConsole.Helpers
       } while (!isValidNumber);
       return number;
     }
+    public static void DisplayProgressBar(double percentage)
+    {
+      if (percentage < 0 || percentage > 100)
+        throw new ArgumentOutOfRangeException(nameof(percentage), "Percentage must be between 0 and 100.");
+
+      int consoleWidth = Console.WindowWidth;
+      int progressBarWidth = (int)(consoleWidth * 0.75);
+      int filledWidth = 0;
+      int emptyWidth = progressBarWidth;
+
+      Console.WriteLine();
+
+      for (double currentPercentage = 0; currentPercentage <= percentage; currentPercentage += 1)
+      {
+        filledWidth = (int)(progressBarWidth * (currentPercentage / 100));
+        emptyWidth = progressBarWidth - filledWidth;
+
+        string filledBar = new string('█', filledWidth);
+        string emptyBar = new string('░', emptyWidth);
+
+        Console.Write("\r[");
+        Console.ForegroundColor = ConsoleColor.Green;
+        Console.Write(filledBar);
+        Console.ForegroundColor = ConsoleColor.Red;
+        Console.Write(emptyBar);
+        Console.ResetColor();
+        Console.Write($"] {currentPercentage:0.00}%");
+
+        // Delay to animate the progress bar
+        Thread.Sleep(20);
+      }
+
+      Console.WriteLine();
+      Console.WriteLine();
+    }
   }
 }
