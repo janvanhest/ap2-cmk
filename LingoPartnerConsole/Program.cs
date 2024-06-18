@@ -52,7 +52,7 @@ namespace LingoPartnerConsole
         serviceProvider.GetService<IUserService>() ?? throw new InvalidOperationException("fail to get user service running");
       ILearningActivityService learningActivityService =
         serviceProvider.GetService<ILearningActivityService>() ?? throw new InvalidOperationException("fail to get learning activity service running");
-      IProgressService progressService = // FIXME: This is not used in the Menu class
+      IProgressService progressService =
         serviceProvider.GetService<IProgressService>() ?? throw new InvalidOperationException("fail to get progress service running");
 
       Menu menu = new(
@@ -60,7 +60,8 @@ namespace LingoPartnerConsole
         learningModuleService,
         authenticationService,
         userService,
-        learningActivityService
+        learningActivityService,
+        progressService
         );
       menu.Show();
     }
