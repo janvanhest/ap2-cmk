@@ -5,6 +5,7 @@ using LingoPartnerInfrastructure.Helpers;
 using LingoPartnerShared.Helpers;
 using MySql.Data.MySqlClient;
 using System.Net.Mail;
+using System.Security.Cryptography.X509Certificates;
 
 namespace LingoPartnerInfrastructure.Repository
 {
@@ -176,6 +177,40 @@ namespace LingoPartnerInfrastructure.Repository
         }
       }
       return null;
+    }
+
+    public User? GetById(int id)
+    {
+      using (MySqlConnection connection = new(_connectionString))
+      {
+        connection.Open();
+        string query = "SELECT * FROM User WHERE Id = @Id";
+        using (MySqlCommand cmd = new(query, connection))
+        {
+          cmd.Parameters.AddWithValue("@Id", id);
+          using (MySqlDataReader reader = cmd.ExecuteReader())
+          {
+            if (reader.Read())
+            {
+              return new User(
+                  reader.GetInt32("Id"),
+                  reader.GetString("FirstName"),
+                  reader.GetString("MiddleName"),
+                  reader.GetString("LastName"),
+                  reader.GetDateTime("DateOfBirth"),
+                  new MailAddress(reader.GetString("Email")),
+                  reader.GetString("Password"),
+                  reader.GetString("Username"),
+                  Enum.Parse<UserRole>(reader.GetString("Role"))
+              );
+            }
+            else
+            {
+              return null;
+            }
+          }
+        }
+      }
     }
   }
 }

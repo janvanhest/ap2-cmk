@@ -211,19 +211,31 @@ namespace LingoPartnerInfrastructure.Repository
 
     public List<LearningModule> GetLearningModulesByIds(IEnumerable<int> ids)
     {
-      List<LearningModule> learningModules = new List<LearningModule>();
-      using (MySqlConnection connection = new(connectionString))
+      if (ids == null || !ids.Any())
+      {
+        throw new ArgumentException("IDs must not be null or empty", nameof(ids));
+      }
+
+      var learningModules = new List<LearningModule>();
+      using (var connection = new MySqlConnection(connectionString))
       {
         connection.Open();
-        string query = "SELECT * FROM LearningModule WHERE Id IN (@Ids)";
-        using (MySqlCommand command = new(query, connection))
+        // Build the query dynamically with parameter placeholders
+        string query = "SELECT * FROM LearningModule WHERE Id IN (" + string.Join(",", ids.Select((_, i) => $"@Id{i}")) + ")";
+
+        using (var command = new MySqlCommand(query, connection))
         {
-          command.Parameters.AddWithValue("@Ids", string.Join(",", ids));
-          using (MySqlDataReader reader = command.ExecuteReader())
+          // Add each ID as a separate parameter
+          for (int i = 0; i < ids.Count(); i++)
+          {
+            command.Parameters.AddWithValue($"@Id{i}", ids.ElementAt(i));
+          }
+
+          using (var reader = command.ExecuteReader())
           {
             while (reader.Read())
             {
-              LearningModule newLearningModule = new(
+              var newLearningModule = new LearningModule(
                   reader.GetInt32("Id"),
                   reader.GetString("Name"),
                   reader.GetString("Description")
@@ -235,6 +247,7 @@ namespace LingoPartnerInfrastructure.Repository
       }
       return learningModules;
     }
+
   }
 }
 

@@ -136,25 +136,34 @@ namespace LingoPartnerInfrastructure.Repository
 
     public IEnumerable<LearningActivity> GetByIds(IEnumerable<int> activityIds)
     {
-      List<LearningActivity> activities = [];
+      if (activityIds == null || !activityIds.Any())
+      {
+        throw new ArgumentException("Activity IDs must not be null or empty", nameof(activityIds));
+      }
 
-      using (MySqlConnection connection = new(_connectionString))
+      var activities = new List<LearningActivity>();
+      using (var connection = new MySqlConnection(_connectionString))
       {
         connection.Open();
-        string query = "SELECT * FROM LearningActivity WHERE Id IN (@Ids)";
-        using (MySqlCommand cmd = new MySqlCommand(query, connection))
+        var query = $"SELECT * FROM LearningActivity WHERE Id IN ({string.Join(",", activityIds.Select((_, i) => $"@Id{i}"))})";
+
+        using (var cmd = new MySqlCommand(query, connection))
         {
-          cmd.Parameters.AddWithValue("@Ids", string.Join(",", activityIds));
-          using (MySqlDataReader reader = cmd.ExecuteReader())
+          for (int i = 0; i < activityIds.Count(); i++)
+          {
+            cmd.Parameters.AddWithValue($"@Id{i}", activityIds.ElementAt(i));
+          }
+
+          using (var reader = cmd.ExecuteReader())
           {
             while (reader.Read())
             {
-              LearningActivity activity = new(
-                (int)reader.GetInt32("Id"),
-                reader.GetString("Name"),
-                reader.GetString("Description"),
-                (LearningActivityType)Enum.Parse(typeof(LearningActivityType), reader.GetString("Type")),
-                (int)reader.GetInt32("Module_id")
+              var activity = new LearningActivity(
+                  reader.GetInt32("Id"),
+                  reader.GetString("NAME"),
+                  reader.GetString("Description"),
+                  (LearningActivityType)Enum.Parse(typeof(LearningActivityType), reader.GetString("TYPE")),
+                  reader.GetInt32("Module_id")
               );
               activities.Add(activity);
             }

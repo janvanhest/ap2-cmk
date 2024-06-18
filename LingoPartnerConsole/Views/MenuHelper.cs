@@ -12,7 +12,8 @@ namespace LingoPartnerConsole.Views
         ILearningModuleService learningModuleService,
         IAuthenticationService authenticationService,
         IUserService userService,
-        ILearningActivityService learningActivityService
+        ILearningActivityService learningActivityService,
+        IProgressService progressService
       )
     {
       ConsoleHelper.DisplayTypingAnimation("Press any key to return to the menu...");
@@ -22,7 +23,8 @@ namespace LingoPartnerConsole.Views
         learningModuleService,
         authenticationService,
         userService,
-        learningActivityService
+        learningActivityService,
+        progressService
         );
       menu.Show();
     }

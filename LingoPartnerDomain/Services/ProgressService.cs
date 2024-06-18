@@ -48,18 +48,20 @@ namespace LingoPartnerDomain.Services
 
     public double GetModuleCompletionPercentage(int moduleId, User? user)
     {
+      if (user == null) throw new ArgumentNullException(nameof(user));
+      if (user.Id == null) throw new ArgumentNullException(nameof(user.Id));
 
-      User? currentUser = user ?? throw new ArgumentNullException(nameof(user));
-      int? userId = currentUser.Id ?? throw new ArgumentNullException(nameof(user.Id));
-      IEnumerable<LearningActivity> activitiesByLearningModuleId = _learningActivityService.GetLearningActivitiesByModuleId(moduleId).ToArray();
-      if (activitiesByLearningModuleId.Count() == 0) return 0;
+      int userId = user.Id.Value;
+      var activitiesByLearningModuleId = _learningActivityService.GetLearningActivitiesByModuleId(moduleId).ToList();
+      if (activitiesByLearningModuleId.Count == 0) return 0;
 
+      // retrieve all completed activities for the user. Only retrieve single values of completed activities. Make sure they are unique.
       var completedActivities = _progressRepository
-          .GetProgressByUserId(userId.Value)
+          .GetProgressByUserId(userId)
           .Where(p => p.Status == ProgressStatus.COMPLETED && activitiesByLearningModuleId.Any(la => la.Id == p.LearningActivityId))
           .Count();
 
-      return completedActivities * 100.0 / activitiesByLearningModuleId.Count();
+      return (double)completedActivities * 100 / activitiesByLearningModuleId.Count;
     }
   }
 }

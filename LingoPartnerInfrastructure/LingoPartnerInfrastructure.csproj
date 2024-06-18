@@ -13,8 +13,4 @@
     <ProjectReference Include="..\LingoPartnerDomain\LingoPartnerDomain.csproj" />
     <ProjectReference Include="..\LingoPartnerShared\LingoPartnerShared.csproj" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="DTO/" />
-  </ItemGroup>
-
 </Project>

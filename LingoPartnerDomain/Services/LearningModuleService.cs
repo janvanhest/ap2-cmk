@@ -70,13 +70,40 @@ namespace LingoPartnerInfrastructure.Services
     }
     public IReadOnlyCollection<LearningModule> GetByUserId(int userId)
     {
-      // List<LearningModule> associatedLearningModules = new List<LearningModule>();
-      List<Progress> userProgress = progressService.GetProgressByUserId(userId).ToList();
-      List<int> uniqueLearningActivityIds = userProgress.Select(p => p.LearningActivityId).Distinct().ToList();
-      List<LearningActivity> learningActivities = learningActivityService.GetActivitiesByIds(uniqueLearningActivityIds).ToList();
-      List<int> AssociatedUniqueLearningModuleIds = learningActivities.Select(a => a.LearningModuleId).Distinct().ToList();
-      List<LearningModule> associatedLearningModules = [.. learningModuleRepository.GetLearningModulesByIds(AssociatedUniqueLearningModuleIds)];
-      return associatedLearningModules.AsReadOnly();
+      // Retrieve progress records for the user
+      IEnumerable<Progress> userProgress = progressService.GetProgressByUserId(userId);
+      if (userProgress == null || !userProgress.Any())
+      {
+        return new List<LearningModule>().AsReadOnly();
+      }
+
+      // Extract unique learning activity IDs from user progress
+      List<int> uniqueLearningActivityIds = userProgress
+        .Select(p => p.LearningActivityId)
+        .Distinct()
+        .ToList();
+
+      // Retrieve learning activities by these IDs
+      IEnumerable<LearningActivity> learningActivities = learningActivityService.GetActivitiesByIds(uniqueLearningActivityIds);
+      if (learningActivities == null || !learningActivities.Any())
+      {
+        return new List<LearningModule>().AsReadOnly();
+      }
+
+      // Extract unique learning module IDs from learning activities
+      List<int> associatedUniqueLearningModuleIds = learningActivities
+        .Select(a => a.LearningModuleId)
+        .Distinct()
+        .ToList();
+
+      // Retrieve learning modules by these IDs
+      List<LearningModule> associatedLearningModules = learningModuleRepository.GetLearningModulesByIds(associatedUniqueLearningModuleIds);
+      if (associatedLearningModules == null || !associatedLearningModules.Any())
+      {
+        return new List<LearningModule>().AsReadOnly();
+      }
+
+      return associatedLearningModules.ToList().AsReadOnly();
     }
   }
 }

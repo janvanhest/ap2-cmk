@@ -1,4 +1,5 @@
-﻿using LingoPartnerDomain.Classes;
+﻿using System.Collections.ObjectModel;
+using LingoPartnerDomain.Classes;
 using LingoPartnerDomain.Interfaces.Repositories;
 using LingoPartnerDomain.Interfaces.Services;
 
@@ -13,7 +14,7 @@ namespace LingoPartnerConsole.Views
     }
     public void Show()
     {
-      IReadOnlyList<LearningActivity> learningActivities = learningActivityService.GetAllActivities().ToList<LearningActivity>().AsReadOnly();
+      ReadOnlyCollection<LearningActivity> learningActivities = learningActivityService.GetAllActivities().ToList<LearningActivity>().AsReadOnly();
       int index = 1;
       foreach (LearningActivity activity in learningActivities)
       {
