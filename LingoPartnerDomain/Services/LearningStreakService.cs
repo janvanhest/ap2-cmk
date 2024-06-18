@@ -10,20 +10,20 @@ namespace LingoPartnerInfrastructure.Services
 {
   public class LearningStreakService : ILearningStreakService
   {
-    private readonly IProgressRepository progressRepository;
+    private readonly IProgressService progressService;
     private readonly IAuthenticationService authenticationService;
     private ILearningStreakStrategy learningStreakStrategy;
     private ILearningStreakScoringStrategy scoringStrategy;
     private User user;
 
     public LearningStreakService(
-        IProgressRepository progressRepository,
+        IProgressService progressRepository,
         IAuthenticationService authenticationService,
         ILearningStreakStrategy learningStreakStrategy,
         ILearningStreakScoringStrategy scoringStrategy
     )
     {
-      this.progressRepository = progressRepository ?? throw new ArgumentNullException(nameof(progressRepository));
+      this.progressService = progressRepository ?? throw new ArgumentNullException(nameof(progressRepository));
       this.authenticationService = authenticationService ?? throw new ArgumentNullException(nameof(authenticationService));
       this.learningStreakStrategy = learningStreakStrategy ?? new ConsecutiveDaysStrategy();
       this.scoringStrategy = scoringStrategy ?? new SimpleScoringStrategy();
@@ -39,7 +39,7 @@ namespace LingoPartnerInfrastructure.Services
     private List<Progress> GetProgressItems()
     {
       int userId = user.Id ?? throw new ArgumentNullException(nameof(user));
-      return progressRepository.GetProgressByUserId(userId).ToList();
+      return progressService.GetProgressByUserId(userId).ToList();
     }
 
     private List<DateTime> ConvertProgressToUniqueDates(List<Progress> progressItems)
