@@ -208,6 +208,33 @@ namespace LingoPartnerInfrastructure.Repository
       }
       return updateSuccess;
     }
+
+    public List<LearningModule> GetLearningModulesByIds(IEnumerable<int> ids)
+    {
+      List<LearningModule> learningModules = new List<LearningModule>();
+      using (MySqlConnection connection = new(connectionString))
+      {
+        connection.Open();
+        string query = "SELECT * FROM LearningModule WHERE Id IN (@Ids)";
+        using (MySqlCommand command = new(query, connection))
+        {
+          command.Parameters.AddWithValue("@Ids", string.Join(",", ids));
+          using (MySqlDataReader reader = command.ExecuteReader())
+          {
+            while (reader.Read())
+            {
+              LearningModule newLearningModule = new(
+                  reader.GetInt32("Id"),
+                  reader.GetString("Name"),
+                  reader.GetString("Description")
+              );
+              learningModules.Add(newLearningModule);
+            }
+          }
+        }
+      }
+      return learningModules;
+    }
   }
 }
 

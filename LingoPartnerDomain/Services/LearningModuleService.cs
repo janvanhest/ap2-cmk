@@ -8,10 +8,18 @@ namespace LingoPartnerInfrastructure.Services
   public class LearningModuleService : ILearningModuleService
   {
     private readonly ILearningModuleRepository learningModuleRepository;
+    private readonly IProgressService progressService;
+    private readonly ILearningActivityService learningActivityService;
 
-    public LearningModuleService(ILearningModuleRepository learningModuleRepository)
+    public LearningModuleService(
+        ILearningModuleRepository learningModuleRepository,
+        IProgressService progressService,
+        ILearningActivityService learningActivityService
+        )
     {
       this.learningModuleRepository = learningModuleRepository ?? throw new System.ArgumentNullException(nameof(learningModuleRepository));
+      this.progressService = progressService ?? throw new System.ArgumentNullException(nameof(progressService));
+      this.learningActivityService = learningActivityService ?? throw new System.ArgumentNullException(nameof(learningActivityService));
     }
 
     public IEnumerable<LearningModule> GetAllLearningModules()
@@ -60,13 +68,15 @@ namespace LingoPartnerInfrastructure.Services
     {
       return learningModuleRepository.GetLearningModuleById(id);
     }
-
-    // FIXME: Probably not need, as we are using the AddLearningModule method above, so delete it? 
-    // public LearningModule? AddLearningModule(string name, string description)
-    // {
-    //   LearningModule newLearningModule = new LearningModule(name, description);
-    //   return learningModuleRepository.AddLearningModule(newLearningModule);
-    // }
-
+    public IReadOnlyCollection<LearningModule> GetByUserId(int userId)
+    {
+      // List<LearningModule> associatedLearningModules = new List<LearningModule>();
+      List<Progress> userProgress = progressService.GetProgressByUserId(userId).ToList();
+      List<int> uniqueLearningActivityIds = userProgress.Select(p => p.LearningActivityId).Distinct().ToList();
+      List<LearningActivity> learningActivities = learningActivityService.GetActivitiesByIds(uniqueLearningActivityIds).ToList();
+      List<int> AssociatedUniqueLearningModuleIds = learningActivities.Select(a => a.LearningModuleId).Distinct().ToList();
+      List<LearningModule> associatedLearningModules = [.. learningModuleRepository.GetLearningModulesByIds(AssociatedUniqueLearningModuleIds)];
+      return associatedLearningModules.AsReadOnly();
+    }
   }
 }
