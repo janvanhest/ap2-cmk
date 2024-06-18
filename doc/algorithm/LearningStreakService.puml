@@ -1,0 +1,54 @@
+@startuml
+title Learning Streak Service Activity Diagram
+
+start
+
+:Initialize LearningStreakService;
+note right
+  Inject through constructor parameters
+  with help of serviceProvider
+    IProgressRepository progressRepository,
+    IAuthenticationService authenticationService,
+    ILearningStreakStrategy learningStreakStrategy,
+    ILearningStreakScoringStrategy scoringStrategy
+end note
+
+if (Specific Strategies Provided?) then (yes)
+note right
+  This is setup in the constructor of the service
+end note
+  :Set provided strategies;
+else (no)
+  :Set default strategies;
+endif
+
+
+:Fetch user progress;
+note right
+Uses the implementation of IAuthenticationService 
+(for user retrieval)
+
+Uses the implementation of IProgressRepository
+(for progress retrieval)
+end note
+
+:Convert progress to unique dates;
+
+:Calculate learning streaks;
+note right
+  Uses the implementation of ILearningStreakStrategy
+  
+  Uses either ConsecutiveDaysStrategy or 
+  WeekendSkipStrategy
+end note
+
+:Score learning streaks;
+note right
+  Uses the implementation of ILearningStreakScoringStrategy
+  
+    Uses either SimpleScoringStrategy or 
+    BonusScoringStrategy
+end note
+
+stop
+@enduml

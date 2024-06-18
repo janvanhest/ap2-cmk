@@ -1,15 +1,16 @@
-﻿using LingoPartnerConsole.helpers;
-using LingoPartnerDomain.classes;
+﻿using LingoPartnerConsole.Helpers;
+using LingoPartnerDomain.Classes;
+using LingoPartnerDomain.Interfaces.Services;
 
 namespace LingoPartnerConsole
 {
   public class LearningModuleAdd
   {
-    private Administration SchoolAdministration;
+    private ILearningModuleService learningModuleService;
 
-    public LearningModuleAdd(Administration administration)
+    public LearningModuleAdd(ILearningModuleService learningModuleService)
     {
-      SchoolAdministration = administration;
+      this.learningModuleService = learningModuleService ?? throw new ArgumentNullException(nameof(learningModuleService));
     }
 
     public void Show()
@@ -18,12 +19,12 @@ namespace LingoPartnerConsole
       string description = ConsoleHelper.GetStringInput("Enter description:");
 
       // Create the learning module object
-      LearningModule newLearningModule = new LearningModule(
+      LearningModule newLearningModule = new(
           name: name,
           description: description
       );
       // Add the learning module to the administration
-      SchoolAdministration.Add(newLearningModule);
+      learningModuleService.AddLearningModule(newLearningModule);
       Console.WriteLine($"Learning module {name} successfully added.");
     }
   }

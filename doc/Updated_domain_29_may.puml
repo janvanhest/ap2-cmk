@@ -1,0 +1,188 @@
+@startuml
+
+interface IUserRepository {
+    + AddUser(user: User): User?
+    + GetUserByUsername(username: String): User?
+    + GetUsers(): List<User>
+    + UpdateUser(user: User): bool
+}
+
+interface ILearningActivityRepository {
+    + AddLearningActivity(learningActivity: LearningActivity): LearningActivity?
+    + GetAllLearningActivities(): List<LearningActivity>
+}
+
+interface ILearningModuleRepository {
+    + AddLearningModule(learningModule: LearningModule): LearningModule?
+    + GetAllLearningModules(): List<LearningModule>
+}
+
+interface IProgressRepository {
+    + AddProgress(progress: Progress): Progress?
+    + GetAllProgress(): List<Progress>
+}
+
+enum FriendRequestStatus {
+    ACCEPTED
+    DECLINED
+    PENDING
+    CANCELED
+    BLOCKED
+    UNBLOCKED
+}
+
+enum LearningActivityType {
+    MULTIPLECHOICE
+    FILLINTHEBLANK
+    TRUEFALSE
+    MATCHING
+    INSTRUCTION
+    QUIZ
+}
+
+enum ProgressStatus {
+    NOT_STARTED
+    IN_PROGRESS
+    COMPLETED
+}
+
+enum ProgressType {
+    LEARNING_ACTIVITY
+    ASSESSMENT
+    MODULE
+    PROJECT
+}
+
+enum RewardType {
+    POINTS
+    BADGE
+    CERTIFICATE
+    DIPLOMA
+}
+
+enum UserRole {
+    ADMIN
+    TEACHER
+    STUDENT
+}
+
+class Administration {
+    - userRepository: IUserRepository
+    - learningModuleRepository: ILearningModuleRepository
+    - learningActivityRepository: ILearningActivityRepository
+
+    - users: List<User>
+    + Users: IReadOnlyList<User>
+    - learningModules: List<LearningModule>
+    + LearningModules: IReadOnlyList<LearningModule>
+    - learningActivities: List<LearningActivity>
+    + LearningActivities: IReadOnlyList<LearningActivity>
+
+    - CurrentUser: User?
+
+    + Administration(userRepository: IUserRepository, learningModuleRepository: ILearningModuleRepository, learningActivityRepository: ILearningActivityRepository)
+    + Add(user: User)
+    + Add(module: LearningModule)
+    + Add(newLearningActivity: LearningActivity): LearningActivity?
+    + UpdateUserProfile(updatedUser: User, newPassword: String?): User?
+    + RemoveLearningModule(moduleId: Int)
+    + Authenticate(username: String, password: String): bool
+    + RetrieveAllData()
+}
+
+class FriendRequest {
+    - id: Int
+    - sender: User
+    - recipient: User
+    - status: FriendRequestStatus
+    + FriendRequest(id: Int, sender: User, recipient: User)
+    + UpdateStatus(newStatus: FriendRequestStatus)
+}
+
+class LearningActivity {
+    - id: Int?
+    - name: String
+    - description: String
+    - type: LearningActivityType
+    - learningModuleId: Int
+    + LearningActivity(name: String, description: String, type: LearningActivityType, learningModuleId: Int)
+    + LearningActivity(id: Int, name: String, description: String, type: LearningActivityType, learningModuleId: Int)
+    + UpdateActivity(newActivity: LearningActivity)
+}
+
+class LearningModule {
+    - id: Int?
+    - name: String
+    - description: String
+    - learningActivities: List<LearningActivity>
+    + learningActivities: IReadOnlyList<LearningActivity>
+    + LearningModule(name: String, description: String)
+    + LearningModule(id: Int, name: String, description: String)
+    + Initialize(name: String, description: String)
+    + AddLearningActivity(activity: LearningActivity)
+    + RemoveLearningActivity(activity: LearningActivity): bool
+    + ShowLearningActivities(): List<LearningActivity>
+    + UpdateModule(newName: String, newDescription: String)
+}
+
+class Progress {
+    - id: Int?
+    - type: ProgressType
+    - status: ProgressStatus
+    - details: String
+    - userId: Int
+    - learningActivityId: Int
+    + Progress(id: Int, type: ProgressType, status: ProgressStatus, details: String, userId: Int, learningActivityId: Int)
+    + Progress(type: ProgressType, status: ProgressStatus, details: String, userId: Int, learningActivityId: Int)
+    + ShowDetails(): String
+    + UpdateProgress(newStatus: ProgressStatus, newDetails: String)
+}
+
+class Reward {
+    - id: Int
+    - name: String
+    - type: RewardType
+    - description: String
+    - criteria: String
+    + Reward(name: String, type: RewardType, description: String, criteria: String)
+    + UpdateReward(newName: String, newType: RewardType, newDescription: String, newCriteria: String)
+}
+
+class User {
+    - id: Int?
+    - firstName: String
+    - middleName: String
+    - lastName: String
+    - dateOfBirth: Date
+    - email: MailAddress
+    - password: String
+    - username: String
+    - role: UserRole
+    + User(firstName: String, middleName: String, lastName: String, dateOfBirth: Date, email: MailAddress, password: String, username: String, role: UserRole)
+    + User(id: Int, firstName: String, middleName: String, lastName: String, dateOfBirth: Date, email: MailAddress, password: String, username: String, role: UserRole)
+    + UpdateProfile(firstName: String, middleName: String, lastName: String)
+    + UpdateProfile(firstName: String, middleName: String, lastName: String, email: MailAddress)
+    + UpdateProfile(firstName: String, middleName: String, lastName: String, email: MailAddress, newPassword: String)
+    + SetRole(newRole: UserRole)
+    + VerifyPassword(attemptedPassword: String): bool
+    + getFullName(): String
+}
+
+Administration "1" -right-> "n" User
+Administration "1" -left-> "n" LearningModule
+Administration "1" -up-> IUserRepository
+Administration "1" -up-> ILearningActivityRepository
+Administration "1" -up-> ILearningModuleRepository
+Administration "1" -up-> IProgressRepository
+
+User -up-> "n" Reward
+User -down-> "n" Progress
+
+User "1" -up-> "n" FriendRequest : sent
+User "1" <-up- "n" FriendRequest : received
+
+Progress "1" -left-> "1" LearningActivity
+
+LearningModule "1" -down-> "n" LearningActivity
+
+@enduml

@@ -31,7 +31,6 @@ Logs/
 *.tmp
 *.vs/
 .vscode/
-*.csproj
 *.cache
 *.crunchsolution
 

@@ -1,15 +1,17 @@
-﻿using LingoPartnerConsole.helpers;
-using LingoPartnerDomain.classes;
+﻿using LingoPartnerConsole.Helpers;
+using LingoPartnerDomain.Classes;
 using LingoPartnerDomain.enums;
+using LingoPartnerDomain.Interfaces.Repositories;
+using LingoPartnerDomain.Interfaces.Services;
 
 namespace LingoPartnerConsole.Views
 {
   public class LearningActivityAdd
   {
-    private Administration SchoolAdministration;
-    public LearningActivityAdd(Administration schoolAdministration)
+    private ILearningActivityService learningActivityService;
+    public LearningActivityAdd(ILearningActivityService learningActivityService)
     {
-      SchoolAdministration = schoolAdministration;
+      this.learningActivityService = learningActivityService;
     }
     public void Show(int learningModuleId)
     {
@@ -23,7 +25,7 @@ namespace LingoPartnerConsole.Views
           type: type,
           learningModuleId: learningModuleId
       );
-      SchoolAdministration.AddLearningActivity(learningModuleId, newLearningActivity);
+      learningActivityService.CreateActivity(newLearningActivity);
     }
   }
 }

@@ -3,10 +3,48 @@
 ## 17 juni. 
 - First final version. 
 - Algorithm for learningstreaks is implemented.
+### 18 juni. 
+- Updated technical en functional design with latest changes. 
+- implemented dashboard service
+- implemented streak calculation strategy
+- implemented streak calculator
+- implemented progress repo
+- implemented progress service
+- updated for each entity a service and a repo. 
+- Updated uml diagram in documentation.
+
+### 30 mei. 
+- Removed API layer. 
+- Made intention with writing a DashBoardService. 
+- Added ProgressRepo
+- Injected ProgressRepo
+- Made a start with
+  - DashboardService
+  - IStreakCalculationStrategy 
+  - StreakCalculationStrategy
+  - AdvancedCalculationStrategy
+  - BasicStreakCalculationStrategy
+  - Created StreakCalculator
+- Created CalculateTotalScore for streaks. 
+- created function GetLastStreak
+- created function GetFirstStreak
+- GetProgressRecordsByUser
+- CalculateStreaks
+- Updated progress entity with date fields. 
+- Updated script.sql to reflect changes. 
+- Updated Domainlayer to reflect changes. 
+
+### 27 mei. 
+- Added 
 
 ### 24 mei. 
-- Start of creating a branch for a simple test. 
-  - User will be tested. 
+- Added simple test for Adminstration. 
+- Added diagrams as an svg instead of an png. 
+- Added # Functioneel Ontwerp "LingoPartner" Taal Leer App
+- Added Documentation with latest info and diagrams. 
+  - Functional design. 
+  - Technical design. 
+- Added new chapter with user acceptance tests.
 
 ## 24 mei Versie 0.4 
 - Most important entities are added with repos so most important algorithms can be implemented. 
