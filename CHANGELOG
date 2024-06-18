@@ -1,6 +1,14 @@
 # Changelog
 
-### 30 mei. 
+### 18 juni. 
+- Updated technical en functional design with latest changes. 
+- implemented dashboard service
+- implemented streak calculation strategy
+- implemented streak calculator
+- implemented progress repo
+- implemented progress service
+- updated for each entity a service and a repo. 
+- Updated uml diagram in documentation.
 
 ### 30 mei. 
 - Removed API layer. 
