@@ -1,10 +1,6 @@
 ﻿using LingoPartnerConsole.Helpers;
-using LingoPartnerDomain.Classes;
 using LingoPartnerDomain.enums;
-using LingoPartnerDomain.Interfaces.Repositories;
 using LingoPartnerDomain.Interfaces.Services;
-using LingoPartnerDomain.Services;
-using LingoPartnerDomain.Strategies.Scoring;
 
 namespace LingoPartnerConsole.Views
 {
@@ -79,6 +75,11 @@ namespace LingoPartnerConsole.Views
       LearningActivityAdd learningActivityAdd = new(learningActivityService);
       UserUpdate userUpdate = new(userService);
       UserAdd userAdd = new(userService);
+      ConsoleDashboardView consoleDashboardView = new(
+        learningStreakService,
+        learningModuleService,
+        progressService
+      );
       switch (choice)
       {
         case "0":
@@ -122,22 +123,10 @@ namespace LingoPartnerConsole.Views
           int learningModuleId = ConsoleHelper.GetIntInput("Enter the LearningModule ID:");
           learningActivityAdd.Show(learningModuleId);
           break;
-        case "10":
-          NotImplemented(menuIndex);
-          break;
         case "15":
-          ConsoleDashboardView consoleDashboardView = new(
-              authenticationService,
-              learningModuleService,
-              progressService
-              );
-          consoleDashboardView.ShowDashboard();
-          ConsoleHelper.DisplayMessage("Here comes the Streak", MessageType.INFORMATION);
-          // simplescoringstrategy
-          int simpleScore = learningStreakService.CalculateTotalScore(new SimpleScoringStrategy());
-          int BonusScoringStrategy = learningStreakService.CalculateTotalScore(new BonusScoringStrategy());
-          Console.WriteLine($"Simple Score: {simpleScore}");
-          Console.WriteLine($"Bonus Score: {BonusScoringStrategy}");
+          consoleDashboardView.ShowDashboard(
+            authenticationService.CurrentUser ?? throw new ArgumentNullException(nameof(authenticationService.CurrentUser))
+          );
           break;
         default:
           NotImplemented(menuIndex);
