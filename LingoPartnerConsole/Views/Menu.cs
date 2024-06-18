@@ -3,6 +3,7 @@ using LingoPartnerDomain.Classes;
 using LingoPartnerDomain.enums;
 using LingoPartnerDomain.Interfaces.Repositories;
 using LingoPartnerDomain.Interfaces.Services;
+using LingoPartnerDomain.Services;
 using LingoPartnerDomain.Strategies.Scoring;
 
 namespace LingoPartnerConsole.Views
@@ -14,6 +15,7 @@ namespace LingoPartnerConsole.Views
     private IAuthenticationService authenticationService;
     private IUserService userService;
     private ILearningActivityService learningActivityService;
+    private IProgressService progressService;
 
     private IReadOnlyList<string> MenuItems =
     [
@@ -39,7 +41,8 @@ namespace LingoPartnerConsole.Views
       ILearningModuleService learningModuleService,
       IAuthenticationService authenticationService,
       IUserService userService,
-      ILearningActivityService learningActivityService
+      ILearningActivityService learningActivityService,
+      IProgressService progressService
       )
     {
       this.learningStreakService = learningStreakService ??
@@ -52,6 +55,8 @@ namespace LingoPartnerConsole.Views
         throw new ArgumentNullException(nameof(userService));
       this.learningActivityService = learningActivityService ??
         throw new ArgumentNullException(nameof(learningActivityService));
+      this.progressService = progressService ??
+        throw new ArgumentNullException(nameof(progressService));
     }
     public void Show()
     {
@@ -121,7 +126,11 @@ namespace LingoPartnerConsole.Views
           NotImplemented(menuIndex);
           break;
         case "15":
-          ConsoleDashboardView consoleDashboardView = new(authenticationService);
+          ConsoleDashboardView consoleDashboardView = new(
+              authenticationService,
+              learningModuleService,
+              progressService
+              );
           consoleDashboardView.ShowDashboard();
           ConsoleHelper.DisplayMessage("Here comes the Streak", MessageType.INFORMATION);
           // simplescoringstrategy
@@ -137,7 +146,8 @@ namespace LingoPartnerConsole.Views
               learningModuleService,
               authenticationService,
               userService,
-              learningActivityService
+              learningActivityService,
+              progressService
               );
 
           break;
@@ -147,7 +157,8 @@ namespace LingoPartnerConsole.Views
                     learningModuleService,
                     authenticationService,
                     userService,
-                    learningActivityService
+                    learningActivityService,
+                    progressService
                     );
     }
     private void GoodBye()
