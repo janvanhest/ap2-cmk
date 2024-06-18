@@ -1,5 +1,9 @@
 # Changelog
 
+## 17 juni. 
+- First final version. 
+- Algorithm for learningstreaks is implemented.
+
 ### 24 mei. 
 - Start of creating a branch for a simple test. 
   - User will be tested. 
