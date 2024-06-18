@@ -1,59 +1,91 @@
-﻿using LingoPartnerConsole.helpers;
-using LingoPartnerDomain.classes;
+﻿using LingoPartnerConsole.Helpers;
 using LingoPartnerDomain.enums;
+using LingoPartnerDomain.Interfaces.Services;
 
 namespace LingoPartnerConsole.Views
 {
   internal class Menu
   {
-    public Administration SchoolAdministration;
-    private List<string> MenuItems = new List<string>
-    {
+    private ILearningStreakService learningStreakService;
+    private ILearningModuleService learningModuleService;
+    private IAuthenticationService authenticationService;
+    private IUserService userService;
+    private ILearningActivityService learningActivityService;
+    private IProgressService progressService;
+
+    private IReadOnlyList<string> MenuItems =
+    [
       "Create a User", // 1
       "Show all users", // 2
       "Show all teachers", // 3
       "Show all students", // 4
-      "Add a LearningModule", // 5
-      "Show all LearningModules", // 6
-      "Show all LearningActivities", // 7
-      "Add a LearningActivity", // 8
-      "Show all LearningActivities for a LearningModule", // 9
-      "Show all LearningActivities for a User", // 10
-      "Show all LearningActivities for a Teacher", // 11
-      "Show all LearningActivities for a Student", // 12
-      "Show all LearningActivities for a LearningModule and a User", // 13
-    };
+      "Update a user", // 5
+      "Add a LearningModule", // 6
+      "Show all LearningModules", // 7
+      "Show all LearningActivities", // 8
+      "Add a LearningActivity", // 9
+      "Show all LearningActivities for a LearningModule", // 10
+      "Show all LearningActivities for a User", // 11
+      "Show all LearningActivities for a Teacher", // 12
+      "Show all LearningActivities for a Student", // 13
+      "Show all LearningActivities for a LearningModule and a User", // 14
+      "Show my dashboard baby" // 15
+    ];
 
-    public Menu(Administration schoolAdministration)
+    public Menu(
+      ILearningStreakService learningStreakService,
+      ILearningModuleService learningModuleService,
+      IAuthenticationService authenticationService,
+      IUserService userService,
+      ILearningActivityService learningActivityService,
+      IProgressService progressService
+      )
     {
-      SchoolAdministration = schoolAdministration;
+      this.learningStreakService = learningStreakService ??
+        throw new ArgumentNullException(nameof(learningStreakService));
+      this.learningModuleService = learningModuleService ??
+        throw new ArgumentNullException(nameof(learningModuleService));
+      this.authenticationService = authenticationService ??
+        throw new ArgumentNullException(nameof(authenticationService));
+      this.userService = userService ??
+        throw new ArgumentNullException(nameof(userService));
+      this.learningActivityService = learningActivityService ??
+        throw new ArgumentNullException(nameof(learningActivityService));
+      this.progressService = progressService ??
+        throw new ArgumentNullException(nameof(progressService));
     }
     public void Show()
     {
       Console.Clear();
 
-      ShowMenuOptions(MenuItems);
+      ShowMenuOptions([.. MenuItems]);
 
       Console.WriteLine("Please enter your choice:\n");
       Console.WriteLine($"Enter your choice (0-{MenuItems.Count}):");
 
-      var choice = Console.ReadLine();
+      string? choice = Console.ReadLine();
 
       // check if the choice is an integer
       int menuIndex = ValidateMenuIndex(choice);
       Console.Clear();
-      UserList userList = new UserList(SchoolAdministration);
-      LearningModuleAdd learningModuleAdd = new LearningModuleAdd(SchoolAdministration);
-      LearningModuleList learningModuleList = new LearningModuleList(SchoolAdministration);
-      LearningActivityList learningActivityList = new LearningActivityList(SchoolAdministration);
-      LearningActivityAdd learningActivityAdd = new LearningActivityAdd(SchoolAdministration);
+      UserList userList = new(userService);
+      LearningModuleAdd learningModuleAdd = new(learningModuleService);
+      LearningModuleList learningModuleList = new(learningModuleService);
+      LearningActivityList learningActivityList = new(learningActivityService);
+      LearningActivityAdd learningActivityAdd = new(learningActivityService);
+      UserUpdate userUpdate = new(userService);
+      UserAdd userAdd = new(userService);
+      ConsoleDashboardView consoleDashboardView = new(
+        learningStreakService,
+        learningModuleService,
+        progressService
+      );
       switch (choice)
       {
         case "0":
-          GoodBey();
+          GoodBye();
           break;
         case "1":
-          UserAdd userAdd = new UserAdd(SchoolAdministration);
           userAdd.Show();
           break;
         case "2":
@@ -69,34 +101,56 @@ namespace LingoPartnerConsole.Views
           userList.Show(UserRole.STUDENT);
           break;
         case "5":
+          ConsoleHelper.DisplayMessage("Update a user:");
+          userList.Show();
+          userUpdate.Show();
+          break;
+        case "6":
           ConsoleHelper.DisplayMessage("Add a new learning module");
           learningModuleAdd.Show();
           break;
-        case "6":
+        case "7":
           ConsoleHelper.DisplayMessage("List of all LearningModules:");
           learningModuleList.Show();
           break;
-        case "7":
+        case "8":
           ConsoleHelper.DisplayMessage("List of all LearningActivities:");
           learningActivityList.Show();
           break;
-        case "8":
+        case "9":
           ConsoleHelper.DisplayMessage("Add a new LearningActivity:");
           learningModuleList.Show();
           int learningModuleId = ConsoleHelper.GetIntInput("Enter the LearningModule ID:");
           learningActivityAdd.Show(learningModuleId);
           break;
-        case "9":
-          NotImplemented(menuIndex);
+        case "15":
+          consoleDashboardView.ShowDashboard(
+            authenticationService.CurrentUser ?? throw new ArgumentNullException(nameof(authenticationService.CurrentUser))
+          );
           break;
         default:
           NotImplemented(menuIndex);
-          MenuHelper.ReturnToMenu(SchoolAdministration);
+          MenuHelper.ReturnToMenu(
+              learningStreakService,
+              learningModuleService,
+              authenticationService,
+              userService,
+              learningActivityService,
+              progressService
+              );
+
           break;
       }
-      MenuHelper.ReturnToMenu(SchoolAdministration);
+      MenuHelper.ReturnToMenu(
+                    learningStreakService,
+                    learningModuleService,
+                    authenticationService,
+                    userService,
+                    learningActivityService,
+                    progressService
+                    );
     }
-    private void GoodBey()
+    private void GoodBye()
     {
       ConsoleHelper.DisplayMessage("Goodbye!", MessageType.INFORMATION);
       Console.WriteLine("Press any key to exit...");

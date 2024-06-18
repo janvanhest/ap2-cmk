@@ -1,6 +1,4 @@
-﻿using System.Diagnostics;
-using System.Runtime.CompilerServices;
-using MySql.Data.MySqlClient;
+﻿using MySql.Data.MySqlClient;
 
 namespace LingoPartnerInfrastructure.Helpers
 {
@@ -19,7 +17,7 @@ namespace LingoPartnerInfrastructure.Helpers
     {
       try
       {
-        using (var connection = new MySqlConnection(connectionString))
+        using (MySqlConnection connection = new(connectionString))
         {
           connection.Open();
           return true;

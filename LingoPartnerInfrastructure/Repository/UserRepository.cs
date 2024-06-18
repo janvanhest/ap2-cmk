@@ -1,11 +1,11 @@
-﻿using LingoPartnerDomain.classes;
+﻿using LingoPartnerDomain.Classes;
 using LingoPartnerDomain.enums;
-using LingoPartnerDomain.interfaces;
+using LingoPartnerDomain.Interfaces.Repositories;
 using LingoPartnerInfrastructure.Helpers;
 using LingoPartnerShared.Helpers;
 using MySql.Data.MySqlClient;
-using System.Diagnostics;
 using System.Net.Mail;
+using System.Security.Cryptography.X509Certificates;
 
 namespace LingoPartnerInfrastructure.Repository
 {
@@ -19,12 +19,12 @@ namespace LingoPartnerInfrastructure.Repository
         connectionString :
         InfrastructureHelper.CreateConnectionString();
     }
-    public User? AddUser(User user)
+    public User? Add(User user, string password)
     {
-      using (var connection = new MySqlConnection(_connectionString))
+      using (MySqlConnection connection = new(_connectionString))
       {
         connection.Open();
-        using (var transaction = connection.BeginTransaction())
+        using (MySqlTransaction transaction = connection.BeginTransaction())
         {
           try
           {
@@ -33,18 +33,18 @@ namespace LingoPartnerInfrastructure.Repository
               VALUES (@FirstName, @MiddleName, @LastName, @DateOfBirth, @Email, @Password, @Username, @Role);
               SELECT LAST_INSERT_ID();";
 
-            using (var command = new MySqlCommand(query, connection, transaction))
+            using (MySqlCommand command = new(query, connection, transaction))
             {
               command.Parameters.AddWithValue("@FirstName", user.FirstName);
               command.Parameters.AddWithValue("@MiddleName", user.MiddleName);
               command.Parameters.AddWithValue("@LastName", user.LastName);
               command.Parameters.AddWithValue("@DateOfBirth", user.DateOfBirth);
               command.Parameters.AddWithValue("@Email", user.Email.ToString());
-              command.Parameters.AddWithValue("@Password", user.Password); // Consider using hashed password
+              command.Parameters.AddWithValue("@Password", password); // Consider using hashed password
               command.Parameters.AddWithValue("@Username", user.Username);
               command.Parameters.AddWithValue("@Role", user.Role.ToString());
 
-              var result = command.ExecuteScalar();
+              object result = command.ExecuteScalar();
               if (result != null)
               {
                 transaction.Commit();
@@ -55,7 +55,7 @@ namespace LingoPartnerInfrastructure.Repository
                     user.LastName,
                     user.DateOfBirth,
                     user.Email,
-                    user.Password,
+                    password,
                     user.Username,
                     user.Role
                 );
@@ -64,8 +64,7 @@ namespace LingoPartnerInfrastructure.Repository
           }
           catch (MySqlException ex)
           {
-            transaction.Rollback();
-            Trace.TraceError($"Database error: {ex.Message}");
+            LoggingHelper.LogError(ex, $"Database error while adding user: {user.Username}\nerror is: {ex.Message}");
             throw;
           }
         }
@@ -73,16 +72,16 @@ namespace LingoPartnerInfrastructure.Repository
       return null;
     }
 
-    public User? GetUserByUsername(string username)
+    public User? GetBy(string username)
     {
-      using (var connection = new MySqlConnection(_connectionString))
+      using (MySqlConnection connection = new(_connectionString))
       {
         connection.Open();
         string query = "SELECT * FROM User WHERE Username = @Username";
-        using (var cmd = new MySqlCommand(query, connection))
+        using (MySqlCommand cmd = new(query, connection))
         {
           cmd.Parameters.AddWithValue("@Username", username);
-          using (var reader = cmd.ExecuteReader())
+          using (MySqlDataReader reader = cmd.ExecuteReader())
           {
             if (reader.Read())
             {
@@ -104,16 +103,16 @@ namespace LingoPartnerInfrastructure.Repository
       return null;
     }
 
-    public IEnumerable<User> GetUsers()
+    public IEnumerable<User> GetAll()
     {
-      var users = new List<User>();
-      using (var connection = new MySqlConnection(_connectionString))
+      List<User> users = [];
+      using (MySqlConnection connection = new(_connectionString))
       {
         connection.Open();
         string query = "SELECT * FROM User";
-        using (var cmd = new MySqlCommand(query, connection))
+        using (MySqlCommand cmd = new(query, connection))
         {
-          using (var reader = cmd.ExecuteReader())
+          using (MySqlDataReader reader = cmd.ExecuteReader())
           {
             while (reader.Read())
             {
@@ -135,12 +134,12 @@ namespace LingoPartnerInfrastructure.Repository
       return users;
     }
 
-    public User? UpdateUser(User user)
+    public User? Update(User user, string? password)
     {
-      using (var connection = new MySqlConnection(_connectionString))
+      using (MySqlConnection connection = new(_connectionString))
       {
         connection.Open();
-        using (var transaction = connection.BeginTransaction())
+        using (MySqlTransaction transaction = connection.BeginTransaction())
         {
           try
           {
@@ -149,7 +148,7 @@ namespace LingoPartnerInfrastructure.Repository
               SET FirstName = @FirstName, MiddleName = @MiddleName, LastName = @LastName, DateOfBirth = @DateOfBirth, Email = @Email, Password = @Password, Username = @Username, Role = @Role
               WHERE Id = @Id;";
 
-            using (var command = new MySqlCommand(query, connection, transaction))
+            using (MySqlCommand command = new(query, connection, transaction))
             {
               command.Parameters.AddWithValue("@Id", user.Id);
               command.Parameters.AddWithValue("@FirstName", user.FirstName);
@@ -157,11 +156,11 @@ namespace LingoPartnerInfrastructure.Repository
               command.Parameters.AddWithValue("@LastName", user.LastName);
               command.Parameters.AddWithValue("@DateOfBirth", user.DateOfBirth);
               command.Parameters.AddWithValue("@Email", user.Email.ToString());
-              command.Parameters.AddWithValue("@Password", user.Password); // Consider using hashed password
+              if (password != null) { command.Parameters.AddWithValue("@Password", password); };
               command.Parameters.AddWithValue("@Username", user.Username);
               command.Parameters.AddWithValue("@Role", user.Role.ToString());
 
-              var result = command.ExecuteNonQuery();
+              int result = command.ExecuteNonQuery();
               if (result > 0)
               {
                 transaction.Commit();
@@ -178,6 +177,40 @@ namespace LingoPartnerInfrastructure.Repository
         }
       }
       return null;
+    }
+
+    public User? GetById(int id)
+    {
+      using (MySqlConnection connection = new(_connectionString))
+      {
+        connection.Open();
+        string query = "SELECT * FROM User WHERE Id = @Id";
+        using (MySqlCommand cmd = new(query, connection))
+        {
+          cmd.Parameters.AddWithValue("@Id", id);
+          using (MySqlDataReader reader = cmd.ExecuteReader())
+          {
+            if (reader.Read())
+            {
+              return new User(
+                  reader.GetInt32("Id"),
+                  reader.GetString("FirstName"),
+                  reader.GetString("MiddleName"),
+                  reader.GetString("LastName"),
+                  reader.GetDateTime("DateOfBirth"),
+                  new MailAddress(reader.GetString("Email")),
+                  reader.GetString("Password"),
+                  reader.GetString("Username"),
+                  Enum.Parse<UserRole>(reader.GetString("Role"))
+              );
+            }
+            else
+            {
+              return null;
+            }
+          }
+        }
+      }
     }
   }
 }

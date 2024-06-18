@@ -1,23 +1,27 @@
-﻿using LingoPartnerDomain.classes;
+﻿using System.Collections.ObjectModel;
+using LingoPartnerDomain.Classes;
 using LingoPartnerDomain.enums;
+using LingoPartnerDomain.Interfaces.Repositories;
+using LingoPartnerDomain.Interfaces.Services;
 
 namespace LingoPartnerConsole.Views
 {
   public class UserList
   {
-    private Administration SchoolAdministration;
-    public UserList(Administration schoolAdministration)
+    private IUserService userService;
+    public UserList(IUserService userService)
     {
-      SchoolAdministration = schoolAdministration;
+      this.userService = userService;
     }
     public void Show(UserRole? role = null)
     {
+      ReadOnlyCollection<User> users = userService.GetAllUsers().ToList<User>().AsReadOnly();
       UserRole? roleToFilter = null;
       if (role != null)
       {
         roleToFilter = role;
       }
-      foreach (User user in SchoolAdministration.Users)
+      foreach (User user in users)
       {
         if (roleToFilter == null || user.Role == roleToFilter)
         {

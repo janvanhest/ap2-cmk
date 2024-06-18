@@ -1,0 +1,20 @@
+@startuml
+package "LingoPartnerConsole" {
+}
+
+package "LingoPartnerDomain" {
+}
+
+package "LingoPartnerInfrastructure" {
+}
+
+package "LingoPartnerShared" {
+}
+
+[LingoPartnerConsole] -down-> [LingoPartnerDomain]
+[LingoPartnerConsole] --> [LingoPartnerInfrastructure]
+[LingoPartnerInfrastructure] -up-> [LingoPartnerDomain]
+[LingoPartnerDomain] -right-> [LingoPartnerShared]
+[LingoPartnerConsole] --> [LingoPartnerShared]
+[LingoPartnerInfrastructure] -up-> [LingoPartnerShared]
+@enduml

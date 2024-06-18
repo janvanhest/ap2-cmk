@@ -1,6 +1,6 @@
-﻿using LingoPartnerDomain.classes;
+﻿using LingoPartnerDomain.Classes;
 using LingoPartnerDomain.enums;
-using LingoPartnerDomain.interfaces;
+using LingoPartnerDomain.Interfaces.Repositories;
 using LingoPartnerShared.Helpers;
 using MySql.Data.MySqlClient;
 
@@ -17,10 +17,10 @@ namespace LingoPartnerInfrastructure.Repository
 
     public Progress? AddProgress(Progress progress)
     {
-      using (var connection = new MySqlConnection(_connectionString))
+      using (MySqlConnection connection = new(_connectionString))
       {
         connection.Open();
-        using (var transaction = connection.BeginTransaction())
+        using (MySqlTransaction transaction = connection.BeginTransaction())
         {
           try
           {
@@ -29,7 +29,7 @@ namespace LingoPartnerInfrastructure.Repository
                             VALUES (@Type, @Status, @Details, @UserId, @LearningActivityId);
                             SELECT LAST_INSERT_ID();";
 
-            using (var command = new MySqlCommand(query, connection, transaction))
+            using (MySqlCommand command = new(query, connection, transaction))
             {
               command.Parameters.AddWithValue("@Type", progress.Type.ToString());
               command.Parameters.AddWithValue("@Status", progress.Status.ToString());
@@ -37,7 +37,7 @@ namespace LingoPartnerInfrastructure.Repository
               command.Parameters.AddWithValue("@UserId", progress.UserId);
               command.Parameters.AddWithValue("@LearningActivityId", progress.LearningActivityId);
 
-              var result = command.ExecuteScalar();
+              object result = command.ExecuteScalar();
               if (result != null)
               {
                 transaction.Commit();
@@ -65,15 +65,15 @@ namespace LingoPartnerInfrastructure.Repository
 
     public IEnumerable<Progress> GetAllProgress()
     {
-      using (var connection = new MySqlConnection(_connectionString))
+      using (MySqlConnection connection = new(_connectionString))
       {
         connection.Open();
         string query = @"SELECT * FROM Progress";
-        using (var command = new MySqlCommand(query, connection))
+        using (MySqlCommand command = new(query, connection))
         {
-          using (var reader = command.ExecuteReader())
+          using (MySqlDataReader reader = command.ExecuteReader())
           {
-            List<Progress> progressList = new List<Progress>();
+            List<Progress> progressList = [];
             while (reader.Read())
             {
               progressList.Add(new Progress(
@@ -94,26 +94,26 @@ namespace LingoPartnerInfrastructure.Repository
 
     public IEnumerable<Progress> GetProgressByUserId(int userId)
     {
-      using (var connection = new MySqlConnection(_connectionString))
+      using (MySqlConnection connection = new(_connectionString))
       {
         connection.Open();
-        string query = @"SELECT * FROM Progress WHERE UserId = @UserId";
-        using (var command = new MySqlCommand(query, connection))
+        string query = @"SELECT * FROM Progress WHERE user_id = @UserId";
+        using (MySqlCommand command = new(query, connection))
         {
           command.Parameters.AddWithValue("@UserId", userId);
-          using (var reader = command.ExecuteReader())
+          using (MySqlDataReader reader = command.ExecuteReader())
           {
-            List<Progress> progressList = new List<Progress>();
+            List<Progress> progressList = [];
             while (reader.Read())
             {
               progressList.Add(new Progress(
-                  reader.GetInt32("Id"),
-                  Enum.Parse<ProgressType>(reader.GetString("Type")),
-                  Enum.Parse<ProgressStatus>(reader.GetString("Status")),
-                  reader.GetString("Details"),
-                  reader.GetInt32("UserId"),
-                  reader.GetInt32("LearningActivityId"),
-                  reader.GetDateTime("Date")
+                  reader.GetInt32("id"),
+                  Enum.Parse<ProgressType>(reader.GetString("progress_type")),
+                  Enum.Parse<ProgressStatus>(reader.GetString("status")),
+                  reader.GetString("details"),
+                  reader.GetInt32("user_id"),
+                  reader.GetInt32("learningActivity_id"),
+                  reader.GetDateTime("date")
               ));
             }
             return progressList;
@@ -122,12 +122,34 @@ namespace LingoPartnerInfrastructure.Repository
       }
     }
 
-    public Progress? UpdateProgress(Progress updateProgress)
+    public IEnumerable<DateTime> GetUniqueDatesByUserId(int userId)
     {
-      using (var connection = new MySqlConnection(_connectionString))
+      List<DateTime> uniqueDates = [];
+      using (MySqlConnection connection = new(_connectionString))
       {
         connection.Open();
-        using (var transaction = connection.BeginTransaction())
+        string query = @"SELECT DISTINCT Date FROM Progress WHERE UserId = @UserId";
+        using (MySqlCommand command = new(query, connection))
+        {
+          command.Parameters.AddWithValue("@UserId", userId);
+          using (MySqlDataReader reader = command.ExecuteReader())
+          {
+            while (reader.Read())
+            {
+              uniqueDates.Add(reader.GetDateTime("Date"));
+            }
+          }
+        }
+      }
+      return uniqueDates;
+    }
+
+    public Progress? UpdateProgress(Progress updateProgress)
+    {
+      using (MySqlConnection connection = new(_connectionString))
+      {
+        connection.Open();
+        using (MySqlTransaction transaction = connection.BeginTransaction())
         {
           try
           {
@@ -136,13 +158,13 @@ namespace LingoPartnerInfrastructure.Repository
                             SET Status = @Status, Details = @Details 
                             WHERE Id = @Id";
 
-            using (var command = new MySqlCommand(query, connection, transaction))
+            using (MySqlCommand command = new(query, connection, transaction))
             {
               command.Parameters.AddWithValue("@Status", updateProgress.Status.ToString());
               command.Parameters.AddWithValue("@Details", updateProgress.Details);
               command.Parameters.AddWithValue("@Id", updateProgress.Id);
 
-              var result = command.ExecuteNonQuery();
+              int result = command.ExecuteNonQuery();
               if (result > 0)
               {
                 transaction.Commit();
