@@ -12,8 +12,8 @@ namespace LingoPartnerDomain.Services
   {
     private readonly IProgressService progressService;
     private readonly IAuthenticationService authenticationService;
-    private ILearningStreakStrategy learningStreakStrategy;
     private ILearningStreakScoringStrategy scoringStrategy;
+    private ILearningStreakStrategy learningStreakStrategy;
     private User user;
 
     public LearningStreakService(

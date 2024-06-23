@@ -2,6 +2,8 @@
 using LingoPartnerDomain.Classes;
 using LingoPartnerDomain.enums;
 using LingoPartnerDomain.Interfaces.Services;
+using LingoPartnerDomain.Services;
+using LingoPartnerDomain.Strategies;
 using LingoPartnerDomain.Strategies.Scoring;
 
 namespace LingoPartnerConsole.Views
@@ -47,10 +49,20 @@ namespace LingoPartnerConsole.Views
         Console.WriteLine($"Module: {module.Name} - {percentage}% completed");
         ConsoleHelper.DisplayProgressBar(percentage);
       }
+      Console.WriteLine("include weekends in streak calculation? Y/N\n");
+      ConsoleKeyInfo choice = Console.ReadKey();
+      if (choice.Key == ConsoleKey.Y)
+      {
+        learningStreakService.SetLearningStreakStrategy(new ConsecutiveDaysStrategy());
+      }
+      else
+      {
+        learningStreakService.SetLearningStreakStrategy(new WeekendSkipStrategy());
+      }
       ConsoleHelper.DisplayMessage("Here comes the Streak", MessageType.INFORMATION);
       int simpleScore = learningStreakService.CalculateTotalScore(new SimpleScoringStrategy());
       int BonusScoringStrategy = learningStreakService.CalculateTotalScore(new BonusScoringStrategy());
-      Console.WriteLine($"Simple Score: \nThe learning streak score takes {simpleScore} lasts days into account");
+      Console.WriteLine($"Simple Score: \nThe learning streak score takes {simpleScore} days into account");
       Console.WriteLine($"Bonus Score: \n{BonusScoringStrategy}");
     }
   }
