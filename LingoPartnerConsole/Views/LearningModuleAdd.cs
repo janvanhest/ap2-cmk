@@ -15,8 +15,19 @@ namespace LingoPartnerConsole
 
     public void Show()
     {
-      string name = ConsoleHelper.GetStringInput("Enter name:");
+      string name;
+      // Loop until a unique name is provided
+      while (true)
+      {
+        name = ConsoleHelper.GetStringInput("Enter name:");
+        if (learningModuleService.GetLearningModuleByName(name) == null)
+        {
+          break;
+        }
+        Console.WriteLine("Learning module already exists. Please enter a different name.");
+      }
       string description = ConsoleHelper.GetStringInput("Enter description:");
+
 
       // Create the learning module object
       LearningModule newLearningModule = new(
@@ -25,7 +36,7 @@ namespace LingoPartnerConsole
       );
       // Add the learning module to the administration
       learningModuleService.AddLearningModule(newLearningModule);
-      Console.WriteLine($"Learning module {name} successfully added.");
+      Console.WriteLine($"Learning module '{name}' successfully added.");
     }
   }
 }

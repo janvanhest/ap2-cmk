@@ -36,8 +36,8 @@ namespace LingoPartnerConsole.Views
       string lastName = AskForUpdate("last name", user.LastName)
         ? ConsoleHelper.GetStringInput("Enter last name:")
         : user.LastName;
-      DateTime dateOfBirth = AskForUpdate("date of birth", user.DateOfBirth.ToString("yyyy-MM-dd"))
-        ? ConsoleHelper.GetDateInput("Enter date of birth (YYYY-MM-DD):")
+      DateTime dateOfBirth = AskForUpdate("date of birth", user.DateOfBirth.ToString("DD-MM-YYYY"))
+        ? ConsoleHelper.GetDateInput("Enter date of birth (DD-MM-YYYY):")
         : user.DateOfBirth;
       MailAddress email = AskForUpdate("email", user.Email.ToString())
         ? ConsoleHelper.GetEmailInput("Enter email address:")
@@ -80,7 +80,7 @@ namespace LingoPartnerConsole.Views
       {
         Console.WriteLine($"Do you want to update {fieldName} (Y/N)?");
         Console.WriteLine($"Current value is: {currentValue}");
-        string input = Console.ReadLine()?.Trim().ToUpper();
+        string input = Console.ReadLine().ToUpper();
         if (input == "Y")
         {
           return true;

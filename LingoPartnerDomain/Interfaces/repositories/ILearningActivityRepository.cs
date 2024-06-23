@@ -11,5 +11,6 @@ namespace LingoPartnerDomain.Interfaces.Repositories
     IEnumerable<LearningActivity> GetByIds(IEnumerable<int> activityIds);
     IEnumerable<LearningActivity> GetAll();
     IEnumerable<LearningActivity> GetByLearningModuleId(int moduleId);
+    LearningActivity? GetByName(string name);
   }
 }

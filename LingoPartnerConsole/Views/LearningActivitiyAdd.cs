@@ -16,7 +16,16 @@ namespace LingoPartnerConsole.Views
     public void Show(int learningModuleId)
     {
       ConsoleHelper.DisplayTypingAnimation("Add a new LearningActivity:\n");
-      string name = ConsoleHelper.GetStringInput("Enter name:");
+      string name;
+      while (true)
+      {
+        name = ConsoleHelper.GetStringInput("Enter name:");
+        if (learningActivityService.GetLearningActivityByName(name) == null)
+        {
+          break;
+        }
+        Console.WriteLine("Learning activity already exists. Please enter a different name.");
+      }
       string description = ConsoleHelper.GetStringInput("Enter description:");
       LearningActivityType type = ConsoleHelper.GetLearningActivityType();
       LearningActivity newLearningActivity = new LearningActivity(

@@ -15,30 +15,5 @@
       Name = name ?? throw new ArgumentNullException(nameof(name));
       Description = description ?? throw new ArgumentNullException(nameof(description));
     }
-
-    public void AddLearningActivity(LearningActivity activity)
-    {
-      if (activity == null)
-      {
-        throw new ArgumentNullException(nameof(activity));
-      }
-      LearningActivities.Add(activity);
-    }
-
-    public bool RemoveLearningActivity(LearningActivity activity)
-    {
-      return LearningActivities.Remove(activity);
-    }
-
-    public IReadOnlyCollection<LearningActivity> ShowLearningActivities()
-    {
-      return new List<LearningActivity>(learningActivities);
-    }
-
-    public void UpdateModule(string newName, string newDescription)
-    {
-      Name = newName ?? throw new ArgumentNullException(nameof(newName));
-      Description = newDescription ?? throw new ArgumentNullException(nameof(newDescription));
-    }
   }
 }

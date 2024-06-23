@@ -10,11 +10,10 @@ using LingoPartnerDomain.Interfaces.Services;
 using LingoPartnerDomain.Interfaces.Repositories;
 using LingoPartnerInfrastructure.Helpers;
 using LingoPartnerInfrastructure.Repository;
-using LingoPartnerInfrastructure.Services;
+using LingoPartnerDomain.Services;
 using LingoPartnerDomain.Interfaces.Strategies;
 using LingoPartnerDomain.Strategies;
 using LingoPartnerDomain.Strategies.Scoring;
-using LingoPartnerDomain.Services;
 
 namespace LingoPartnerConsole
 {
@@ -120,7 +119,7 @@ namespace LingoPartnerConsole
       string welcomeMessage = "Welcome Guest!";
       if (user != null)
       {
-        welcomeMessage = $"\nHave a nice schoolday! Or something like that, {user.getFullName()}!\n";
+        welcomeMessage = $"\nHave a nice schoolday! Or something like that, {user.GetFullName()}!\n";
       }
       Console.WriteLine(welcomeMessage);
       Console.WriteLine("Press a key to continue...\n");

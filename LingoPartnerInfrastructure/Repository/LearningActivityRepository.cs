@@ -211,6 +211,41 @@ namespace LingoPartnerInfrastructure.Repository
       return activities;
     }
 
+    public LearningActivity? GetByName(string name)
+    {
+      LearningActivity? activity = null;
+      using (MySqlConnection connection = new(_connectionString))
+      {
+        connection.Open();
+        string query = "SELECT * FROM LearningActivity WHERE Name = @Name";
+        using (MySqlCommand cmd = new MySqlCommand(query, connection))
+        {
+          cmd.Parameters.AddWithValue("@Name", name);
+          try
+          {
+            using (MySqlDataReader reader = cmd.ExecuteReader())
+            {
+              if (reader.Read())
+              {
+                activity = new LearningActivity(
+                  (int)reader.GetInt32("Id"),
+                  reader.GetString("Name"),
+                  reader.GetString("Description"),
+                  (LearningActivityType)Enum.Parse(typeof(LearningActivityType), reader.GetString("Type")),
+                  (int)reader.GetInt32("Module_id")
+                );
+              }
+            }
+          }
+          catch (MySqlException ex)
+          {
+            LoggingHelper.LogError(ex, "Error getting learning activity by name");
+            throw;
+          }
+        }
+      }
+      return activity;
+    }
 
     public void Remove(int activityId)
     {

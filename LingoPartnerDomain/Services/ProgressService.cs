@@ -2,7 +2,6 @@
 using LingoPartnerDomain.enums;
 using LingoPartnerDomain.Interfaces.Repositories;
 using LingoPartnerDomain.Interfaces.Services;
-using LingoPartnerInfrastructure.Services;
 using LingoPartnerShared.Helpers;
 
 namespace LingoPartnerDomain.Services

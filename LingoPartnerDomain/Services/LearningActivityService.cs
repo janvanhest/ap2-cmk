@@ -47,5 +47,10 @@ namespace LingoPartnerDomain.Services
     {
       return _learningActivityRepository.GetByLearningModuleId(moduleId);
     }
+
+    public LearningActivity? GetLearningActivityByName(string name)
+    {
+      return _learningActivityRepository.GetByName(name);
+    }
   }
 }

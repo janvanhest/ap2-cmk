@@ -3,7 +3,7 @@ using LingoPartnerDomain.Classes;
 using LingoPartnerDomain.Interfaces.Repositories;
 using LingoPartnerDomain.Interfaces.Services;
 
-namespace LingoPartnerInfrastructure.Services
+namespace LingoPartnerDomain.Services
 {
   public class LearningModuleService : ILearningModuleService
   {
@@ -104,6 +104,12 @@ namespace LingoPartnerInfrastructure.Services
       }
 
       return associatedLearningModules.ToList().AsReadOnly();
+    }
+
+    public LearningModule? GetLearningModuleByName(string name)
+    {
+      LearningModule? module = learningModuleRepository.GetLearningModuleByName(name);
+      return module;
     }
   }
 }

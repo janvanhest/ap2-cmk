@@ -6,7 +6,7 @@ using LingoPartnerDomain.Interfaces.Strategies;
 using LingoPartnerDomain.Strategies;
 using LingoPartnerDomain.Strategies.Scoring;
 
-namespace LingoPartnerInfrastructure.Services
+namespace LingoPartnerDomain.Services
 {
   public class LearningStreakService : ILearningStreakService
   {

@@ -14,15 +14,18 @@ namespace LingoPartnerDomain.Classes
     private string password;
     public string Username { get; private set; }
     public UserRole Role { get; private set; }
-    public List<LearningStreak> LearningStreaks { get; private set; }
-    public List<Reward> Rewards { get; private set; }
-    public List<Progress> ProgressRecords { get; private set; }
-    public List<FriendRequest> SentFriendRequests { get; private set; }
-    public List<FriendRequest> ReceivedFriendRequests { get; private set; }
-
-    public User(string firstName, string middleName, string lastName, DateTime dateOfBirth, MailAddress email,
-                string password, string username, UserRole role)
-      : this(null, firstName, middleName, lastName, dateOfBirth, email, password, username, role) { }
+    public User(
+      string firstName,
+      string middleName,
+      string lastName,
+      DateTime dateOfBirth,
+      MailAddress email,
+      string password,
+      string username,
+      UserRole role)
+      : this(null,
+      firstName, middleName, lastName, dateOfBirth, email, password, username, role)
+    { }
     public User(int? id, string firstName, string middleName, string lastName, DateTime dateOfBirth, MailAddress email, string password, string username, UserRole role)
     {
       Id = id;
@@ -35,20 +38,16 @@ namespace LingoPartnerDomain.Classes
       Username = username ?? throw new ArgumentNullException(nameof(username), "Username cannot be null.");
       Role = role;
     }
-
     // Update only first, middle, and last names
     public void UpdateProfile(string firstName, string middleName, string lastName)
     {
       SetNames(firstName, middleName, lastName);
-      Console.WriteLine("Names updated successfully.");
     }
-
     // Update names and email address
     public void UpdateProfile(string firstName, string middleName, string lastName, MailAddress email)
     {
       SetNames(firstName, middleName, lastName);
       SetEmail(email);
-      Console.WriteLine("Names and email updated successfully.");
     }
 
     // Update names, email address, and password
@@ -57,7 +56,6 @@ namespace LingoPartnerDomain.Classes
       SetNames(firstName, middleName, lastName);
       SetEmail(email);
       SetPassword(newPassword);
-      Console.WriteLine("Names, email, and password updated successfully.");
     }
 
     private void SetNames(string firstName, string? middleName, string lastName)
@@ -82,18 +80,13 @@ namespace LingoPartnerDomain.Classes
       this.password = newPassword; // Consider security practices for password storage
     }
 
-    public void SetRole(UserRole newRole)
-    {
-      Role = newRole;
-    }
-
     public bool VerifyPassword(string attemptedPassword)
     {
       // Implement password verification
       return attemptedPassword == password; // Simplified for example, consider password hashing
     }
 
-    public string getFullName()
+    public string GetFullName()
     {
       string fullName = FirstName;
       if (!string.IsNullOrEmpty(MiddleName))
@@ -102,30 +95,6 @@ namespace LingoPartnerDomain.Classes
       }
       fullName += $" {LastName}";
       return fullName;
-    }
-    public void AddLearningStreak(LearningStreak learningStreak)
-    {
-      LearningStreaks.Add(learningStreak);
-    }
-
-    public void AddReward(Reward reward)
-    {
-      Rewards.Add(reward);
-    }
-
-    public void AddProgressRecord(Progress progress)
-    {
-      ProgressRecords.Add(progress);
-    }
-
-    public void AddSentFriendRequest(FriendRequest friendRequest)
-    {
-      SentFriendRequests.Add(friendRequest);
-    }
-
-    public void AddReceivedFriendRequest(FriendRequest friendRequest)
-    {
-      ReceivedFriendRequests.Add(friendRequest);
     }
   }
 }

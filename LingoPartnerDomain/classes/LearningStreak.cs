@@ -10,7 +10,7 @@ namespace LingoPartnerDomain.Classes
     private List<DateTime> _dates = [];
     private DateTime? _startDate;
     private DateTime? _endDate;
-    private ReadOnlyCollection<DateTime> ActivityDates => _dates.AsReadOnly();
+    public ReadOnlyCollection<DateTime> ActivityDates => _dates.AsReadOnly();
     // public int Length => _startDate.HasValue && _endDate.HasValue ? (_endDate.Value - _startDate.Value).Days + 1 : 0;
     public int Length => _dates.Count;
     public DateTime? StartDate => _dates.Count != 0 ? _dates.Min() : null;

@@ -1,7 +1,6 @@
 ﻿using System.Collections.ObjectModel;
 using LingoPartnerDomain.Classes;
 using LingoPartnerDomain.enums;
-using LingoPartnerDomain.Interfaces.Repositories;
 using LingoPartnerDomain.Interfaces.Services;
 
 namespace LingoPartnerConsole.Views
@@ -25,7 +24,7 @@ namespace LingoPartnerConsole.Views
       {
         if (roleToFilter == null || user.Role == roleToFilter)
         {
-          Console.WriteLine($"{user.Id}. {user.FirstName} {user.MiddleName} {user.LastName} ({user.Role})");
+          Console.WriteLine($"UserName: {user.Username}. UserId: {user.Id}. UserDetails: {user.FirstName} {user.MiddleName} {user.LastName} ({user.Role})");
         }
       }
     }

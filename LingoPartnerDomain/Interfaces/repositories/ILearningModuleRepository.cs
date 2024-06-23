@@ -10,5 +10,6 @@ namespace LingoPartnerDomain.Interfaces.Repositories
     List<LearningModule> GetLearningModulesByIds(IEnumerable<int> ids);
     LearningModule? UpdateLearningModule(LearningModule module);
     Boolean DeleteLearningModule(int id);
+    LearningModule? GetLearningModuleByName(string name);
   }
 }

@@ -2,7 +2,7 @@
 using LingoPartnerDomain.Interfaces.Repositories;
 using LingoPartnerDomain.Interfaces.Services;
 
-namespace LingoPartnerInfrastructure.Services
+namespace LingoPartnerDomain.Services
 {
   public class AuthenticationService : IAuthenticationService
   {

@@ -22,7 +22,7 @@ namespace LingoPartnerConsole.Views
       string firstName = ConsoleHelper.GetStringInput("Enter first name:");
       string middleName = ConsoleHelper.GetStringInput("Enter middle name: (- for none)");
       string lastName = ConsoleHelper.GetStringInput("Enter last name:");
-      DateTime dateOfBirth = ConsoleHelper.GetDateInput("Enter date of birth (YYYY-MM-DD):");
+      DateTime dateOfBirth = ConsoleHelper.GetDateInput("Enter date of birth (DD-MM-YYYY):");
       MailAddress email = ConsoleHelper.GetEmailInput("Enter email address:");
       string password = ConsoleHelper.GetPasswordInput("Enter password:");
       string username = ConsoleHelper.GetStringInput("Enter username:");

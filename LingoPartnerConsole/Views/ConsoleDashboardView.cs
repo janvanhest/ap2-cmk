@@ -32,7 +32,7 @@ namespace LingoPartnerConsole.Views
       int userId = user.Id ?? throw new ArgumentNullException(nameof(user.Id));
       ConsoleHelper.DisplayMessage("Dashboard", LingoPartnerDomain.enums.MessageType.INFORMATION);
 
-      Console.WriteLine($"User: {user.getFullName()}");
+      Console.WriteLine($"User: {user.GetFullName()}");
       Console.WriteLine($"Role: {user.Role}");
 
       // TODO:

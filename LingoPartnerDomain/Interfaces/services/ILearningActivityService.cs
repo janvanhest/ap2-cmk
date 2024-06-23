@@ -11,5 +11,6 @@ namespace LingoPartnerDomain.Interfaces.Services
     IEnumerable<LearningActivity> GetAllActivities();
     IEnumerable<LearningActivity> GetActivitiesByIds(IEnumerable<int> activityIds);
     IEnumerable<LearningActivity> GetLearningActivitiesByModuleId(int moduleId);
+    LearningActivity? GetLearningActivityByName(string name);
   }
 }

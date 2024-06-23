@@ -248,6 +248,31 @@ namespace LingoPartnerInfrastructure.Repository
       return learningModules;
     }
 
+    public LearningModule? GetLearningModuleByName(string name)
+    {
+      LearningModule? learningModule = null;
+      using (MySqlConnection connection = new(connectionString))
+      {
+        connection.Open();
+        string query = "SELECT * FROM LearningModule WHERE Name = @Name";
+        using (MySqlCommand command = new(query, connection))
+        {
+          command.Parameters.AddWithValue("@Name", name);
+          using (MySqlDataReader reader = command.ExecuteReader())
+          {
+            if (reader.Read())
+            {
+              learningModule = new LearningModule(
+                  reader.GetInt32("Id"),
+                  reader.GetString("Name"),
+                  reader.GetString("Description")
+              );
+            }
+          }
+        }
+      }
+      return learningModule;
+    }
   }
 }
 
