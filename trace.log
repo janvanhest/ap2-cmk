@@ -671,3 +671,68 @@ LingoPartnerConsole Information: 0 :
 
 Application started at: 18-06-2024 23:40:22
 Trace configuration initialized.
+Trace configuration initialized.
+LingoPartnerConsole Information: 0 : 
+
+Application started at: 19-06-2024 09:16:14
+Trace configuration initialized.
+LingoPartnerConsole Error: 0 : Unable to connect to any of the specified MySQL hosts.
+Trace configuration initialized.
+LingoPartnerConsole Error: 0 : Unable to connect to any of the specified MySQL hosts.
+Trace configuration initialized.
+LingoPartnerConsole Information: 0 : 
+
+Application started at: 22-06-2024 20:02:02
+Trace configuration initialized.
+LingoPartnerConsole Information: 0 : 
+
+Application started at: 23-06-2024 09:12:58
+Trace configuration initialized.
+LingoPartnerConsole Information: 0 : 
+
+Application started at: 23-06-2024 09:15:02
+LingoPartnerConsole Error: 0 : DEVELOPMENT: Error in Add: Database error while adding user: ddelg
+error is: Duplicate entry 'ddelg' for key 'Username'
+Error message: Duplicate entry 'ddelg' for key 'Username'
+Stack trace:    at MySql.Data.MySqlClient.MySqlStream.ReadPacketAsync(Boolean execAsync)
+   at MySql.Data.MySqlClient.NativeDriver.GetResultAsync(Int32 affectedRow, Int64 insertedId, Boolean execAsync)
+   at MySql.Data.MySqlClient.Driver.GetResultAsync(Int32 statementId, Int32 affectedRows, Int64 insertedId, Boolean execAsync)
+   at MySql.Data.MySqlClient.Driver.NextResultAsync(Int32 statementId, Boolean force, Boolean execAsync)
+   at MySql.Data.MySqlClient.MySqlDataReader.NextResultAsync(Boolean execAsync, CancellationToken cancellationToken)
+   at MySql.Data.MySqlClient.MySqlDataReader.NextResultAsync(Boolean execAsync, CancellationToken cancellationToken)
+   at MySql.Data.MySqlClient.MySqlCommand.ExecuteReaderAsync(CommandBehavior behavior, Boolean execAsync, CancellationToken cancellationToken)
+   at MySql.Data.MySqlClient.MySqlCommand.ExecuteReaderAsync(CommandBehavior behavior, Boolean execAsync, CancellationToken cancellationToken)
+   at MySql.Data.MySqlClient.MySqlCommand.ExecuteReaderAsync(CommandBehavior behavior, Boolean execAsync, CancellationToken cancellationToken)
+   at MySql.Data.MySqlClient.MySqlCommand.ExecuteScalarAsync(Boolean execAsync, CancellationToken cancellationToken)
+   at MySql.Data.MySqlClient.MySqlCommand.ExecuteScalar()
+   at LingoPartnerInfrastructure.Repository.UserRepository.Add(User user, String password) in /Users/janvanhest/fontys/console_apps/ap2-cmk/LingoPartnerInfrastructure/Repository/UserRepository.cs:line 47
+Trace configuration initialized.
+LingoPartnerConsole Information: 0 : 
+
+Application started at: 23-06-2024 09:27:44
+Trace configuration initialized.
+LingoPartnerConsole Information: 0 : 
+
+Application started at: 23-06-2024 10:13:35
+Trace configuration initialized.
+LingoPartnerConsole Information: 0 : 
+
+Application started at: 23-06-2024 10:43:26
+Trace configuration initialized.
+LingoPartnerConsole Information: 0 : 
+
+Application started at: 23-06-2024 11:16:29
+Trace configuration initialized.
+LingoPartnerConsole Information: 0 : 
+
+Application started at: 23-06-2024 11:36:14
+Trace configuration initialized.
+LingoPartnerConsole Information: 0 : 
+
+Application started at: 23-06-2024 12:55:55
+Trace configuration initialized.
+LingoPartnerConsole Information: 0 : 
+
+Application started at: 23-06-2024 20:56:53
+Trace configuration initialized.
+Trace configuration initialized.
