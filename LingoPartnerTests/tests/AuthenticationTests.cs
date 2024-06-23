@@ -2,9 +2,9 @@
 using Moq;
 using LingoPartnerDomain.Classes;
 using LingoPartnerDomain.Interfaces.Repositories;
-using LingoPartnerInfrastructure.Services;
 using LingoPartnerDomain.enums;
 using System.Net.Mail;
+using LingoPartnerDomain.Services;
 
 namespace LingoPartnerTests.authentication
 {
@@ -37,7 +37,6 @@ namespace LingoPartnerTests.authentication
       );
 
       _userRepositoryMock.Setup(repo => repo.GetBy(username)).Returns(user);
-      // _userRepositoryMock.Setup(repo => repo.(password)).Returns(true);
       _authenticationService.Authenticate(username, password);
 
       // Act
@@ -57,7 +56,7 @@ namespace LingoPartnerTests.authentication
       var invalidPassword = "invalidPassword";
       var user = new User(
         "admin",
-        null,
+        "",
         "admin",
         new DateTime(1990, 1, 1),
         new MailAddress("admin@tpm.nl"),
@@ -70,7 +69,7 @@ namespace LingoPartnerTests.authentication
       _userRepositoryMock.Setup(repo => repo.GetBy(username)).Returns(user);
 
       // Act
-      var result = _authenticationService.Authenticate(username, password);
+      bool result = _authenticationService.Authenticate(username, password);
 
       // Assert
       Assert.False(result);
@@ -81,13 +80,13 @@ namespace LingoPartnerTests.authentication
     public void Authenticate_UserNotFound_ReturnsFalse()
     {
       // Arrange
-      var username = "nonexistentuser";
-      var password = "anyPassword";
+      string username = "nonexistentuser";
+      string password = "anyPassword";
 
       _userRepositoryMock.Setup(repo => repo.GetBy(username)).Returns((User)null);
 
       // Act
-      var result = _authenticationService.Authenticate(username, password);
+      bool result = _authenticationService.Authenticate(username, password);
 
       // Assert
       Assert.False(result);
