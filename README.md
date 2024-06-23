@@ -3,18 +3,25 @@ Opdracht voor semester 2 Fontys HBO ICT opleiding
 
 ## Pre-requisites
 
-Voor de liefhebber een kleine video introductie zodat je makkelijk kan zien hoe je de applicatie aan de praat kan krijgen. 
+- Docker dient geinstalleerd te zijn.
+- Voor installatie instructies zie: [Docker installatie](https://docs.docker.com/desktop/)
+
+Bij het starten van dit docker compose bestand wordt er een mariadb server gestart.
+
+Er wordt automatisch een sql script uitgevoerd om de database te vullen met tabellen en data die nodig is voor de applicatie.
+
+Het script vind je in de map sql/script.sql
+
+Het docker compose bestand staat in de root folder. 
+
+Ik heb een voorbeeld `.env` bestand gemaakt `.env.example` , welke je kan gebruiken.
+
+De video hieronder laat zien hoe je de database met behulp van docker compose aan de praat krijgt. 
 
 [![Installation instructions](https://i.ytimg.com/vi/TpJ_nHRIF3E/maxresdefault.jpg)](https://youtu.be/TpJ_nHRIF3E "Installation instructions")
-
-Docker dient geinstalleerd te zijn.
-Voor installatie instructies zie: [Docker installatie](https://docs.docker.com/desktop/)
-
 > Noot: Wanneer men hier geen gebruik van wilt maken zal men zelf een mariadb/mysql server moeten opzetten en het script zelf inladen. 
 
-Ik heb een docker-compose.yml bestand gemaakt om de database te starten.
-Je zult wel een .env bestand moeten aanmaken. 
-Ik heb een voorbeeld bestand gemaakt .env.example, welke je kan gebruiken.
+In de video kom je de volgende commando's tegen:
 
 ```bash
 $ cp .env.example .env
@@ -31,11 +38,11 @@ De log kan je bekijken met het volgende commando:
 $ docker-compose logs -f
 ```
 
-Bij het starten van dit docker compose bestand wordt er een mariadb server gestart.
-Er wordt automatisch een sql script uitgevoerd om de database te vullen met tabellen en data die nodig is voor de applicatie.
-Het script vind je in de map sql/script.sql
-Het docker compose bestand staat in de root folder. 
+## In te leveren materialen. 
+- [x] Functioneel ontwerp en Technisch ontwerp. 
+- [x] Persoonlijke development report. 
 
+Onderstaand informatie heb ik gebruikt tijdens ontwikkelen. 
 ## Pitch
 
 You can find the documentation for the pitch in the doc folder.
@@ -86,10 +93,11 @@ A few scenario's that are not implemented in this project but could be implement
 ## Reminders
 
 Klassendiagram
-Encapsulatie
-Abstractie
-Inheritance
-Polymorphisme
+
+- Encapsulatie
+- Abstractie
+- Inheritance
+- Polymorphisme
 
 Composition over inheritance. 
 Loose coupling vs tight coupling.
@@ -101,6 +109,6 @@ L - Liskov Substitution Principle
 I - Interface Segregation Principle
 D - Dependency Inversion Principle
 
-GRASPc
+GRASP
 
 
