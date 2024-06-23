@@ -6,14 +6,14 @@ namespace LingoPartnerConsole.Views
 {
   internal class Menu
   {
-    private ILearningStreakService learningStreakService;
-    private ILearningModuleService learningModuleService;
-    private IAuthenticationService authenticationService;
-    private IUserService userService;
-    private ILearningActivityService learningActivityService;
-    private IProgressService progressService;
+    private readonly ILearningStreakService learningStreakService;
+    private readonly ILearningModuleService learningModuleService;
+    private readonly IAuthenticationService authenticationService;
+    private readonly IUserService userService;
+    private readonly ILearningActivityService learningActivityService;
+    private readonly IProgressService progressService;
 
-    private IReadOnlyList<string> MenuItems =
+    private readonly IReadOnlyList<string> MenuItems =
     [
       "Create a User", // 1
       "Show all users", // 2
@@ -24,12 +24,7 @@ namespace LingoPartnerConsole.Views
       "Show all LearningModules", // 7
       "Show all LearningActivities", // 8
       "Add a LearningActivity", // 9
-      "Show all LearningActivities for a LearningModule", // 10
-      "Show all LearningActivities for a User", // 11
-      "Show all LearningActivities for a Teacher", // 12
-      "Show all LearningActivities for a Student", // 13
-      "Show all LearningActivities for a LearningModule and a User", // 14
-      "Show my dashboard baby" // 15
+      "Show my dashboard baby" // 10
     ];
 
     public Menu(
@@ -57,17 +52,23 @@ namespace LingoPartnerConsole.Views
     public void Show()
     {
       Console.Clear();
-
       ShowMenuOptions([.. MenuItems]);
 
-      Console.WriteLine("Please enter your choice:\n");
-      Console.WriteLine($"Enter your choice (0-{MenuItems.Count}):");
+      Console.WriteLine("Please enter your choice (0-{0}):", MenuItems.Count);
 
       string? choice = Console.ReadLine();
 
-      // check if the choice is an integer
+      // Validate the choice
       int menuIndex = ValidateMenuIndex(choice);
+
+      if (menuIndex == -1)
+      {
+        Show();
+        return;
+      }
+
       Console.Clear();
+
       UserList userList = new(userService);
       LearningModuleAdd learningModuleAdd = new(learningModuleService);
       LearningModuleList learningModuleList = new(learningModuleService);
@@ -80,75 +81,66 @@ namespace LingoPartnerConsole.Views
         learningModuleService,
         progressService
       );
-      switch (choice)
+      switch (menuIndex)
       {
-        case "0":
+        case 0:
           GoodBye();
           break;
-        case "1":
+        case 1:
           userAdd.Show();
           break;
-        case "2":
+        case 2:
           ConsoleHelper.DisplayMessage("List of all users:");
           userList.Show();
           break;
-        case "3":
+        case 3:
           ConsoleHelper.DisplayMessage("List of all teachers:");
           userList.Show(UserRole.TEACHER);
           break;
-        case "4":
+        case 4:
           ConsoleHelper.DisplayMessage("List of all students:");
           userList.Show(UserRole.STUDENT);
           break;
-        case "5":
+        case 5:
           ConsoleHelper.DisplayMessage("Update a user:");
           userList.Show();
           userUpdate.Show();
           break;
-        case "6":
+        case 6:
           ConsoleHelper.DisplayMessage("Add a new learning module");
           learningModuleAdd.Show();
           break;
-        case "7":
+        case 7:
           ConsoleHelper.DisplayMessage("List of all LearningModules:");
           learningModuleList.Show();
           break;
-        case "8":
+        case 8:
           ConsoleHelper.DisplayMessage("List of all LearningActivities:");
           learningActivityList.Show();
           break;
-        case "9":
+        case 9:
           ConsoleHelper.DisplayMessage("Add a new LearningActivity:");
           learningModuleList.Show();
           int learningModuleId = ConsoleHelper.GetIntInput("Enter the LearningModule ID:");
           learningActivityAdd.Show(learningModuleId);
           break;
-        case "15":
+        case 10:
           consoleDashboardView.ShowDashboard(
-            authenticationService.CurrentUser ?? throw new ArgumentNullException(nameof(authenticationService.CurrentUser))
-          );
+              authenticationService.CurrentUser ?? throw new ArgumentNullException(nameof(authenticationService.CurrentUser)));
           break;
         default:
           NotImplemented(menuIndex);
-          MenuHelper.ReturnToMenu(
-              learningStreakService,
-              learningModuleService,
-              authenticationService,
-              userService,
-              learningActivityService,
-              progressService
-              );
-
           break;
       }
+
       MenuHelper.ReturnToMenu(
-                    learningStreakService,
-                    learningModuleService,
-                    authenticationService,
-                    userService,
-                    learningActivityService,
-                    progressService
-                    );
+          learningStreakService,
+          learningModuleService,
+          authenticationService,
+          userService,
+          learningActivityService,
+          progressService
+          );
     }
     private void GoodBye()
     {
@@ -180,7 +172,7 @@ namespace LingoPartnerConsole.Views
     public void ShowMenuOptions(List<string> menuItems)
     {
       ConsoleHelper.DisplayMessage("Welcome to the LingoPartner menu.", MessageType.INFORMATION);
-      Console.WriteLine("Please select on of the following options:");
+      Console.WriteLine("Please select one of the following options:");
       int index = 1;
       foreach (string item in menuItems)
       {
@@ -191,4 +183,3 @@ namespace LingoPartnerConsole.Views
     }
   }
 }
-
