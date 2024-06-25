@@ -1,0 +1,185 @@
+﻿using LingoPartnerConsole.Helpers;
+using LingoPartnerDomain.enums;
+using LingoPartnerDomain.Interfaces.Services;
+
+namespace LingoPartnerConsole.Views
+{
+  internal class Menu
+  {
+    private readonly ILearningStreakService learningStreakService;
+    private readonly ILearningModuleService learningModuleService;
+    private readonly IAuthenticationService authenticationService;
+    private readonly IUserService userService;
+    private readonly ILearningActivityService learningActivityService;
+    private readonly IProgressService progressService;
+
+    private readonly IReadOnlyList<string> MenuItems =
+    [
+      "Create a User", // 1
+      "Show all users", // 2
+      "Show all teachers", // 3
+      "Show all students", // 4
+      "Update a user", // 5
+      "Add a LearningModule", // 6
+      "Show all LearningModules", // 7
+      "Show all LearningActivities", // 8
+      "Add a LearningActivity", // 9
+      "Show my dashboard baby" // 10
+    ];
+
+    public Menu(
+      ILearningStreakService learningStreakService,
+      ILearningModuleService learningModuleService,
+      IAuthenticationService authenticationService,
+      IUserService userService,
+      ILearningActivityService learningActivityService,
+      IProgressService progressService
+      )
+    {
+      this.learningStreakService = learningStreakService ??
+        throw new ArgumentNullException(nameof(learningStreakService));
+      this.learningModuleService = learningModuleService ??
+        throw new ArgumentNullException(nameof(learningModuleService));
+      this.authenticationService = authenticationService ??
+        throw new ArgumentNullException(nameof(authenticationService));
+      this.userService = userService ??
+        throw new ArgumentNullException(nameof(userService));
+      this.learningActivityService = learningActivityService ??
+        throw new ArgumentNullException(nameof(learningActivityService));
+      this.progressService = progressService ??
+        throw new ArgumentNullException(nameof(progressService));
+    }
+    public void Show()
+    {
+      Console.Clear();
+      ShowMenuOptions([.. MenuItems]);
+
+      Console.WriteLine("Please enter your choice (0-{0}):", MenuItems.Count);
+
+      string? choice = Console.ReadLine();
+
+      // Validate the choice
+      int menuIndex = ValidateMenuIndex(choice);
+
+      if (menuIndex == -1)
+      {
+        Show();
+        return;
+      }
+
+      Console.Clear();
+
+      UserList userList = new(userService);
+      LearningModuleAdd learningModuleAdd = new(learningModuleService);
+      LearningModuleList learningModuleList = new(learningModuleService);
+      LearningActivityList learningActivityList = new(learningActivityService);
+      LearningActivityAdd learningActivityAdd = new(learningActivityService);
+      UserUpdate userUpdate = new(userService);
+      UserAdd userAdd = new(userService);
+      ConsoleDashboardView consoleDashboardView = new(
+        learningStreakService,
+        learningModuleService,
+        progressService
+      );
+      switch (menuIndex)
+      {
+        case 0:
+          GoodBye();
+          break;
+        case 1:
+          userAdd.Show();
+          break;
+        case 2:
+          ConsoleHelper.DisplayMessage("List of all users:");
+          userList.Show();
+          break;
+        case 3:
+          ConsoleHelper.DisplayMessage("List of all teachers:");
+          userList.Show(UserRole.TEACHER);
+          break;
+        case 4:
+          ConsoleHelper.DisplayMessage("List of all students:");
+          userList.Show(UserRole.STUDENT);
+          break;
+        case 5:
+          ConsoleHelper.DisplayMessage("Update a user:");
+          userList.Show();
+          userUpdate.Show();
+          break;
+        case 6:
+          ConsoleHelper.DisplayMessage("Add a new learning module");
+          learningModuleAdd.Show();
+          break;
+        case 7:
+          ConsoleHelper.DisplayMessage("List of all LearningModules:");
+          learningModuleList.Show();
+          break;
+        case 8:
+          ConsoleHelper.DisplayMessage("List of all LearningActivities:");
+          learningActivityList.Show();
+          break;
+        case 9:
+          ConsoleHelper.DisplayMessage("Add a new LearningActivity:");
+          learningModuleList.Show();
+          int learningModuleId = ConsoleHelper.GetIntInput("Enter the LearningModule ID:");
+          learningActivityAdd.Show(learningModuleId);
+          break;
+        case 10:
+          consoleDashboardView.ShowDashboard(
+              authenticationService.CurrentUser ?? throw new ArgumentNullException(nameof(authenticationService.CurrentUser)));
+          break;
+        default:
+          NotImplemented(menuIndex);
+          break;
+      }
+
+      MenuHelper.ReturnToMenu(
+          learningStreakService,
+          learningModuleService,
+          authenticationService,
+          userService,
+          learningActivityService,
+          progressService
+          );
+    }
+    private void GoodBye()
+    {
+      ConsoleHelper.DisplayMessage("Goodbye!", MessageType.INFORMATION);
+      Console.WriteLine("Press any key to exit...");
+      Console.ReadKey();
+      Environment.Exit(0);
+    }
+    private int ValidateMenuIndex(string? choice)
+    {
+      if (int.TryParse(choice, out int result))
+      {
+        if (result >= 0 && result <= MenuItems.Count)
+        {
+          return result;
+        }
+      }
+
+      Console.WriteLine("Invalid choice. Please try again.");
+      return -1;
+    }
+    public void NotImplemented(int menuIndex)
+    {
+      string description = menuIndex >= 1 && menuIndex <= MenuItems.Count
+          ? $"\nThis is not implemented yet\nMenu Index: {menuIndex}\nMenu Description: {MenuItems[menuIndex - 1]}\n"
+          : "This feature is not implemented yet.";
+      Console.WriteLine($"{description}");
+    }
+    public void ShowMenuOptions(List<string> menuItems)
+    {
+      ConsoleHelper.DisplayMessage("Welcome to the LingoPartner menu.", MessageType.INFORMATION);
+      Console.WriteLine("Please select one of the following options:");
+      int index = 1;
+      foreach (string item in menuItems)
+      {
+        Console.WriteLine($"{index}. {item}");
+        index++;
+      }
+      Console.WriteLine("0. Exit\n");
+    }
+  }
+}

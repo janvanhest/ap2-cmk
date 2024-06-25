@@ -1,0 +1,281 @@
+@startuml
+
+class FriendRequest {
+    - Id?: Int {private}
+    - SenderId: int {private}
+    - Recipient: int {private}
+    - Status: FriendRequestStatus {private}
+    + FriendRequest(int? id, int senderId, int recipientId)
+    +UpdateStatus(status: FriendRequestStatus): FriendRequest
+}
+
+class LearningActivity {
+    - Id?: Int
+    - Name: String
+    - Description: String
+    - Type: LearningActivityType
+    - LearningModuleId: Int
+    + LearningActivity(int?: id, name: String, description: String, type: LearningActivityType, learningModuleId: Int)
+    + UpdateActivity(name: String, description: String, type: LearningActivityType): void
+}
+
+class LearningModule {
+    - Id: Int
+    - Name: String
+    - Description: String
+    + LearningModule(name: String, description: String)
+}
+
+class Progress {
+    - Id: Int?
+    - Type: ProgressType
+    - Status: ProgressStatus
+    - Details: String
+    +Progress(type: ProgressType, status: ProgressStatus, progressDetails: String)
+    +ShowDetails(): String
+    +UpdateProgress(details: String)
+}
+
+class Reward {
+    - Id?: Int
+    - Name: String
+    - Type: RewardType
+    - Description: String
+    - Date: Date
+    + Reward(name: String, type: RewardType, description: String, date: Date)
+    + UpdateReward(name: String, type: RewardType, description: String, date: Date)
+}
+
+class User {
+    - Id: Int?
+    - FirstName: String
+    - MiddleName: String
+    - LastName: String
+    - DateOfBirth: Date
+    - Email: String
+    - Password: String
+    - Role: UserRole
+    + User(id: int?, firstName: String, middleName: String, lastName: String, dateOfBirth: Date, email: String, password: String, role: UserRole)
+    + UpdateProfile(string firstName, string middleName, string lastName)
+    + UpdateProfile(string firstName, string middleName, string lastName, MailAddress email)
+    + GetFullName(): string
+}
+
+class LearningStreak {
+    - _scoringStrategy: ILearningStreakScoringStrategy
+    - _dates: List<DateTime>
+    - _startDate: DateTime?
+    - _endDate: DateTime?
+    - ActivityDates: ReadOnlyCollection<DateTime>
+    + Length: int
+    + StartDate: DateTime?
+    + EndDate: DateTime?
+    + Score: int
+    + LearningStreak(ILearningStreakScoringStrategy scoringStrategy)
+    + LearningStreak(List<DateTime> activityDates, ILearningStreakScoringStrategy scoringStrategy) : this(scoringStrategy)
+    + AddActivityDate(date: DateTime): bool
+    - UpdateDateRange()
+    + MeetCriteria(): bool
+}
+
+class RewardService {
+    - rewardRepository: IRewardRepository
+    + RewardService(IRewardRepository rewardRepository)
+    + AddReward(Reward reward): Reward?
+    + GetRewardById(rewardId: Int): Reward?
+    + GetRewardsByUserId(userId: Int): List<Reward>
+}
+
+class FriendRequestService {
+    - friendRequestRepository: IFriendRequestRepository
+    + FriendRequestService(IFriendRequestRepository friendRequestRepository)
+    + AddFriendRequest(friendRequest: FriendRequest): FriendRequest
+    + UpdateFriendRequestStatus(friendRequestId: Int, status: FriendRequestStatus)
+    + GetFriendRequestById(friendRequestId: Int): FriendRequest
+    + GetFriendRequestsByUserId(userId: Int): List<FriendRequest>
+    + DeleteFriendRequestById(friendRequestId: Int)
+}
+
+class ProgressService {
+    - progressRepository: IProgressRepository
+    - learningActivityService: ILearningActivityService
+    + ProgressService(IProgressRepository progressRepository, ILearningActivityService learningActivityService)
+    + AddProgress(progress: Progress): Progress
+    + UpdateProgress(progress: Progress): Progress
+    + GetAllProgress(): List<Progress>
+    + GetProgressByUserId(userId: Int): List<Progress>
+    + GetUniqueDatesByUserId(userId: Int): List<DateTime>
+    + GetModuleCompletionPercentage(userId: Int, moduleId: Int): double
+}
+
+class LearningActivityService {
+    - learningActivityRepository: ILearningActivityRepository
+    + LearningActivityService(ILearningActivityRepository learningActivityRepository)
+    + CreateActivity(activity: LearningActivity): LearningActivity
+    + UpdateActivity(activity: LearningActivity): LearningActivity?
+    + DeleteLearningActivity(activityId: Int): void
+    + GetActivityById(activityId: Int): LearningActivity?
+    + GetAllActivities(): List<LearningActivity>
+    + GetActivitiesByIds(Ienumerable<int> activityIds): IEnumarable<LearningActivity>
+    + GetLearningActivitiesByModuleId(moduleId: Int): List<LearningActivity>
+    + GetlearningActivityByName(name: String): LearningActivity?
+}
+
+class UserService {
+    - _userRepository: IUserRepository
+    + UserService(IUserRepository userRepository)
+    + RegisterUser(user: User): User
+    + GetAllUsers(): List<User>
+    + UpdateUser(user: User, string? password)
+    + GetUserByUsername(username: String): User?
+    + DeleteUser(userId: Int)
+}
+
+class LearningStreakService {
+    - progressService: IProgressService
+    - authenticationService: IAuthenticationService
+    - learningStreakStrategy: ILearningStreakStrategy
+    - scoringStrategy: ILearningStreakScoringStrategy
+    - user: User
+    + LearningStreakService(progressService: IProgressService, authenticationService: IAuthenticationService, learningStreakStrategy: ILearningStreakStrategy, scoringStrategy: ILearningStreakScoringStrategy)
+    + SetLearningStreakStrategy(learningStreakStrategy: ILearningStreakStrategy)
+    - GetProgressItems(): List<Progress>
+    - ConvertProgressToUniqueDates(progressItems: List<Progress>): List<DateTime>
+    + GetLearningStreaks(): List<LearningStreak>
+    + GetCurrentStreak(): LearningStreak
+    + CalculateTotalScore(ILearningStreakScoringStrategy? scoringStrategy)
+}
+
+class LearningModuleService {
+    - learningModuleRepository: ILearningModuleRepository
+    - ProgressService: IProgressService
+    - LearningActivityService: ILearningActivityService
+    + LearningModuleService(ILearningModuleRepository learningModuleRepository, IProgressService progressService, ILearningActivityService learningActivityService)
+    + GetAllLearningModules(): List<LearningModule>
+    + DeleteLearningModule(int id): bool
+    + AddLearningModule(module: LearningModule): LearningModule
+    + UpdateLearningModule(module: LearningModule)
+    + GetLearningModuleById(moduleId: Int): LearningModule
+    + GetByUserId(userId: Int): IReadOnlyCollection<LearningModule>
+    + GetLearningModuleByName(name: String): LearningModule?
+}
+
+class AuthenticationService {
+    - userRepository: IUserRepository
+    - currentUser: User?
+    + AuthenticationService(IUserRepository userRepository)
+    + AuthenticateUser(username: String, password: String): bool
+    + CurrentUser: User?
+}
+
+interface IUserRepository {
+    + Add(user: User): User
+    + GetBy(string username): User?
+    + GetAll(): IEnumerable<User>
+    + Update(user: User): User?
+    + GetById(int userId): User?
+}
+
+interface ILearningActivityRepository {
+    AddActivity(activity: LearningActivity): LearningActivity
+    UpdateActivity(activity: LearningActivity): LearningActivity?
+    Remove(activityId: Int): void
+    GetById(int activityId): LearningActivity?
+    GetByIds(IEnumerable<int> activityIds): IEnumerable<LearningActivity>
+    GetAll(): IEnumerable<LearningActivity>
+    GetByLearningModuleId(int moduleId): IEnumerable<LearningActivity>
+    GetByName(string name): LearningActivity?
+}
+
+interface ILearningModuleRepository {
+    + GetAllLearningModules(): IEnumerable<LearningModule> 
+    + AddLearningModule(LearningModule module): LearningModule? 
+    + GetLearningModuleById(int id): LearningModule? 
+    + GetLearningModulesByIds(IEnumerable<int> ids):  List<LearningModule> 
+    + UpdateLearningModule(LearningModule module): LearningModule? 
+    + DeleteLearningModule(int id): Boolean 
+    + GetLearningModuleByName(string name): LearningModule? 
+}
+
+interface IProgressRepository {
+    + Progress AddProgress(Progress progress)
+    + Progress UpdateProgress(Progress updateProgress)
+    + List<Progress> GetAllProgress()
+    + List<Progress> GetProgressByUserId(int userId)
+    + List<DateTime> GetUniqueDatesByUserId(int userId)
+}
+
+interface IFriendRequestRepository {
+    + FriendRequest AddFriendRequest(FriendRequest request)
+    + void UpdateFriendRequestStatus(int friendRequestId, FriendRequestStatus status)
+    + FriendRequest GetFriendRequestById(int requestId)
+    + List<FriendRequest> GetFriendRequestsByUserId(int userId)
+    + void DeleteFriendRequestById(int friendRequestId)
+}
+
+interface IRewardRepository {
+    + Reward AddReward(Reward reward)
+    + Reward GetRewardById(int rewardId)
+    + List<Reward> GetRewardsByUserId(int userId)
+}
+
+interface ILearningStreakScoringStrategy {
+    + int CalculateScore(List<DateTime> dates)
+}
+
+interface ILearningStreakStrategy {
+    + bool MeetCriteria(List<DateTime> dates)
+}
+
+class WeekendSkipStrategy {
+    + int CalculateScore(List{DateTime} dates)
+}
+
+class ConsecutiveDaysStrategy {
+    + int CalculateScore(List{DateTime} dates)
+}
+
+class SimpleScoringStrategy {
+    + int CalculateScore(List{DateTime} dates)
+}
+
+class BonusScoringStrategy {
+    + int CalculateScore(List{DateTime} dates)
+}
+
+User -up-> "n" Reward
+User -right-> "n" Progress
+User "1" -left-> "n" LearningStreak
+User "1" -up-> "n" FriendRequest : sent
+User "1" <-up- "n" FriendRequest : received
+
+Progress "1" --> "1" LearningActivity
+LearningModule "1" --> "n" LearningActivity
+
+LearningModuleService ..> LearningModule : depends on
+LearningActivityService .up.> LearningActivity : depends on
+ProgressService .up.> Progress : depends on
+RewardService .down.> Reward : depends on
+UserService .down.> User : depends on
+FriendRequestService .right.> FriendRequest : depends on
+AuthenticationService ..> User : depends on
+LearningStreakService .up.> User : depends on
+LearningStreakService .up.> LearningStreak : depends on
+
+AuthenticationService .up.> IUserRepository
+LearningActivityService .down.> ILearningActivityRepository
+LearningModuleService .up.> ILearningModuleRepository
+ProgressService .down.> IProgressRepository
+UserService .up.> IUserRepository
+FriendRequestService .up.> IFriendRequestRepository
+RewardService .right.> IRewardRepository
+LearningStreakService .right.> ProgressService
+
+LearningStreakService -down-|> ILearningStreakScoringStrategy
+LearningStreakService -down-|> ILearningStreakStrategy
+WeekendSkipStrategy -up.|> ILearningStreakStrategy
+ConsecutiveDaysStrategy -up.|> ILearningStreakStrategy
+SimpleScoringStrategy -up.|> ILearningStreakScoringStrategy
+BonusScoringStrategy -up.|> ILearningStreakScoringStrategy
+
+@enduml

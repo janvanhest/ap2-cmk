@@ -1,0 +1,15 @@
+@startuml
+
+title Fetch First Streak
+
+start
+:Initialize returnValue to null;
+:Fetch all streaks;
+if (streaks is not empty) then (yes)
+  :Get first streak from streaks;
+  :Set returnValue to first streak;
+endif
+:return returnValue;
+stop
+
+@enduml

@@ -1,0 +1,197 @@
+@startuml
+
+class FriendRequest {
+    - id: Int
+    - sender: User
+    - recipient: User
+    - status: FriendRequestStatus
+    +FriendRequest(sender: User, recipient: User)
+    +UpdateStatus(status: FriendRequestStatus)
+}
+
+class LearningActivity {
+    -id: Int
+    -name: String
+    -description: String
+    -type: LearningActivityType
+    +LearningActivity(name: String, description: String, type: LearningActivityType)
+    +UpdateActivity(name: String, description: String, type: LearningActivityType)
+}
+
+class LearningModule {
+    -id: int
+    -name: String
+    -description: String
+    +LearningModule(name: String, description: String)
+    +AddLearningActivity(activity: LearningActivity)
+    +RemoveLearningActivity(activity: LearningActivity)
+    +ShowLearningActivities(): List<LearningActivity>
+    +UpdateModule(name: String, description: String)
+}
+
+class Progress {
+    -id: Int
+    -type: ProgressType
+    -status: ProgressStatus
+    -progressDetails: String
+    +Progress(type: ProgressType, status: ProgressStatus, progressDetails: String)
+    +ShowDetails(): String
+    +UpdateProgress(details: String)
+}
+
+class Reward {
+    -name: String
+    -type: RewardType
+    -description: String
+    -date: Date
+    +Reward(name: String, type: RewardType, description: String, date: Date)
+    +ShowDetails(): String
+}
+
+class User {
+    -id: Int
+    -firstName: String
+    -middleName: String
+    -lastName: String
+    -dateOfBirth: Date
+    -email: String
+    -password: String
+    -role: UserRole
+    +User(firstName: String, middleName: String, lastName: String, dateOfBirth: Date, email: String, password: String, role: UserRole)
+    +UpdateProfile(firstName: String, middleName: String, lastName: String, email: String, password: String)
+    +SetRole(role: UserRole)
+}
+
+class FriendRequestService {
+    + AddFriendRequest(sender: User, recipient: User): FriendRequest
+    + UpdateFriendRequestStatus(request: FriendRequest, status: FriendRequestStatus)
+}
+
+class LearningActivityService {
+    + AddLearningActivity(name: String, description: String, type: LearningActivityType): LearningActivity
+    + UpdateLearningActivity(activity: LearningActivity, name: String, description: String, type: LearningActivityType)
+    + GetLearningActivities(module: LearningModule): List<LearningActivity>
+}
+
+class LearningModuleService {
+    + AddLearningModule(name: String, description: String): LearningModule
+    + RemoveLearningModule(module: LearningModule)
+    + AddLearningActivityToModule(module: LearningModule, activity: LearningActivity)
+    + RemoveLearningActivityFromModule(module: LearningModule, activity: LearningActivity)
+    + UpdateLearningModule(module: LearningModule, name: String, description: String)
+}
+
+class ProgressService {
+    + AddProgress(type: ProgressType, status: ProgressStatus, progressDetails: String): Progress
+    + UpdateProgress(progress: Progress, details: String)
+    + GetProgressDetails(progress: Progress): String
+}
+
+class RewardService {
+    + AddReward(name: String, type: RewardType, description: String, date: Date): Reward
+    + GetRewardDetails(reward: Reward): String
+}
+
+class UserService {
+    + AddUser(firstName: String, middleName: String, lastName: String, dateOfBirth: Date, email: String, password: String, role: UserRole): User
+    + UpdateUserProfile(user: User, firstName: String, middleName: String, lastName: String, email: String, password: String)
+    + SetUserRole(user: User, role: UserRole)
+}
+
+class AuthenticationService {
+    - userRepository: IUserRepository
+    - currentUser: User
+    + RegisterUser(email: String, password: String): User
+    + AuthenticateUser(email: String, password: String): User
+    + LogoutUser(user: User)
+    + ChangeUserPassword(user: User, newPassword: String)
+}
+
+class LearningStreakService {
+    - _scoringStrategy: ILearningStreakScoringStrategy
+    - _dates: List<DateTime>
+    + StartStreak(user: User)
+    + EndStreak(user: User)
+    + GetStreak(user: User): Int
+    + CalculateTotalScore(user: User): Int
+    + AddActivityDate(user: User, date: DateTime): bool
+    + UpdateDateRange()
+}
+
+interface IUserRepository {
+    + User AddUser(User user)
+    + User GetUserById(int userId)
+    + List<User> GetAllUsers()
+    + void UpdateUser(User user)
+    + void DeleteUser(int userId)
+}
+
+interface ILearningActivityRepository {
+    + LearningActivity AddLearningActivity(LearningActivity activity)
+    + LearningActivity GetLearningActivityById(int activityId)
+    + List<LearningActivity> GetAllLearningActivities()
+    + void UpdateLearningActivity(LearningActivity activity)
+    + void DeleteLearningActivity(int activityId)
+}
+
+interface ILearningModuleRepository {
+    + LearningModule AddLearningModule(LearningModule module)
+    + LearningModule GetLearningModuleById(int moduleId)
+    + List<LearningModule> GetAllLearningModules()
+    + void UpdateLearningModule(LearningModule module)
+    + void DeleteLearningModule(int moduleId)
+}
+
+interface IProgressRepository {
+    + Progress AddProgress(Progress progress)
+    + Progress GetProgressById(int progressId)
+    + List<Progress> GetAllProgress()
+    + void UpdateProgress(Progress progress)
+    + void DeleteProgress(int progressId)
+}
+
+interface IFriendRequestRepository {
+    + FriendRequest AddFriendRequest(FriendRequest request)
+    + FriendRequest GetFriendRequestById(int requestId)
+    + List<FriendRequest> GetAllFriendRequests()
+    + void UpdateFriendRequest(FriendRequest request)
+    + void DeleteFriendRequest(int requestId)
+}
+
+interface IRewardRepository {
+    + Reward AddReward(Reward reward)
+    + Reward GetRewardById(int rewardId)
+    + List<Reward> GetAllRewards()
+    + void UpdateReward(Reward reward)
+    + void DeleteReward(int rewardId)
+}
+
+User -up-> "n" Reward
+User -left-> "n" Progress
+
+User "1" -right-> "n" FriendRequest : sent
+User "1" <-right- "n" FriendRequest : received
+
+Progress "1" -down-> "1" LearningActivity
+
+LearningModule "1" -left-> "n" LearningActivity
+
+LearningModuleService .left.> LearningModule : depends on
+LearningActivityService .up.> LearningActivity : depends on
+ProgressService .down.> Progress : depends on
+RewardService .down.> Reward : depends on
+UserService .down.> User : depends on
+FriendRequestService .up.> FriendRequest : depends on
+AuthenticationService .down.> User : depends on
+LearningStreakService .down.> User : depends on
+
+AuthenticationService .up.> IUserRepository
+LearningActivityService .right.> ILearningActivityRepository
+LearningModuleService .right.> ILearningModuleRepository
+ProgressService .up.> IProgressRepository
+UserService .up.> IUserRepository
+FriendRequestService .right.> IFriendRequestRepository
+RewardService .left.> IRewardRepository
+LearningStreakService .right.> IProgressRepository
+
+@enduml
